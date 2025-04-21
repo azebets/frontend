@@ -1,0 +1,675 @@
+.css-1rqoxtp {
+    position: fixed;
+    z-index: 100;
+    top: 64px;
+    left: 0px;
+    height: calc(-64px + 100vh);
+    transform: translateZ(0px);
+}
+.css-12khlxv {
+    position: relative;
+    height: 100%;
+}
+.css-hc67zf {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 12px 0px;
+    height: 100%;
+    background-color: rgb(31, 35, 48);
+    overflow: hidden auto;
+}
+.css-1s7coby {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-right: 12px;
+    height: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+    transition: all 0.1s ease 0s;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+    color: #FA00DF;
+    text-shadow: #ED1E63  0px 0px 8px;
+    background: rgb(26, 29, 41) !important;
+}
+.css-qlws2f {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 36px;
+    min-width: 36px;
+    margin-right: 2px;
+}
+.css-wphpnv {
+    fill: currentcolor;
+    width: 17px;
+    min-width: 17px;
+    height: auto;
+}
+.css-1s7coby svg {
+    filter: drop-shadow(#ED1E63 0px 0px 6px);
+}
+.css-ep4jn7 {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 6px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    background: rgba(203, 215, 255, 0.075);
+    height: 24px;
+    width: 26px;
+    padding: 0px;
+    position: relative;
+    left: 6px;
+    margin-left: auto;
+}
+.css-ep4jn7 svg {
+    color: rgb(177, 182, 198);
+    filter: none;
+    transition: transform 0.1s ease 0s;
+    transform: rotate(180deg);
+    bottom: 2px;
+}
+.css-ep4jn7 > :last-child {
+    margin-right: 0px;
+}
+.css-dkv1ld {
+    fill: currentcolor;
+    width: 8px;
+    min-width: 8px;
+    height: auto;
+}
+.css-1js53w7 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-right: 12px;
+    height: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+    transition: all 0.1s ease 0s;
+    color: rgb(177, 182, 198);
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+}
+.css-13107in > * {
+    animation: 0.2s ease-out 0s 1 normal both running animation-1xy0ntl;
+}
+.css-1y66pyb {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 12px 0px 8px 4px;
+    text-transform: uppercase;
+    color: rgb(103, 109, 124);
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 12px;
+}
+.css-1ia53et {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-right: 12px;
+    height: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+    transition: all 0.1s ease 0s;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+    color: #FA00DF;
+    text-shadow: #ED1E63  0px 0px 8px;
+    background: rgba(203, 215, 255, 0.03);
+}
+
+.css-f1k705 {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 30px;
+    padding: 0px 14px;
+    border-radius: 6px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    background: rgba(203, 215, 255, 0.03);
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 32px;
+}
+.css-oluyn3 {
+    fill: currentcolor;
+    width: 18px;
+    min-width: 18px;
+    height: auto;
+}
+.css-f1k705 > :last-child {
+    margin-right: 0px;
+}
+.css-1o06751 {
+    position: fixed;
+    top: 64px;
+    right: 0px;
+    height: calc(-64px + 100vh);
+    background: rgb(31, 35, 48);
+    transform: translateZ(0px);
+}
+.css-1l4lam1 {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    min-height: 0px;
+    padding-right: 4px;
+    overflow-wrap: break-word;
+    color: rgb(177, 182, 198);
+    overflow: hidden auto;
+}
+.css-ubfyk9 {
+    background: rgb(31, 35, 48);
+    padding: 0px 16px 16px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.css-1knbux5 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.css-7vo7yq {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    column-gap: 6px;
+    max-width: 100%;
+    margin: 0px;
+    height: 50px;
+}
+.css-gtbrz1 {
+    flex: 1 1 0%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    overflow: auto hidden;
+    scrollbar-width: none;
+}
+.css-8j08p8 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    column-gap: 6px;
+    height: 30px;
+    min-height: 30px;
+    padding: 0px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    transition: all 0.1s ease 0s;
+    font-size: 12px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    user-select: none;
+    cursor: default;
+    color: rgb(242, 193, 255);
+    text-shadow:  var(--primary-color) 0px 0px 10px;
+    background: rgba(203, 215, 255, 0.055) !important;
+}
+.css-k50ptw {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-right: 12px;
+    height: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+    color: rgb(177, 182, 198);
+    transition: all 0.1s ease 0s;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+}
+.css-1ozy758 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-right: 12px;
+    height: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+    color: rgb(177, 182, 198);
+    transition: all 0.1s ease 0s;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+    background: rgb(26, 29, 41) !important;
+}
+.css-1s4i9mj {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    column-gap: 6px;
+    height: 30px;
+    min-height: 30px;
+    padding: 0px 10px;
+    border-radius: 6px;
+    color: rgb(103, 109, 124);
+    text-transform: uppercase;
+    transition: all 0.1s ease 0s;
+    font-size: 12px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+}
+.css-1lci74v {
+    fill: currentcolor;
+    width: 14px;
+    min-width: 14px;
+    height: auto;
+    position: relative;
+    top: -0.5px;
+}
+.css-17rman {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    column-gap: 4px;
+}
+.css-18dge23 {
+    fill: currentcolor;
+    width: 21px;
+    min-width: 21px;
+    height: auto;
+    cursor: pointer;
+    color: rgb(134, 141, 166);
+}
+.css-14rbbvk {
+    fill: currentcolor;
+    width: 20px;
+    min-width: 20px;
+    height: auto;
+    cursor: pointer;
+    color: rgb(134, 141, 166);
+}
+.css-1deqcht:not(:last-of-type) {
+    margin-bottom: 8px;
+}
+.css-1deqcht {
+    position: relative;
+    padding: 8px;
+    background: rgba(203, 215, 255, 0.03);
+    border-radius: 6px;
+}
+.css-1lphp3s {
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    column-gap: 6.00858px;
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-flex;
+    vertical-align: middle;
+    margin-right: 5px;
+    max-width: 100%;
+}
+.css-1nmmrxo {
+    vertical-align: middle;
+    line-height: 22px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+}
+.css-1f0zcjv {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    min-width: 21px;
+    width: 21px;
+    min-height: 21px;
+    height: 21px;
+}
+.css-1ago99h {
+    width: 100%;
+}
+.css-o3tivt {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.css-eder7j {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.88);
+}
+.css-14c5l9t {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 40px;
+    width: 100%;
+    padding: 6px 5px 6px 15px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(15, 17, 26, 0.55);
+    transition: background 0.1s ease 0s;
+    position: relative;
+    height: auto;
+}
+.css-14c5l9t .rollbit-chat-input {
+    width: 100%;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+}
+.css-7vf9my {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-top: 12px;
+}
+.css-vl9u4l {
+    fill: currentcolor;
+    width: 13px;
+    min-width: 13px;
+    height: auto;
+}
+.css-dnlyp1 {
+    margin-right: auto;
+    color: rgb(177, 182, 198);
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.css-1r39q8v {
+    margin-right: 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.css-njm7gi:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+.css-njm7gi {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 24px;
+    padding: 0px 8px;
+    border-radius: 4px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 12px;
+    color: #fff;
+    background: var(--primary-color);
+    box-shadow: rgba(118, 255, 25, 0.4) 0px 0px 10px, rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.15) 0px -3px 0px inset, var(--primary-color) 0px 0px 8px inset;
+}
+.css-1q1bjed {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    min-height: 0px;
+}
+
+.css-sstt98 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-right: 12px;
+    height: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+    transition: all 0.1s ease 0s;
+    color: rgb(177, 182, 198);
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+}
+.css-qk763z {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: all 250ms ease 0s;
+}
+@media (min-width: 1000px) {
+    .css-qk763z {
+        padding-left: 240px;
+        padding-right: 0px;
+    }
+}
+.css-sstt98, .css-sstt98:hover {
+    background: rgba(203, 215, 255, 0.03);
+    color: #FA00DF;
+    text-shadow: #ED1E63  0px 0px 8px;
+}
+.css-4pv6ck {
+    fill: currentcolor;
+    width: 21px;
+    min-width: 21px;
+    height: auto;
+    cursor: pointer;
+    color: rgb(134, 141, 166);
+    transform: rotate(180deg);
+}
+.css-1fiw968 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-bottom: 12px;
+    gap: 20px;
+}
+.css-1b3khn7 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 40px;
+    min-height: 40px;
+    width: 100%;
+    padding: 0px 5px 0px 15px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(15, 17, 26, 0.55);
+    transition: background 0.1s ease 0s;
+    flex: 1 1 0%;
+    min-width: 170px;
+}
+.css-oluyn3 {
+    fill: currentcolor;
+    width: 18px;
+    min-width: 18px;
+    height: auto;
+}
+.css-1b3khn7 input, .css-1b3khn7 textarea {
+    width: 100%;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+}
+.css-1b3khn7 input, .css-1b3khn7 textarea, .css-1b3khn7 input:focus, .css-1b3khn7 textarea:focus, .css-1b3khn7 input:hover, .css-1b3khn7 textarea:hover, .css-1b3khn7 input:active, .css-1b3khn7 textarea:active {
+    outline: none;
+    border: none;
+    background: none;
+}
+.css-1nfl9e5 {
+    z-index: 1000;
+    position: fixed;
+    max-width: 360px;
+    transform: translateZ(0px);
+    width: 100%;
+}
+.css-1nfl9e5 {
+    z-index: 1000;
+    position: fixed;
+    max-width: 360px;
+    transform: translateZ(0px);
+    width: 100%;
+}
+
+.css-8sz5vj {
+    margin: 0px;
+    padding: 20px 20px 20px 39px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: math-auto;
+}
+.css-den4gc {
+    z-index: 1000;
+    position: fixed;
+    max-width: 320px;
+    transform: translateZ(0px);
+    width: 100%;
+}
+.css-rymlxq {
+    height: 100%;
+    border-radius: 6px;
+    animation: 0.12s ease-out 0s 1 normal none running animation-1h5r8ub;
+    transform: translateZ(0px);
+    width: 100%;
+    background: rgb(31, 35, 48);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 8px -4px, rgba(0, 0, 0, 0.18) 0px 0px 20px 0px, rgba(0, 0, 0, 0.35) 0px 40px 34px -16px;
+    overflow: hidden auto;
+}
+.css-11eskem {
+    display: none;
+}
+.css-ep1r8t {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    height: 16px;
+    margin: 0px;
+    padding-left: 40px;
+    cursor: pointer;
+    white-space: nowrap;
+    color: rgb(177, 182, 198);
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+.css-11eskem:checked + label::before {
+    background: rgb(114, 242, 56);
+}
+.css-ep1r8t::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 16px;
+    width: 32px;
+    border-radius: 99px;
+    background: rgba(203, 215, 255, 0.2);
+}
+.css-11eskem:checked + label > div:first-of-type {
+    left: 18px;
+}
+.css-1jwtohg {
+    position: absolute;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 99px;
+    background: rgb(16, 18, 27);
+    transition: left 0.15s ease 0s;
+}
+
+
+@media (max-width: 750px) {
+    .css-1rqoxtp {
+        top: 112px;
+        left: 0px;
+        bottom: 0px;
+        height: auto;
+    }
+}
+
+@media (max-width: 750px) {
+    .css-1o06751 {
+        top: 112px;
+        right: 0px;
+        bottom: 0px;
+        max-width: 450px;
+        height: auto !important;
+        width: 100% !important;
+        z-index: 100 !important;
+        padding-bottom: 0px !important;
+    }
+}

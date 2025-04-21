@@ -1,0 +1,32 @@
+.css-17tg23y {
+    margin: 0px auto;
+    width: 100%;
+    max-width: 960px;
+    padding: 24px 24px 48px;
+}
+.css-19avl7b {
+    border-radius: 8px;
+    background: rgba(203, 215, 255, 0.03);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 16px;
+    padding: 16px 24px;
+}
+.css-1sg2lsz {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.css-o82oj7 {
+    display: inline-block;
+    flex: 0 0 auto;
+    line-height: 0;
+    width: 33px;
+    min-width: 33px;
+    height: auto;
+}

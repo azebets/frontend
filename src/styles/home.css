@@ -1,0 +1,988 @@
+.css-7oel5t {
+    margin: 0px auto;
+    width: 100%;
+    max-width: 1170px;
+    padding: 24px 24px 48px;
+}
+.css-tpc4x9 {
+    border-radius: 8px;
+    background: rgba(203, 215, 255, 0.03);
+    position: relative;
+    padding: 0px 16px 14px;
+}
+.css-njdirk {
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 8px 0px 4px;
+    background: rgb(31, 35, 48);
+}
+.css-ap4xiv, .css-ap4xiv:hover {
+    background: none;
+}
+.css-ap4xiv {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 24px;
+    min-height: 24px;
+    border-radius: 4px;
+    color: rgb(103, 109, 124);
+    transition: all 0.1s ease 0s;
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+    padding: 0px 4px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+.css-e63igi {
+    margin-left: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: rgb(255, 73, 73);
+}
+.css-1ezjk2y {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 24px;
+    min-height: 24px;
+    border-radius: 4px;
+    transition: all 0.1s ease 0s;
+    font-size: 12px;
+    cursor: default;
+    color: rgb(255, 255, 255);
+    padding: 0px 4px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    background: rgba(203, 215, 255, 0.055) !important;
+}
+.css-ap4xiv {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 24px;
+    min-height: 24px;
+    border-radius: 4px;
+    color: rgb(103, 109, 124);
+    transition: all 0.1s ease 0s;
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+    padding: 0px 4px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+@media (min-width: 600px) {
+    .css-1am9shg {
+        min-height: 84.48px;
+    }
+}
+.css-1pylomy {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-top: 16px;
+    overflow: hidden;
+}
+.css-12rip81 {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    width: 66.714px;
+    min-width: 66.714px;
+    margin-right: 12px;
+    right: 0px;
+}
+.css-e4tx6e {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding-bottom: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.css-18g7uso {
+    position: absolute;
+    top: 0px;
+    left: -6%;
+    width: 112%;
+    height: 113%;
+    border-radius: 4px;
+}
+.css-3v2xup {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    column-gap: 4.29185px;
+    font-size: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-top: 6px;
+    width: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.css-1holazi {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    min-width: 15px;
+    width: 15px;
+    min-height: 15px;
+    height: 15px;
+}
+.css-o3tivt {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.css-1ypeake {
+    padding-top: 3px;
+    color: rgb(114, 242, 56);
+    font-size: 11px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+.css-3ezs24 {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    width: 66.714px;
+    min-width: 66.714px;
+    margin-right: 12px;
+    right: 0px;
+}
+
+.css-zhn3eh {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-position: 100% 50%;
+    background-size: cover;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-image: url(../lib/images/welcome_banner.png);
+}
+.css-co0306 {
+    z-index: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 500px;
+    background: linear-gradient(90deg, rgba(31, 35, 48, 0.9) 0%, rgba(31, 35, 48, 0.9) 50%, transparent 100%);
+}
+.css-dffgpk {
+    display: flex;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+.css-b597fs {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    max-width: calc(3.5% + 410px);
+    padding: 56px 0px 56px 3.5%;
+}
+.css-rhqiop {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-bottom: 24px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    word-break: break-word;
+    gap: 12px;
+    font-size: 22px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+.css-1bmbfr1 {
+    padding: 12px 0px 24px;
+    line-height: 1.6;
+    max-width: 410px;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+.css-3gygi5 {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 48px;
+    padding: 0px 24px;
+    border-radius: 8px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    font-size: 14px;
+    color: #fff;
+    background: var(--primary-color);
+    /* box-shadow: #ED1E63 0px 0px 10px, rgba(255, 255, 255, 0.2) 0px 1px 0px inset, rgba(0, 0, 0, 0.15) 0px -3px 0px inset, #FA00DF 0px 0px 12px inset; */
+}
+.css-uqeajf {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    column-gap: 6px;
+    max-width: 100%;
+    margin-bottom: 16px;
+}
+.css-1mo5975 {
+    flex: 1 1 0%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+    overflow: auto hidden;
+    scrollbar-width: none;
+}
+.css-19z4l2h {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    flex-direction: column;
+    gap: 8px;
+    height: 72px;
+    min-height: 72px;
+    width: 108px;
+    padding: 0px 16px 12px;
+    border-radius: 8px;
+    transition: all 0.1s ease 0s;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    user-select: none;
+    cursor: default;
+    /* text-shadow: #c6144f; */
+    color: var(--primary-color) !important;
+    background: rgba(203, 215, 255, 0.055) !important;
+}
+.css-1ie0ikn {
+    fill: currentcolor;
+    width: 20px;
+    min-width: 20px;
+    height: auto;
+    position: relative;
+    top: -1px;
+}
+.css-19z4l2h svg {
+    filter: drop-shadow(#d17c98 0px 0px 6px);
+}
+.css-76jt67 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    flex-direction: column;
+    gap: 8px;
+    height: 72px;
+    min-height: 72px;
+    width: 108px;
+    padding: 0px 16px 12px;
+    border-radius: 8px;
+    color: rgb(177, 182, 198);
+    transition: all 0.1s ease 0s;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+}
+.css-1xat6c {
+    display: none;
+    -webkit-box-align: center;
+    align-items: center;
+    column-gap: 6px;
+}
+.css-lui29e {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 30px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    text-transform: none;
+    background: rgba(203, 215, 255, 0.03);
+    width: 28px;
+    padding: 0px;
+    color: rgb(177, 182, 198);
+}
+
+.css-lui29e > * {
+    margin-right: 8px;
+}
+.css-rrpfla {
+    fill: currentcolor;
+    width: 6px;
+    min-width: 6px;
+    height: auto;
+}
+.css-lui29e {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 30px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    text-transform: none;
+    background: rgba(203, 215, 255, 0.03);
+    width: 28px;
+    padding: 0px;
+    color: rgb(177, 182, 198);
+}
+.css-8adv44 {
+    fill: currentcolor;
+    width: 6px;
+    min-width: 6px;
+    height: auto;
+    transform: rotate(180deg);
+}
+.css-lui29e > :last-child {
+    margin-right: 0px;
+}
+
+.css-1umk8r2 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 50px;
+    min-height: 50px;
+    width: 100%;
+    padding: 0px 5px 0px 15px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(15, 17, 26, 0.55);
+    transition: background 0.1s ease 0s;
+    flex: 1 1 0%;
+    min-width: 170px;
+}
+.css-oluyn3 {
+    fill: currentcolor;
+    width: 18px;
+    min-width: 18px;
+    height: auto;
+}
+.css-1y4j81h {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin: 33.5px 0px 13.5px;
+}
+.css-1lvctvs {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+.css-mpgbkp {
+    display: flex;
+    width: 21px;
+}
+.css-1xnqux5 {
+    fill: currentcolor;
+    width: 15.5px;
+    min-width: 15.5px;
+    height: auto;
+    position: relative;
+    left: -1px;
+}
+.css-h1pfxx {
+    text-transform: none;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    color: rgb(255, 176, 24);
+    margin-left: 16px;
+}
+.css-1h4p0hd {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    column-gap: 6px;
+}
+.css-itefrr {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 24px;
+    padding: 0px 8px;
+    border-radius: 4px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    background: rgba(203, 215, 255, 0.03);
+}
+.css-itefrr > :last-child {
+    margin-right: 0px;
+}
+.css-k6iza4 {
+    fill: currentcolor;
+    width: 5.5px;
+    height: 10px;
+}
+.css-1p9d1h6 {
+    fill: currentcolor;
+    width: 5.5px;
+    height: 10px;
+    transform: rotate(180deg);
+}
+.css-itefrr > :last-child {
+    margin-right: 0px;
+}
+.css-13107in > :nth-of-type(1) {
+    animation-delay: 0s;
+}
+.css-13107in > * {
+    animation: 0.2s ease-out 0s 1 normal both running animation-1xy0ntl;
+}
+.css-9vwzbp > div {
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+.css-vugqe6 > * {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    height: 220px;
+    min-height: 220px;
+    max-height: 220px;
+}
+.css-d6icxj {
+    position: relative;
+    width: 100%;
+    padding-bottom: 140%;
+    transition: transform 0.15s ease-out 0s;
+    background: rgba(203, 215, 255, 0.03);
+    border-radius: 8px;
+}
+.css-nyormw {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+}
+.css-1agvln2 {
+    display: none;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    animation: 0.15s ease-in 0s 1 normal none running animation-sqvad5;
+    cursor: pointer;
+}
+.css-1kv5tu {
+    fill: currentcolor;
+    width: 13px;
+    min-width: 13px;
+    height: auto;
+    position: relative;
+    top: -0.5px;
+}
+.css-bmalp3 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin-bottom: 13.5px;
+}
+.css-io63f9 {
+    position: relative;
+}
+.css-wcq858 {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px 4px;
+}
+.css-oe1okv {
+    height: 28px;
+    background: rgba(203, 215, 255, 0.03);
+}
+.css-io63f9 thead {
+    z-index: 2;
+    height: 40px;
+    position: relative;
+    background: rgb(31, 35, 48);
+}
+.css-1d17pqc {
+    text-transform: uppercase;
+    color: rgb(103, 109, 124);
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+.css-1d17pqc:first-of-type {
+    padding-left: 24px;
+    border-radius: 4px 0px 0px 4px;
+}
+.css-1d17pqc:not(:last-of-type) {
+    padding-right: 16px;
+}
+.css-1d17pqc > div {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.css-1n6eoad:last-of-type {
+    padding-right: 24px;
+    border-radius: 0px 4px 4px 0px;
+}
+.css-1n6eoad {
+    text-transform: uppercase;
+    color: rgb(103, 109, 124);
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+.css-io63f9 tbody > tr:nth-of-type(2n+1) {
+    animation: 0.5s ease-out 0s 1 normal none running animation-13rvueg;
+}
+.css-1k5q1yl {
+    height: 40px;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    background: rgba(203, 215, 255, 0.03);
+}
+.css-1oa65f7 {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+}
+.css-1oa65f7:first-of-type {
+    padding-left: 24px;
+    border-radius: 4px 0px 0px 4px;
+}
+
+.css-1oa65f7:not(:last-of-type) {
+    padding-right: 16px;
+}
+.css-1oa65f7 > div {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    min-height: 28px;
+    font-variant-numeric: tabular-nums;
+}
+.css-s92gka {
+    position: relative;
+    width: 24px;
+    padding-bottom: 24px;
+    overflow: hidden;
+    display: block;
+    margin-right: 8px;
+    border-radius: 3px;
+}
+.css-18g7uso {
+    position: absolute;
+    top: 0px;
+    left: -6%;
+    width: 112%;
+    height: 113%;
+    border-radius: 4px;
+}
+.css-1b3rv0c {
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 120px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+}
+.css-1ago99h {
+    width: 100%;
+}
+.css-o3tivt {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.css-15m7f2a {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    column-gap: 6.00858px;
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.css-rja9yq {
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+}
+.css-rja9yq > div {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    min-height: 28px;
+    font-variant-numeric: tabular-nums;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+.css-io63f9::after {
+    background: linear-gradient(rgba(26, 29, 41, 0) 0%, rgb(26, 29, 41) 75%);
+    content: "";
+    z-index: 2;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 30%;
+    width: 100%;
+    pointer-events: none;
+}
+.css-1n6eoad {
+    text-transform: uppercase;
+    color: rgb(103, 109, 124);
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 12px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+.css-1n6eoad > div {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+.css-rja9yq:last-of-type {
+    padding-right: 24px;
+    border-radius: 0px 4px 4px 0px;
+}
+.css-ojf8hg {
+    display: flex;
+    align-items: flex-start;
+}
+.css-1yx9de1 {
+    flex: 1 1 0%;
+    min-width: 0px;
+}
+.css-1y4bokc {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 24px;
+}
+.css-1umk8r2 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 50px;
+    min-height: 50px;
+    width: 100%;
+    padding: 0px 5px 0px 15px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(15, 17, 26, 0.55);
+    transition: background 0.1s ease 0s;
+    flex: 1 1 0%;
+    min-width: 170px;
+}
+.css-oluyn3 {
+    fill: currentcolor;
+    width: 18px;
+    min-width: 18px;
+    height: auto;
+}
+.css-1umk8r2 input, .css-1umk8r2 textarea, .css-1umk8r2 input:focus, .css-1umk8r2 textarea:focus, .css-1umk8r2 input:hover, .css-1umk8r2 textarea:hover, .css-1umk8r2 input:active, .css-1umk8r2 textarea:active {
+    outline: none;
+    border: none;
+    background: none;
+}
+.css-1umk8r2 input, .css-1umk8r2 textarea {
+    width: 100%;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 15px;
+}
+.css-ltx4sp {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    text-transform: none;
+    background: rgba(203, 215, 255, 0.03);
+    padding: 0px 12px 0px 16px;
+    max-width: 100%;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    color: rgb(177, 182, 198);
+}
+.css-xb95tu {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    text-align: left;
+    flex: 1 1 0%;
+    min-width: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0px !important;
+}
+.css-18ifrrj {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-left: 4px;
+    color: rgb(255, 176, 24);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.css-ltx4sp > :last-child {
+    margin-right: 0px;
+}
+.css-1vsy0ig {
+    fill: currentcolor;
+    width: 7px;
+    min-width: 7px;
+    height: auto;
+}
+.css-1l01j61 {
+    display: grid;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 18px 12px;
+}
+.css-1l01j61 > :nth-of-type(1) {
+    animation-delay: 0s;
+}
+.css-1l01j61 > * {
+    animation: 0.2s ease-out 0s 1 normal both running animation-1xy0ntl;
+}
+.css-d6icxj {
+    position: relative;
+    width: 100%;
+    padding-bottom: 140%;
+    transition: transform 0.15s ease-out 0s;
+    background: rgba(203, 215, 255, 0.03);
+    border-radius: 8px;
+}
+
+.css-1agvln2 {
+    display: none;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    animation: 0.15s ease-in 0s 1 normal none running animation-sqvad5;
+    cursor: pointer;
+}
+.css-nyormw {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 1450px) {
+    .css-zhn3eh {
+        height: 250px;
+    }
+}
+@media (max-width: 1187px) {
+    .css-zhn3eh {
+        background-position: 50% 50%;
+    }
+}
+@media (max-width: 1307px) {
+    .css-b597fs {
+        padding: 36px 0px 36px 16px;
+    }
+}
+
+@media (max-width: 1187px) {
+    .css-b597fs {
+        padding: 32px 24px;
+    }
+}
+@media (max-width: 1187px) {
+    .css-dffgpk {
+        flex-direction: column;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+        min-height: 0px;
+    }
+}
+@media only screen and (max-width: 1280px) {
+    .css-zhn3eh {
+        height: 200px;
+    }
+}
+@media only screen and (max-width: 1130px) {
+    .css-zhn3eh {
+        height: 150px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .css-zhn3eh {
+        height: 120px;
+    }
+}

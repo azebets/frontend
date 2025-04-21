@@ -1,0 +1,149 @@
+.css-xzyayo {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 100%;
+    padding: 50px;
+    background: rgba(16, 18, 27, 0.6);
+}
+
+
+.css-1mz1qbe {
+    width: 100%;
+    padding: 32px;
+}
+.css-rhqiop {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-bottom: 24px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    word-break: break-word;
+    gap: 12px;
+    font-size: 22px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+.css-1u1hdo2 {
+    padding-bottom: 16px;
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+.css-1vec8iw {
+    text-transform: uppercase;
+    color: rgb(177, 182, 198);
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+.css-14hgewr {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 40px;
+    min-height: 40px;
+    width: 100%;
+    padding: 0px 5px 0px 15px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(15, 17, 26, 0.55);
+    transition: background 0.1s ease 0s;
+}
+.css-suhvqt {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 24px;
+    padding: 0px 8px;
+    border-radius: 4px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 12px;
+    color: #fff;
+    background: var(--primary-color);
+}
+
+.css-1mz1qbe p {
+    line-height: 1.6;
+    margin: 10px 0px 16px;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+.css-1vr6qde {
+    color: rgb(255, 73, 73);
+    vertical-align: middle;
+    font-size: 12px;
+}
+.css-yc876q {
+    border-radius: 8px;
+    background: rgba(203, 215, 255, 0.03);
+    max-width: 328px;
+    padding: 24px;
+}
+.css-yc876q p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+.css-1ljh5f5 {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.1s ease 0s;
+    appearance: none;
+    border: none;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    user-select: none;
+    height: 30px;
+    padding: 0px 14px;
+    border-radius: 6px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    background: rgba(203, 215, 255, 0.075);
+}
+.css-14hgewr {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 40px;
+    min-height: 40px;
+    width: 100%;
+    padding: 0px 5px 0px 15px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(15, 17, 26, 0.55);
+    transition: background 0.1s ease 0s;
+}
