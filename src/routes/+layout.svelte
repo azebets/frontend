@@ -129,9 +129,6 @@
 
 {#if $screen && $device}
    <div id="root" >
-      {#if isPassword}
-         <Password on:close={()=> isPassword = false}/>
-      {/if}
       <Navbar sideHasExpand={sideHasExpand} chat={chat} menu={menu} on:return={()=> sideHasExpand = 248} on:chat={handleChatSection} on:menu={handleMenuSection}/>
          {#if $screen < 750}
             <div style="min-height: 112px;"></div>
