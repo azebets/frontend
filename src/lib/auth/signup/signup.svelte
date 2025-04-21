@@ -100,8 +100,10 @@
              Contain at least one sign
         </div>
     </div>
+     <!-- svelte-ignore a11y-invalid-attribute -->
     <div class="css-1nsxilh">This site is protected by reCAPTCHA and the Google <a href="#" target="_blank" rel="noreferrer">Privacy Policy</a>
             and 
+             <!-- svelte-ignore a11y-invalid-attribute -->
             <a href="#" target="_blank" rel="noreferrer">Terms of Service</a> 
             apply.
     </div>

@@ -76,8 +76,10 @@
     <div class="css-1vec8iw"></div>
 
 <div class="css-1nsxilh">This site is protected by reCAPTCHA and the Google 
+    <!-- svelte-ignore a11y-invalid-attribute -->
     <a href="#" rel="noreferrer">Privacy Policy</a> 
     and
+     <!-- svelte-ignore a11y-invalid-attribute -->
      <a href="#" rel="noreferrer">Terms of Service</a> apply.
 </div>
 <button class="css-u44gss button" disabled={track} on:click={handleSubmit} type="submit"> {$loading ? "Loading..." : "Login"}</button>
