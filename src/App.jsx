@@ -1,4 +1,4 @@
-// import Navbar from "./components/Navbar.jsx";
+import Navbar from "./components/Navbar.jsx";
 // import Menubar from "./components/Menubar.jsx";
 // import { Routes, Route } from 'react-router';
 // import { BrowserRouter } from "react-router-dom";
@@ -14,10 +14,9 @@ function App() {
   // const [sideHasExpand, setSideHasExpand] = React.useState(8)
   return (
     <>
-       Helo
       {/* <Suspense fallback={<Loader color={"white"}/>}></Suspense>
       <Toaster position="bottom-right" expand={false} richColors  /> */}
-      {/* <Navbar /> */}
+      <Navbar />
       {/* <Menubar />
       <div style={{minHeight: "64px"}}></div>
       <div className={sideHasExpand === 340 ? "css-yl3y1i" : sideHasExpand === 8 ? "css-qk763z" : "css-1polf3r"}>
