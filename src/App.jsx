@@ -34,7 +34,6 @@ function App() {
         <div style={{height: "64px"}}></div>
         <Footer />   
       </div>
-
     </>
   )
 }

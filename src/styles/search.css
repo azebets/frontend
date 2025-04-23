@@ -1,0 +1,188 @@
+
+.css-13b27oz {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100%;
+    padding: 50px;
+    background: rgba(16, 18, 27, 0.6);
+}
+.css-38zi9d {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    max-width: 1408px;
+    vertical-align: middle;
+    border-radius: 10px;
+    animation: 0.15s ease-out 0s 1 normal both running animation-1h5r8ub;
+    background: rgb(26, 29, 41);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 20px, rgba(255, 255, 255, 0.04) 0px 1px 0px inset, rgba(0, 0, 0, 0.25) 0px -4px 0px inset;
+}
+
+.css-av8uu6 {
+    width: 100%;
+    padding: 32px;
+}
+.css-ojf8hg {
+    display: flex;
+    align-items: flex-start;
+}
+.css-1p8yaqw {
+    border-radius: 8px;
+    background: rgba(203, 215, 255, 0.03);
+    width: 190px;
+    margin-right: 32px;
+    position: sticky;
+    top: 32px;
+}
+.css-jk475g {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0px 12px 0px 6px;
+    height: 40px;
+    min-height: 40px;
+    transition: all 0.1s ease 0s;
+    color: rgb(177, 182, 198);
+    font-size: 14px;
+    width: 100%;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+}
+.css-jk475g, .css-jk475g:hover {
+    background: rgba(203, 215, 255, 0.03);
+    color: #FA00DF;
+    text-shadow: #ED1E63  0px 0px 8px;
+}
+.css-jk475g:first-of-type {
+    border-radius: 8px 8px 0px 0px;
+}
+.css-8w1vtk {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 40px;
+    min-width: 40px;
+}
+.css-wphpnv {
+    fill: currentcolor;
+    width: 17px;
+    min-width: 17px;
+    height: auto;
+}
+.css-jk475g svg, .css-jk475g:hover svg {
+    filter: drop-shadow(#ED1E63 0px 0px 6px);
+}
+.css-1xpgu24 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0px 12px 0px 6px;
+    height: 40px;
+    width: 100%;
+    min-height: 40px;
+    transition: all 0.1s ease 0s;
+    color: rgb(177, 182, 198);
+    font-size: 14px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+}
+.css-1yx9de1 {
+    flex: 1 1 0%;
+    min-width: 0px;
+}
+.css-rhqiop {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-bottom: 24px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    word-break: break-word;
+    gap: 12px;
+    font-size: 22px;
+    font-family: "Geogrotesque Wide", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+.css-1y4bokc {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 24px;
+}
+.css-1b3khn7 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 40px;
+    min-height: 40px;
+    width: 100%;
+    padding: 0px 5px 0px 15px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(15, 17, 26, 0.55);
+    transition: background 0.1s ease 0s;
+    flex: 1 1 0%;
+    min-width: 170px;
+}
+.css-1l01j61 {
+    display: grid;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 18px 12px;
+}
+.css-1l01j61 > :nth-of-type(1) {
+    animation-delay: 0s;
+}
+.css-1l01j61 > * {
+    animation: 0.2s ease-out 0s 1 normal both running animation-1xy0ntl;
+}
+.css-d6icxj {
+    position: relative;
+    width: 100%;
+    padding-bottom: 140%;
+    transition: transform 0.15s ease-out 0s;
+    background: rgba(203, 215, 255, 0.03);
+    border-radius: 8px;
+}
+.css-nyormw {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+
+@media (max-width: 767px) {
+    .css-1nc5kzu {
+        transform: translate(-4px, 21px);
+        top: -6px;
+    }
+}
+@media (max-width: 767px) {
+    .css-av8uu6 {
+        padding: 24px 16px;
+    }
+}
+@media (max-width: 599px) {
+    .css-13b27oz {
+        padding: 0px;
+        -webkit-box-align: stretch;
+        align-items: stretch;
+    }
+}

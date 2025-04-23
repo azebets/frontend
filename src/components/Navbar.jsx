@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
 import "../styles/navbar.css"
 import { assets } from '../constants'
-import { useNavigate, NavLink, useLocation } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import AuthLayout from '../modals/Layout';
 import { AppContext } from '../context/AppContext';
+import SearchLayout from '../search/SearchLayout';
 
 export default function Navbar() {
     const location = useLocation()
@@ -11,10 +12,9 @@ export default function Navbar() {
     const params = new URLSearchParams(location.search)
     const pageTab = params.get("tab")
 
-
   return (
     <>
-
+    {pageTab === "search" && <SearchLayout />}
     {pageTab === "auth" &&<AuthLayout />}
         <div className="css-1cn0dze" style={{height: "64px"}}>
         <div className="css-jbqya4">
@@ -33,7 +33,7 @@ export default function Navbar() {
                 </g>
             </svg>
         </button>
-        <button  className="css-qik1t1">
+        <button onClick={()=> Modalroutes("auth", "login")} className="css-qik1t1">
             <svg width="16px" height="15px" viewBox="0 0 16 15" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" size="15.5" top="1" className="css-ouqosf">
                 <title>global-chat</title>
                     <g id="\uD83D\uDCDD-Style-Guide" stroke="none" strokeWidth="1" fill="currentColor" fillRule="evenodd">
