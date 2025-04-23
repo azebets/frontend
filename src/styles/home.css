@@ -180,7 +180,7 @@
     background-size: cover;
     height: 300px;
     background-repeat: no-repeat;
-    background-image: url(assets/banners/welcome_banner.png);
+    /* background-image: url(assets/banners/welcome_banner.png); */
 }
 .css-co0306 {
     z-index: 0;
@@ -198,6 +198,11 @@
     justify-content: space-between;
     position: relative;
     z-index: 1;
+}
+.css-dffgpk img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .css-b597fs {
     display: flex;

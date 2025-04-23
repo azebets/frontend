@@ -7,6 +7,7 @@ export default function NavTabs() {
       <div className="css-zhn3eh">
         {/* <div className="css-co0306"></div>  */}
         <div className="css-dffgpk">
+            <img src="assets/banners/welcome_banner.png" alt="" />
             {/* <div className="css-b597fs">
                 <h1 className="css-rhqiop" style="margin: 0px; font-size: 28px;">Start Winning</h1> 
                 <div className="css-1bmbfr1">Experience true innovation with the highest rewards program within the industry.</div> 

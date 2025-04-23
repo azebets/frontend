@@ -38,7 +38,9 @@ export default function Layout() {
                             
                     </div>
                     <div className="css-97vdup">
+                    <img src="assets/banners/welcome_banner2.png" alt="" />
                         <div className="css-1uqg8wt">
+                            
                             <div></div>
                             {/* <div className="css-92mle7">By accessing the site, I attest that I am at least 18 years old and have read the 
                                 <a className="css-1hv393j" href="/terms-and-conditions" target="_blank">Terms &amp; Conditions.</a>

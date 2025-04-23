@@ -199,13 +199,19 @@
 .css-97vdup {
     width: 50%;
     line-height: 1.6;
-    background-image: url(assets/banners/welcome_banner2.png);
+    /* background-image: url(assets/banners/welcome_banner2.png); */
     background-size: cover;
     background-position: 50% 65%;
     border-radius: 0px 10px 10px 0px;
     position: relative;
     color: rgb(255, 255, 255);
     font-size: 13px;
+}
+.css-97vdup img{
+    width: 100%;
+    height: 100%;
+    border-radius: 0px 10px 10px 0px;
+    object-fit: cover;
 }
 .css-1uqg8wt {
     display: flex;
