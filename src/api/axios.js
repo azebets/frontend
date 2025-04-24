@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { getCookie } from './cookies';
+import { deleteCookie, getCookie } from './cookies';
 import { toast } from 'sonner';
 
 export const backendUrl = ()=>{
   let localhostUrl = "http://localhost:8000"
-  let remoteUrl = "https://safex.onrender.com"
+  let remoteUrl = "https://cyclix.onrender.com"
   const _api = location.hostname === "localhost" || location.hostname === "127.0.0.1"
   ? localhostUrl : remoteUrl
   return _api
@@ -37,8 +37,11 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      console.error('API Error:', error.response.data);
-      toast.error(error.response.data?.error)
+      if(error.response.data === "Authorization token required") {
+        deleteCookie("token")
+        return  
+      }
+      toast.error(error.response.data)
     } else if (error.request) {
       console.error('Network Error:', error.request);
       toast.error("Network Error")

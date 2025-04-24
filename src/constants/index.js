@@ -2,8 +2,9 @@
 const assets = {
     logo: "/assets/logo.png",
     mobileLogo: "/assets/mobile-logo.png",
+    logo3D: "/assets/logo3D.png",
     badge :{
-        one: ""
+        one: "/assets/badges/bronze1.png"
     }
 }
 
@@ -15,4 +16,44 @@ const routes = [
     }
 ]
 
-export {assets, routes}
+let wallet = [
+    {
+       is_active: false,
+        fullname: "Bitcoin",
+       coin_image:"https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400", 
+       coin_name: "BTC", 
+   },
+   {
+    is_active: false,   
+    fullname: "Ethereum",
+    coin_image:"https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628", 
+    coin_name: "ETH", 
+   },
+   {
+    is_active: true,   
+    fullname: "Tron",
+    coin_image:"https://assets.coingecko.com/coins/images/1094/standard/tron-logo.png?1696502193", 
+    coin_name: "TRX", 
+   },
+   {
+    is_active: false,   
+    fullname: "Solana",
+    coin_image:"https://s2.coinmarketcap.com/static/img/coins/64x64/16116.png", 
+    coin_name: "SOL"
+   },
+    {
+    is_active: false,   
+    fullname: "Litecoin",
+    coin_image:"https://assets.coingecko.com/coins/images/2/standard/litecoin.png?1696501400", 
+    coin_name: "LTC"
+   },
+   {
+    is_active: false,   
+    fullname: "Tether",
+    coin_image:"https://assets.coingecko.com/coins/images/325/large/Tether.png?1668148663", 
+    coin_name: "USDT"
+   }
+]
+
+
+export {assets, routes, wallet}

@@ -33,7 +33,7 @@ export default function Home() {
           <Showgame />
           <Bets />
         </>
- }       
+      }       
         <Outlet />
     </div>
   )

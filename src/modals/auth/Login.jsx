@@ -1,9 +1,11 @@
 import React from 'react'
 import { AppContext } from '../../context/AppContext'
 import Google from './Google'
+import { useNavigate } from 'react-router'
 
 export default function Login() {
-    const {Modalroutes} = React.useContext(AppContext)
+    const navigate = useNavigate()
+    const {Modalroutes, _auth, setWallet, setUser} = React.useContext(AppContext)
     const [loading, setLoading] = React.useState(false)
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
@@ -13,7 +15,24 @@ export default function Login() {
     const [success, setSuccess] = React.useState("")
 
     const handleSubmit = async (e) => {
-
+        try{
+            setLoading(true)
+            const data = {
+                email: email,
+                password: password,
+                device: await _auth?.fetchVistorsDevice()
+            }
+            const response = await _auth.login(data)
+            setUser(response.user)
+            setWallet(response.wallet)
+            setLoading(false)
+            navigate(window.location.pathname)
+        }
+        catch(err){
+            console.log(err)
+            setLoading(false)
+        }
+ 
     }
 
   return (
@@ -57,7 +76,7 @@ export default function Login() {
             and
             <a href="#" rel="noreferrer">Terms of Service</a> apply.
         </div>
-        <button className="css-u44gss button" disabled={track} onClick={handleSubmit} type="submit"> {loading ? "Loading..." : "Login"}</button>
+        <button className="css-u44gss button" disabled={loading} onClick={handleSubmit} type="submit"> {loading ? "Loading..." : "Login"}</button>
         <Google text={"Sign in with Google"}/>
 
     </>

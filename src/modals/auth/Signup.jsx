@@ -1,12 +1,17 @@
 import React from 'react'
 import Google from './Google'
+import { AppContext } from '../../context/AppContext'
+import { useNavigate } from 'react-router'
 
 export default function Signup() {
+    const navigate = useNavigate()
+    const {Modalroutes, _auth, setWallet, setUser} = React.useContext(AppContext)
+    const [loading, setLoading] = React.useState(false)
     const [username, setUsername] = React.useState("")
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [showPassword, setShowPassword] = React.useState(false)
-    const [loading, setLoading] = React.useState(false)
+
     const [track, setTrack] = React.useState(false)
     const [error, setError] = React.useState("")
     const [success, setSuccess] = React.useState("")
@@ -16,8 +21,33 @@ export default function Signup() {
     const [_8to30Characters, set_8to30Characters] = React.useState(false)
     const [passMatch, setPassMatch] = React.useState(false)
 
+    React.useEffect(() => {
+        set_8to30Characters(password.length >= 8 && password.length <= 30);
+        setPassNumbers(/[0-9]/.test(password));
+        setLetter(/[a-z]/.test(password) && /[A-Z]/.test(password));
+        setSpecialChar(/^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/.test(password));
+    }, [password]);
+
     
-    const handleSubmit = async (e) => {}
+    const handleSubmit = async (e) => {
+        try{
+            setLoading(true)
+            const data = {
+                email: email,
+                password: password,
+                username: username,
+                device: await _auth?.fetchVistorsDevice()
+            }
+            const response = await _auth.signup(data)
+            setUser(response.user)
+            setWallet(response.wallet)
+            setLoading(false)
+            navigate(window.location.pathname)
+        }
+        catch(err){
+            setLoading(false)
+        }
+    }
 
   return (
     <>
@@ -41,8 +71,8 @@ export default function Signup() {
             <label htmlFor="rollbit-field-4063" className="css-1vec8iw">Password<span className="css-1vr6qde"> *</span></label>
             <div>
                 <div className="css-14hgewr">
-                        <input type="password" onChange={(e)=> setPassword(e.target.value)} name="password" placeholder="********" id="rollbit-field-113" value={password} />  
-                    <button  className="css-u44gsswwe" aria-label={showPassword ? 'Hide password' : 'Show password'} >
+                        <input type={showPassword ?"test": "password"} onChange={(e)=> setPassword(e.target.value)} name="password" placeholder="********" id="rollbit-field-113" value={password} />  
+                    <button onClick={()=> setShowPassword(!showPassword)} className="css-u44gsswwe" aria-label={showPassword ? 'Hide password' : 'Show password'} >
                         {showPassword ?
                         <svg fill="currentColor" viewBox="0 0 64 64" className="svg-icon " > <title></title> <path fillRule="evenodd" clipRule="evenodd" d="M0 32c6.63-11.67 18.48-19.45 32-19.45S57.37 20.33 64 32c-6.63 11.67-18.48 19.45-32 19.45S6.63 43.67 0 32Zm18.19 0c0 7.66 6.21 13.87 13.87 13.87h.01c7.654 0 13.86-6.206 13.86-13.86V32c0-7.66-6.21-13.87-13.87-13.87-7.66 0-13.87 6.21-13.87 13.87Zm13.87 8.2a8.2 8.2 0 0 0 0-16.4 8.2 8.2 0 0 0 0 16.4Z"></path></svg>
                         :

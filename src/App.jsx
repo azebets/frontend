@@ -7,7 +7,15 @@ import Loader from "./constants/Loader.jsx";
 import Footer from "./components/Footer.jsx";
 import Original from "./pages/Original.jsx";
 import Home from "./pages/Home.jsx";
-
+import Account from "./pages/Account.jsx";
+import Profile from "./page.components/account/Profile.jsx";
+import Balance from "./page.components/account/Balance.jsx";
+import Referrals from "./page.components/account/Referrals.jsx";
+import Codes from "./page.components/account/referral/Codes.jsx";
+import Users from "./page.components/account/referral/Users.jsx";
+import Deposit from "./page.components/account/Deposit.jsx";
+import Withdrawal from "./page.components/account/Withdrawal.jsx";
+import Settings from "./pages/Settings.jsx";
 
 function App() {
   const [sideHasExpand, setSideHasExpand] = React.useState(8)
@@ -28,6 +36,17 @@ function App() {
                 <Route path="live-casino" element={<Original />} />
                 <Route path="roulette" element={<Original />} />
                 <Route path="blackjack" element={<Original />} />
+            </Route>
+            <Route path="account" element={<Account />} >
+                <Route path="profile" element={<Profile />} />
+                <Route path="balances" element={<Balance />} />
+                <Route path="referrals" element={<Referrals />} >
+                   <Route path="codes" element={<Codes />} />
+                    <Route path="users" element={<Users />} />  
+                </Route>
+                <Route path="deposits" element={<Deposit />} />
+                <Route path="withdrawals" element={<Withdrawal />} />
+                <Route path="settings" element={<Settings />} />
             </Route>
           </Routes>
         </div>  
