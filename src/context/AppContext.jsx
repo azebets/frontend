@@ -11,8 +11,20 @@ export const AppContextProvider = ({ children }) => {
     const [ user, setUser ] = useState(null)
     const navigate = useNavigate()
     const [ wallet, setWallet ] = useState(null)
+    const [activeWallet, setActiveWallet] = useState()
     const _auth = new AuthScript()
     const _userAuth = new UserScript()
+
+    useEffect(()=>{
+      setActiveWallet(wallet?.find(item => item.is_active === true))
+    },[wallet])
+
+    const updateWallet = ((wa)=>{
+        const updatedWallet = wallet.map(item => 
+          item.coin_image === wa.coin_image ? { ...item, balance: wa.balance } : item
+        );
+        setWallet(updatedWallet);
+    })
 
     useEffect(() => {
       const checkUser = async () => {
@@ -28,13 +40,12 @@ export const AppContextProvider = ({ children }) => {
     const Modalroutes = ((tab, modal, props)=>{
       navigate(`?tab=${tab}&modal=${modal}${props ? `&${Object.keys(props)+"="+ Object.values(props)}` : ""}`)
     })
-    async function logout(){
-      setCookie("token", "", -1);
+    async function logout(){;
       setUser(null)
       toast.success("Logged out successfully");
     }
   return (
-    <AppContext.Provider value={{ user, setUser, Modalroutes, _auth, setWallet, wallet, logout }}>
+    <AppContext.Provider value={{ user, setUser, Modalroutes, _auth, setWallet, wallet, logout , activeWallet, updateWallet}}>
       {children}
     </AppContext.Provider>
   );

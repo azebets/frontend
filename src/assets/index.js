@@ -1,29 +1,29 @@
 const inHouseGames = [
-    {
-        name: "Crash", 
-        img: "/assets/games/crash.png",
-        link: "/crash",
-    },
+    // {
+    //     name: "Crash", 
+    //     img: "/assets/games/crash.png",
+    //     link: "/crash",
+    // },
     {
         name: "Classic Dice",
         img: "/assets/games/classic_dice.png", 
         link: "/classic-dice",
     },
-    {
-        name: "Mines",
-        img: "/assets/games/mine.png", 
-        link: "/mines",
-    },
-    {
-        name: "Plinko",
-        img: "/assets/games/plinko.png", 
-        link: "/plinko"
-    },
-    {
-        name: "Hilo",
-        img: "/assets/games/hilo.png", 
-        link: "/hilo",
-    }
+    // {
+    //     name: "Mines",
+    //     img: "/assets/games/mine.png", 
+    //     link: "/mines",
+    // },
+    // {
+    //     name: "Plinko",
+    //     img: "/assets/games/plinko.png", 
+    //     link: "/plinko"
+    // },
+    // {
+    //     name: "Hilo",
+    //     img: "/assets/games/hilo.png", 
+    //     link: "/hilo",
+    // }
 ]
 
 const slotsGames = [

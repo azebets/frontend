@@ -3,8 +3,11 @@ import 'swiper/css';
 import { Autoplay } from 'swiper/modules'; // Import Autoplay
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {inHouseGames} from "../../assets"
+import { useNavigate } from 'react-router';
+
 
 export default function GameList() {
+    const navigate = useNavigate()
   return (
     <>
       <div className="css-1y4j81h" style={{marginBottom: "3.5px"}}>
@@ -65,7 +68,7 @@ export default function GameList() {
                 }}>
              {inHouseGames.map((game) => (    
                 <SwiperSlide key={game.link}>
-                    <div onClick={()=> goto(game.link)} className="swiper-slide css-vugqe6" >
+                    <div onClick={()=> navigate(game.link)} className="swiper-slide css-vugqe6" >
                         <div style={{paddingTop: "10px"}}>
                             <div className="css-d6icxj">
                                 <img className="css-nyormw" src={game.img} alt="Mines" />

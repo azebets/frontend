@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar.jsx";
 import Menubar from "./components/Menubar.jsx";
+import "./styles/games.css"
 import { Routes, Route } from 'react-router';
 import React, { Suspense, lazy } from 'react';
 import { Toaster } from "sonner";
@@ -16,6 +17,7 @@ import Users from "./page.components/account/referral/Users.jsx";
 import Deposit from "./page.components/account/Deposit.jsx";
 import Withdrawal from "./page.components/account/Withdrawal.jsx";
 import Settings from "./pages/Settings.jsx";
+import ClassicDice from "./pages/Games/Classic Dice/ClassicDice.jsx";
 
 function App() {
   const [sideHasExpand, setSideHasExpand] = React.useState(8)
@@ -48,6 +50,7 @@ function App() {
                 <Route path="withdrawals" element={<Withdrawal />} />
                 <Route path="settings" element={<Settings />} />
             </Route>
+            <Route path="/classic-dice" element={<ClassicDice />} />
           </Routes>
         </div>  
         <div style={{height: "64px"}}></div>
