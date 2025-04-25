@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar.jsx";
 import Menubar from "./components/Menubar.jsx";
-import "./styles/games.css"
+import "./styles/games.css";
+import "./styles/ccpayment.css"
 import { Routes, Route } from 'react-router';
 import React, { Suspense, lazy } from 'react';
 import { Toaster } from "sonner";
@@ -45,7 +46,7 @@ function App() {
                 <Route path="balances" element={<Balance />} />
                 <Route path="referrals" element={<Referrals />} >
                    <Route path="codes" element={<Codes />} />
-                    <Route path="users" element={<Users />} />  
+                    <Route path="users" element={<Users />} />
                 </Route>
                 <Route path="deposits" element={<Deposit />} />
                 <Route path="withdrawals" element={<Withdrawal />} />
@@ -54,9 +55,9 @@ function App() {
             <Route path="/classic-dice" element={<ClassicDice />} />
             <Route path="/hilo" element={<Hilo />} />
           </Routes>
-        </div>  
+        </div>
         <div style={{height: "64px"}}></div>
-        <Footer />   
+        <Footer />
       </div>
     </>
   )
