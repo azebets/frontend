@@ -18,6 +18,7 @@ import Deposit from "./page.components/account/Deposit.jsx";
 import Withdrawal from "./page.components/account/Withdrawal.jsx";
 import Settings from "./pages/Settings.jsx";
 import ClassicDice from "./pages/Games/Classic Dice/ClassicDice.jsx";
+import Hilo from "./pages/Games/Hilo/Hilo.jsx";
 
 function App() {
   const [sideHasExpand, setSideHasExpand] = React.useState(8)
@@ -51,6 +52,7 @@ function App() {
                 <Route path="settings" element={<Settings />} />
             </Route>
             <Route path="/classic-dice" element={<ClassicDice />} />
+            <Route path="/hilo" element={<Hilo />} />
           </Routes>
         </div>  
         <div style={{height: "64px"}}></div>

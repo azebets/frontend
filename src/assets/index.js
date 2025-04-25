@@ -19,11 +19,11 @@ const inHouseGames = [
     //     img: "/assets/games/plinko.png", 
     //     link: "/plinko"
     // },
-    // {
-    //     name: "Hilo",
-    //     img: "/assets/games/hilo.png", 
-    //     link: "/hilo",
-    // }
+    {
+        name: "Hilo",
+        img: "/assets/games/hilo.png", 
+        link: "/hilo",
+    }
 ]
 
 const slotsGames = [
