@@ -1,0 +1,112 @@
+.css-transaction-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #1a1b23;
+  border-radius: 8px;
+}
+
+.css-transaction-list {
+  margin-top: 20px;
+}
+
+.css-transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #2a2c3b;
+  transition: background-color 0.2s;
+}
+
+.css-transaction-item:hover {
+  background-color: #22232f;
+}
+
+.css-transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.css-transaction-amount {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.css-transaction-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.css-transaction-details {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: #8e8e9a;
+}
+
+.css-transaction-id {
+  margin-bottom: 3px;
+}
+
+.css-transaction-date {
+  font-style: italic;
+}
+
+.css-transaction-status {
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+
+.css-status-completed {
+  color: #72f238;
+  background-color: rgba(114, 242, 56, 0.1);
+}
+
+.css-status-pending {
+  color: #f2c94c;
+  background-color: rgba(242, 201, 76, 0.1);
+}
+
+.css-status-failed {
+  color: #eb5757;
+  background-color: rgba(235, 87, 87, 0.1);
+}
+
+.css-loading {
+  text-align: center;
+  padding: 20px;
+  color: #8e8e9a;
+}
+
+.css-load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.css-load-more-button {
+  background-color: #2a2c3b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.css-load-more-button:hover {
+  background-color: #3a3c4b;
+}
+
+.css-load-more-button:disabled {
+  background-color: #2a2c3b;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
