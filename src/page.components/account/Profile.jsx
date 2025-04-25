@@ -6,7 +6,7 @@ export default function Profile() {
     const { user } = React.useContext(AppContext)
     const [loading, setLoad] = React.useState(false)
     const profileHidden = false
-    const showPrivateContent = false
+    const [showPrivateContent, setShowPrivateContent] = React.useState(false)
     const handlePrivacy = (e) => {
         // Handle privacy change
         console.log("Privacy changed:", e.target.checked)
@@ -51,14 +51,14 @@ export default function Profile() {
                         {:else}
                             Save
                         {/if}
-                        
+
                         </button>
                     {/if} */}
 
                     <img src={user?.profileImg}  style={{borderRadius: "50%"}} alt="" scale="0.96" className="css-zipauw" />
                     {/* {#if isEdit}
                         <button className="upload flex-center">
-                        <svg fill="#000000" className="sc-gsDKAQ hxODWG icon" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                        <svg fill="#000000" className="sc-gsDKAQ hxODWG icon" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 viewBox="0 0 487 487" xml:space="preserve">
                             <g>
                                 <g>
@@ -121,7 +121,7 @@ export default function Profile() {
                             <path d="M26,2C12.7,2,2,12.7,2,26s10.7,24,24,24s24-10.7,24-24S39.3,2,26,2z M39.4,20L24.1,35.5 c-0.6,0.6-1.6,0.6-2.2,0L13.5,27c-0.6-0.6-0.6-1.6,0-2.2l2.2-2.2c0.6-0.6,1.6-0.6,2.2,0l4.4,4.5c0.4,0.4,1.1,0.4,1.5,0L35,15.5 c0.6-0.6,1.6-0.6,2.2,0l2.2,2.2C40.1,18.3,40.1,19.3,39.4,20z"></path>
                             </svg>
                         {/if} */}
-                    
+
                         {/* {#if $user?.emailIsVerified}
                             <div color="#72f238" className="css-l0mt26">
                             <svg enableBackground="new 0 0 229.5 229.5" viewBox="0 0 229.5 229.5" xmlns="http://www.w3.org/2000/svg" size="15" className="css-1h2lco0">
@@ -191,12 +191,12 @@ export default function Profile() {
                         Private profile
                     </label>
                 </div>
-                <button onClick={()=> showPrivateContent =! showPrivateContent}>
+                <button onClick={()=> setShowPrivateContent(!showPrivateContent)}>
                     <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" size="15" color="hsl(225.70000000000005, 15.6%, 58.8%)" className="css-1h2lco0" style={{marginLeft: "8px"}}>
                         <path d="M2.313 2.313A7.896 7.896 0 1 0 13.48 13.479 7.896 7.896 0 0 0 2.312 2.313zm5.9 1c.666 0 1.2.55 1.2 1.216a1.22 1.22 0 0 1-1.2 1.217c-.667 0-1.217-.55-1.217-1.234 0-.666.55-1.2 1.216-1.2zm1.716 8.15a.79.79 0 0 1-.167.283c-.433.45-.966.716-1.6.716-.3 0-.583 0-.883-.05-.483-.066-1.1-.666-1.017-1.3l.2-1.3c.134-.75.267-1.516.4-2.266 0-.05.017-.1.017-.15 0-.317-.1-.433-.416-.467-.134-.017-.267-.033-.4-.066-.15-.05-.234-.184-.217-.3.016-.134.1-.217.267-.25.083-.017.183-.017.283-.017h2.3c.283 0 .45.133.45.417 0 .233-.034.466-.084.7-.15.866-.316 1.716-.466 2.583-.05.283-.117.566-.15.85-.017.133 0 .283.033.416.05.184.184.284.367.267.15-.017.3-.066.45-.133.117-.05.216-.134.333-.167.2-.066.35.05.3.234z" fill="currentColor" fillRule="evenodd"></path>
                     </svg>
                 </button>
-            
+
                 {/* {#if showPrivateContent}
                     <div id="rollbit-modal-popover-container">
                         <div className="css-29gh6u" >
@@ -234,10 +234,10 @@ export default function Profile() {
                     {:else}
                         <button disabled={$user?.emailIsLinked || $loading} on:click={handleLinkEmail} className="css-vmbe4r button" type="button">{$user?.emailIsLinked ?"connected" : "Connect"}</button>
                     {/if} */}
-                
+
                 </div>
             </div>
-                
+
     </>
   )
 }
