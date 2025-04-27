@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
-import CCPaymentService from '../../api/payment/ccpayment';
+import { getCCPaymentService, getCoinIdFromSymbol } from '../../utils/ccpayment';
 import { toast } from 'sonner';
 
 export default function CCPaymentTransactions({ type, currency }) {
@@ -8,10 +8,18 @@ export default function CCPaymentTransactions({ type, currency }) {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const [nextId, setNextId] = useState(null);
 
-  const ccPaymentService = new CCPaymentService();
+  // Get CCPayment service instance
+  const ccPaymentService = getCCPaymentService();
 
   useEffect(() => {
+    // Reset pagination when type or currency changes
+    if (type || currency) {
+      setPage(1);
+      setNextId(null);
+      setTransactions([]);
+    }
     fetchTransactions();
   }, [type, currency, page]);
 
@@ -22,37 +30,67 @@ export default function CCPaymentTransactions({ type, currency }) {
       // Determine which API endpoint to call based on transaction type
       let response;
       if (type === 'deposit') {
-        response = await ccPaymentService.getPermanentDeposits({
-          currency: currency,
-          page: page,
-          limit: 10
+        // Get coin ID from the cached coin list or fetch it
+        const coinId = await getCoinIdFromSymbol(currency);
+
+        response = await ccPaymentService.getDepositRecords({
+          coinId: coinId,
+          limit: 10,
+          nextId: nextId
         });
       } else if (type === 'withdrawal') {
-        response = await ccPaymentService.getWithdrawalHistory({
-          currency: currency,
-          page: page,
-          limit: 10
+        // Get coin ID from the cached coin list or fetch it
+        const coinId = await getCoinIdFromSymbol(currency);
+
+        response = await ccPaymentService.getWithdrawalRecords({
+          coinId: coinId,
+          limit: 10,
+          nextId: nextId
         });
       }
 
-      if (response) {
+      if (response && response.success) {
         // Handle deposit response format
-        if (type === 'deposit' && response.deposits) {
+        if (type === 'deposit' && response.data && response.data.records) {
+          const formattedDeposits = response.data.records.map(record => ({
+            id: record.recordId,
+            amount: record.amount,
+            currency: record.coinSymbol,
+            status: record.status,
+            timestamp: record.arrivedAt * 1000, // Convert to milliseconds
+            address: record.toAddress,
+            txId: record.txId
+          }));
+
           if (page === 1) {
-            setTransactions(response.deposits);
+            setTransactions(formattedDeposits);
           } else {
-            setTransactions(prev => [...prev, ...response.deposits]);
+            setTransactions(prev => [...prev, ...formattedDeposits]);
           }
-          setHasMore(response.hasMore || false);
+          // If nextId is present, there are more records
+          setNextId(response.data.nextId || null);
+          setHasMore(!!response.data.nextId);
         }
         // Handle withdrawal response format
-        else if (type === 'withdrawal' && response.withdrawals) {
+        else if (type === 'withdrawal' && response.data && response.data.records) {
+          const formattedWithdrawals = response.data.records.map(record => ({
+            id: record.recordId,
+            amount: record.amount,
+            currency: record.coinSymbol,
+            status: record.status,
+            timestamp: record.completedAt ? new Date(record.completedAt).getTime() : Date.now(),
+            address: record.toAddress,
+            txId: record.txId
+          }));
+
           if (page === 1) {
-            setTransactions(response.withdrawals);
+            setTransactions(formattedWithdrawals);
           } else {
-            setTransactions(prev => [...prev, ...response.withdrawals]);
+            setTransactions(prev => [...prev, ...formattedWithdrawals]);
           }
-          setHasMore(response.hasMore || false);
+          // If nextId is present, there are more records
+          setNextId(response.data.nextId || null);
+          setHasMore(!!response.data.nextId);
         }
       }
     } catch (error) {

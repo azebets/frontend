@@ -1,0 +1,63 @@
+/* Improved input field contrast */
+
+/* Increase contrast for input text */
+.css-1f51ttt input,
+.css-1f51ttt textarea,
+.css-1f51ttt select {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+/* Improve placeholder contrast */
+.css-1f51ttt input::placeholder,
+.css-1f51ttt textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  opacity: 1 !important;
+}
+
+/* Improve contrast for disabled inputs */
+.css-1f51ttt input:disabled,
+.css-1f51ttt textarea:disabled,
+.css-1f51ttt select:disabled {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Improve focus state */
+.css-1f51ttt:focus-within {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 1px var(--primary-color) !important;
+}
+
+/* Improve input field background for better contrast */
+.css-1f51ttt {
+  background: rgba(26, 29, 41, 0.9) !important;
+}
+
+/* Fix select dropdown options */
+select.css-1f51ttt option {
+  color: white !important;
+  background-color: #1a1d29 !important;
+}
+
+/* Fix select element text color */
+select.css-1f51ttt {
+  color: white !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px !important;
+}
+
+/* Specific fix for network chain selection */
+#chain-select {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+#chain-select option {
+  color: white !important;
+  background-color: #1a1d29 !important;
+}

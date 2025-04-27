@@ -12,9 +12,19 @@ export default function Index() {
     const curtab = params.get("cur")
 
     useEffect(() => {
+        // If curtab is present, find the wallet with matching coin_name
+        if (curtab) {
+            const selectedWallet = wallet?.find(item => item.coin_name.toLowerCase() === curtab.toLowerCase())
+            if (selectedWallet) {
+                setActiveWallet(selectedWallet)
+                return
+            }
+        }
+
+        // Fallback to the default active wallet if curtab is not present or not found
         const active = wallet?.find(item => item.is_active === true)
         setActiveWallet(active)
-    }, [wallet])
+    }, [wallet, curtab])
   return (
     <div>
         {
@@ -35,12 +45,12 @@ export default function Index() {
                     ))}
                 </div>
             </>
-              : 
+              :
               <Details activeWallet={activeWallet}/>
         }
-       
-        
-        
+
+
+
     </div>
   )
 }

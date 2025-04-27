@@ -11,7 +11,7 @@ export default function Deposit() {
     const pageTab = params.get("tab") || "btc"
 
     const handleTabChange = (tab) => {
-        navigate(`/account/deposit?tab=${tab}`)
+        navigate(`/account/deposits?tab=${tab}`)
     }
 
     const handleDeposit = () => {
@@ -27,6 +27,7 @@ export default function Deposit() {
                     <button onClick={() => handleTabChange("ltc")} className={pageTab === "ltc" ? "css-ak6yid" : "css-1otg8po"}>LTC</button>
                     <button onClick={() => handleTabChange("sol")} className={pageTab === "sol" ? "css-ak6yid" : "css-1otg8po"}>SOL</button>
                     <button onClick={() => handleTabChange("trx")} className={pageTab === "trx" ? "css-ak6yid" : "css-1otg8po"}>TRX</button>
+                    <button onClick={() => handleTabChange("teth")} className={pageTab === "teth" ? "css-ak6yid" : "css-1otg8po"}>TETH</button>
                     <button onClick={() => handleTabChange("usdt")} className={pageTab === "usdt" ? "css-ak6yid" : "css-1otg8po"}>USDT</button>
                 </div>
 

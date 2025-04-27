@@ -7,7 +7,7 @@ export const backendUrl = ()=>{
   let remoteUrl = "https://azebets.onrender.com"
   const _api = location.hostname === "localhost" || location.hostname === "127.0.0.1"
   ? localhostUrl : remoteUrl
-  return _api
+  return  _api
 }
 
 const api = axios.create({
