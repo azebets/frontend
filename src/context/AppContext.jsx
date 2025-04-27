@@ -54,7 +54,7 @@ export const AppContextProvider = ({ children }) => {
       toast.success("Logged out successfully");
     }
   return (
-    <AppContext.Provider value={{ user, setUser, Modalroutes, _auth, setWallet, wallet, logout , activeWallet, updateWallet}}>
+    <AppContext.Provider value={{ user, setUser, Modalroutes, _auth, setWallet, wallet, logout , activeWallet, updateWallet, _userAuth}}>
       {children}
     </AppContext.Provider>
   );

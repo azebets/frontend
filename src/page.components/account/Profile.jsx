@@ -5,11 +5,17 @@ import {assets} from "../../constants"
 export default function Profile() {
     const { user } = React.useContext(AppContext)
     const [loading, setLoad] = React.useState(false)
+<<<<<<< HEAD
+    const [profileHidden, setProfileHidden] = React.useState(false)
+=======
     const profileHidden = false
+>>>>>>> 1251001df890a7e0310bfc41a4d1fa797e63215b
     const [showPrivateContent, setShowPrivateContent] = React.useState(false)
     const handlePrivacy = (e) => {
         // Handle privacy change
         console.log("Privacy changed:", e.target.checked)
+        setProfileHidden(e.target.checked)
+        setProfileHidden(e.target.checked)
     }
     const handleSaved = () => {
         // Handle save action
