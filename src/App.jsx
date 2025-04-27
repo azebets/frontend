@@ -1,7 +1,8 @@
 import Navbar from "./components/Navbar.jsx";
 import Menubar from "./components/Menubar.jsx";
 import "./styles/games.css";
-import "./styles/ccpayment.css"
+import "./styles/ccpayment.css";
+import "./styles/input-contrast.css";
 import { Routes, Route } from 'react-router';
 import React, { Suspense, lazy } from 'react';
 import { Toaster } from "sonner";
