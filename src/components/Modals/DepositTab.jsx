@@ -11,7 +11,6 @@ export default function DepositTab() {
 
   const cryptos = ['ETH', 'SOL', 'TRX', 'BSC']; // List of available cryptos
 
-  // Fetch the permanent CCPayment deposit address
   useEffect(() => {
     const fetchDepositAddress = async () => {
       try {
