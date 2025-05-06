@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import { lazy, Suspense } from 'react';
+import Loader from '../../components/common/Loader';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-import LandingPage from '../../pages/LandingPage';
-import AffiliatePage from '../../pages/AffiliatePage';
-import VipClubPage from '../../pages/VipClubPage';
+// import LandingPage from '../../pages/LandingPage';
+// import AffiliatePage from '../../pages/AffiliatePage';
+// import VipClubPage from '../../pages/VipClubPage';
+// Lazy-loaded components (loaded on demand)
+const LandingPage = lazy(() => import('../../pages/LandingPage'));
+const AffiliatePage = lazy(() => import('../../pages/AffiliatePage'));
+const VipClubPage = lazy(() => import('../../pages/VipClubPage'));
 import { Toaster } from 'sonner';
 import Chats from './Chats';
 
@@ -24,6 +30,8 @@ function Layout() {
   return (
     <div className="flex min-h-screen bg-grey-800">
       <Toaster position="bottom-right" richColors />
+      <Suspense fallback={<Loader />} >
+      
       {/* Fixed sidebar - will not scroll with page content */}
       <div className="fixed inset-y-0 left-0 z-0">
         <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
@@ -42,15 +50,12 @@ function Layout() {
        
         {/* Scrollable main content with padding */}
         <main className="flex-1 overflow-y-auto p-0 md:p-0 scrollY bg-[#1a2c38]">
+          
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/dashboard" element={
-              <div className="flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold">Dashboard</h1>
-              </div>
-            } />
-            <Route path="/affiliate" element={<AffiliatePage />} />
-            <Route path="/vip-club" element={<VipClubPage />} />
+
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/affiliate" element={<AffiliatePage />} />
+              <Route path="/vip-club" element={<VipClubPage />} />
           </Routes>
         </main>
         
@@ -70,6 +75,7 @@ function Layout() {
           onClick={() => setSidebarOpen(false)}
         />
       )}
+      </Suspense>
     </div>
   );
 }
