@@ -166,7 +166,7 @@ export default function LogginNavbar({ toggleChat }) {
           onClick={toggleWalletModal} // Open wallet modal on click
         >
           <div className="bg-[rgb(15,33,46)] cursor-pointer text-white px-4 py-3 rounded-l flex items-center space-x-2 relative">
-            <span className="text-sm font-medium">0.002339</span>
+            <span className="text-sm font-medium">{parseFloat(user?.balance).toFixed(2)}</span>
             <img
               src="/assets/token/usdt.png" // Replace with the actual path to your currency icon
               alt="Currency Icon"
