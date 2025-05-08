@@ -35,7 +35,7 @@ export default function WalletModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-[#000000ab] bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#1a2c38] p-6 rounded-[15px] shadow-lg w-[400px]">
+      <div className="bg-[#1a2c38] p-6 rounded-[15px] py-12 shadow-lg w-[460px]">
         {/* Modal Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg text-white font-bold">Wallet</h2>
@@ -61,10 +61,10 @@ export default function WalletModal({ isOpen, onClose }) {
         </div>
 
         {/* Tabs */}
-        <div className="flex justify-center mb-4 bg-[#0f212e] rounded-[30px] p-1">
+        <div className="flex justify-center mb-4 bg-[#0f212e] rounded-[30px] p-3">
           <button
             onClick={() => handleTabChange('deposit')}
-            className={`px-4 py-2 text-sm font-medium w-full rounded-[30px] transition-all ${
+            className={`px-4 py-3 text-sm font-medium w-full rounded-[30px] transition-all ${
               activeTab === 'deposit'
                 ? 'bg-blue-600 text-white'
                 : 'text-gray-400'
@@ -74,7 +74,7 @@ export default function WalletModal({ isOpen, onClose }) {
           </button>
           <button
             onClick={() => handleTabChange('withdraw')}
-            className={`px-4 py-2 text-sm font-medium rounded-[30px] w-full transition-all ${
+            className={`px-4 py-3 text-sm font-medium rounded-[30px] w-full transition-all ${
               activeTab === 'withdraw'
                 ? 'bg-blue-600 text-white'
                 : 'text-gray-400'
