@@ -8,15 +8,15 @@ import FaqSection from './sections/FaqSection';
 
 function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-grey-900 to-grey-800 text-white">
-      <div className="container mx-auto px-0 py-0">
+    <div className="min-h-screen w-full relative bg-gradient-to-b from-grey-900 to-grey-800 text-white">
+      <div className="container w-full relative mx-auto px-0 py-0">
         {/* Hero Section */}
         <HeroSection />
         
         {/* Trending Games Section */}
-        <TrendingGames />
+       <TrendingGames />
 
-        <TrendingSport />
+         <TrendingSport />
 
         <PromotionSection />
         <BetsLogSection />

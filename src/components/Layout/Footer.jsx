@@ -91,7 +91,7 @@ function Footer() {
       <div className="border-t border-grey-600 my-6"></div>
       
       {/* Footer links section */}
-      <div className="grid grid-cols-7 gap-8">
+      <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-8">
         {/* Casino column */}
         <div className="flex flex-col">
           <h3 className="text-white font-semibold text-base mb-4">Casino</h3>

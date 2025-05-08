@@ -16,7 +16,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
 
   return (
     <aside 
-      className={`bg-grey-700 shadow-lg transition-all duration-300 ease-in-out fixed h-full ${
+      className={`bg-[#0f212e] shadow-lg transition-all duration-300 ease-in-out fixed h-full ${
         isOpen ? 'w-[240px]' : 'w-[70px]'
       } left-0 z-0 pt-0`}
     >

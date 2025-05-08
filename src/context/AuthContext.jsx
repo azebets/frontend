@@ -10,6 +10,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // User state
   const [isLoading, setIsLoading] = useState(true); // Loading state for initial token check
+  const [newScreen, setNewScreen] = useState(window.innerWidth);
 
   // Check for token in cookies and fetch user profile
   useEffect(() => {
@@ -93,7 +94,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout, resendVerificationCode, verifyCode, updateUserDetails }}>
+    <AuthContext.Provider value={{ user, isLoading, login, register, logout, 
+    resendVerificationCode, verifyCode, updateUserDetails 
+    ,newScreen, setNewScreen}}>
       {children}
     </AuthContext.Provider>
   );

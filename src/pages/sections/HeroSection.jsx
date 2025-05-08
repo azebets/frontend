@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import VipCard from '../landingPageComponent/VipCard';
 
 function HeroSection() {
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -15,10 +18,10 @@ function HeroSection() {
     <div className="py-8 bg-cover bg-center bg-no-repeat" 
       style={{ backgroundImage: 'url("/assets/landingpage/header-bg.DLFzM8kq.png")' }}
     >
-      <div className="grid grid-cols-1 p-5 lg:grid-cols-2 gap-0">
+      <div className="grid grid-cols-1 p-5 md:grid-cols-2 gap-14">
         {/* Left Column - Title, Signup Button, and Social Icons */}
-
-        <div className="text-left" style={{ maxWidth: "408px" }}>
+         {!user ? (
+          <div className="text-left" style={{ maxWidth: "408px" }}>
           <h1 className="text-white font-bold mb-8" style={{ fontSize: "2rem" }}>
             World's Largest Online Casino and Sportsbook
           </h1>
@@ -66,7 +69,9 @@ function HeroSection() {
               </button>
             </div>
           </div>
-        </div>
+        </div>  )
+         : <VipCard />} 
+    
 
         {/* Right Column - Cards side by side */}
         <div className="flex flex-row justify-center space-x-3">
@@ -86,7 +91,7 @@ function HeroSection() {
             </div>
 
             <div className="p-2">
-              <div className="flex items-center mb-3 justify-between items-center">
+              <div className="flex  mb-3 justify-between items-center">
                 <span className="text-white font-semibold text-sm">Casino</span>
                 <div className="flex items-center">
                   <span className="bg-green-500 h-2 w-2 rounded-full mr-2"></span>
