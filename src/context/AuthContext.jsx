@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // User state
   const [isLoading, setIsLoading] = useState(true); // Loading state for initial token check
   const [newScreen, setNewScreen] = useState(window.innerWidth);
+  const [balance, setBalance] = useState(0);
 
   // Check for token in cookies and fetch user profile
   useEffect(() => {
@@ -27,6 +28,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const profile = await getUserProfile();
       setUser(profile); // Update user state
+
     } catch (err) {
       // console.error('Failed to fetch user profile:', err);
       setUser(null); // Clear user state on error
@@ -95,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, isLoading, login, register, logout, 
-    resendVerificationCode, verifyCode, updateUserDetails 
+    resendVerificationCode, verifyCode, updateUserDetails , balance, setBalance
     ,newScreen, setNewScreen}}>
       {children}
     </AuthContext.Provider>

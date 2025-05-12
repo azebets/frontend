@@ -90,7 +90,7 @@ export default {
         'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, .2)',
         'btn': '0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 2px 0 rgba(0, 0, 0, .12), inset 0 1px rgba(255, 255, 255, .04)',
       },
-      borderRadius: {
+      rounded: {
         'none': '0',
         'sm': '0.125rem',
         'base': '0.25rem',

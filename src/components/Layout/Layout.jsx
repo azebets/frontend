@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { lazy, Suspense } from 'react';
 import Loader from '../../components/common/Loader';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
@@ -9,8 +9,10 @@ import Footer from './Footer';
 const LandingPage = lazy(() => import('../../pages/LandingPage'));
 const AffiliatePage = lazy(() => import('../../pages/AffiliatePage'));
 const VipClubPage = lazy(() => import('../../pages/VipClubPage'));
+const CrashGame = lazy(() => import('../../Games/Crash/Index'));
 import { Toaster } from 'sonner';
 import Chats from './Chats';
+import CasinoHome from '../../pages/CasinoHome'; // Import the new CasinoHome component
 
 function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -81,6 +83,10 @@ function Layout() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/affiliate" element={<AffiliatePage />} />
               <Route path="/vip-club" element={<VipClubPage />} />
+              <Route path="/casino/" element={<Navigate to="/casino/home" replace />} />
+              {/* Route for /casino/home */}
+              <Route path="/casino/home" element={<CasinoHome />} />
+              <Route path="/casino/game/crash" element={<CrashGame />} />
             </Routes>
           </main>
 
