@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 export const serverUrl = () => {
     let url = location.hostname === "localhost" || location.hostname === "127.0.0.1" 
-    ? "http://localhost:8000" : "https://backend-e2c9.onrender.com"
+    ? "http://localhost:8000" : "https://azebets.onrender.com"
      return url
 }
 
