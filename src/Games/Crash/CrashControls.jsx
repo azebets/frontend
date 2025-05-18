@@ -13,7 +13,8 @@ const CrashControls = ({
   balance, 
   setBalance,
   history,
-  handleCashout
+  handleCashout,
+  handlePlaceBet
 }) => {
   const [betMode, setBetMode] = useState('manual') // 'manual' or 'auto'
   
@@ -56,6 +57,7 @@ const CrashControls = ({
             balance={balance}
             setBalance={setBalance}
             handleCashout={handleCashout}
+            handlePlaceBet={handlePlaceBet}
           />
         ) : (
           <AutoBetForm
@@ -68,6 +70,7 @@ const CrashControls = ({
             setUserBet={setUserBet}
             balance={balance}
             setBalance={setBalance}
+            handlePlaceBet={handlePlaceBet}
           />
         )}
       </div>

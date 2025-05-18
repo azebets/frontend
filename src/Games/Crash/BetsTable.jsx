@@ -22,7 +22,7 @@ const BetsTable = () => {
             {bets.map((bet, index) => (
               <tr key={index} className="border-b border-gray-700">
                 <td className="py-2 px-4">{bet.username}</td>
-                <td className="py-2 px-4">${bet.amount.toFixed(2)}</td>
+                <td className="py-2 px-4">${bet.amount}</td>
                 <td className="py-2 px-4">{bet.autoCashout ? `${bet.autoCashout.toFixed(2)}x` : 'Manual'}</td>
                 <td className="py-2 px-4">
                   {bet.status === 'active' ? (

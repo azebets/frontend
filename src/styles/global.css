@@ -96,3 +96,28 @@ button{
     opacity: 1;
   }
 }
+
+    @keyframes blink {
+        0% {
+            width: 7px;
+            height: 7px;
+        }
+
+        50% {
+              width: 8px;
+            height: 8px;
+            background-color: red;
+        }
+
+        100% {
+            width: 7px;
+            height: 7px;
+        }
+    }
+
+    .blinking-text {
+        text-align: center;
+        animation: blink 1s infinite;
+        width: 7px;
+        height: 7px;
+    }

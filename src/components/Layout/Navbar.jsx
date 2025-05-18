@@ -48,7 +48,7 @@ function Navbar({ toggleChat }) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full">
+      <header className="sticky top-0 z-[999] w-full ">
         <div className="bg-[rgb(26,44,56)] h-[60px] text-[13px] shadow-xl">
           <div className="flex items-center justify-between px-4 h-full">
             <div className="flex items-center">
@@ -83,13 +83,10 @@ function Navbar({ toggleChat }) {
             {/* Register button with box shadow */}
             <button 
               className="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-4 rounded-[6px] transition-colors shadow-[0_4px_6px_rgba(0,0,0,0.3)] cursor-pointer"
-              onClick={handleRegisterClick}
-            >
+              onClick={handleRegisterClick}>
               Register
             </button>
           </div>}
-          
-          
           </div>
         </div>
       </header>

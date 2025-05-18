@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
-import { useSearchParams } from 'react-router-dom'; // Import useSearchParams
-import VerificationModal from '../Modals/VerificationModal'; // Import the modal
-import TwoStepRegistrationModal from '../Modals/TwoStepRegistrationModal'; // Import the two-step registration modal
-import WalletModal from '../Modals/WalletModal'; // Import the WalletModal component
+import { useSearchParams, useNavigate } from 'react-router-dom'; // Import useSearchParams
 import { toast } from 'sonner'; // Import toast from sonner
+import { useLocation } from 'react-router-dom'
 
 export default function LogginNavbar({ toggleChat }) {
-  const { user, logout, verifyCode, resendVerificationCode, updateUserDetails } = useContext(AuthContext); // Access user, logout, verifyCode, and updateUserDetails from AuthContext
+  const { user, balance, logout, verifyCode, resendVerificationCode, updateUserDetails } = useContext(AuthContext); // Access user, logout, verifyCode, and updateUserDetails from AuthContext
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(''); // State for search input
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -15,6 +13,9 @@ export default function LogginNavbar({ toggleChat }) {
   const [isTwoStepModalOpen, setIsTwoStepModalOpen] = useState(false); // State for two-step registration modal
   const userDropdownRef = useRef(null); // Reference for the dropdown
   const [searchParams, setSearchParams] = useSearchParams(); // Manage query parameters
+  const navigate = useNavigate();
+  const location = useLocation()
+  const [showStatistics, setShowStatistics] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -36,6 +37,18 @@ export default function LogginNavbar({ toggleChat }) {
     setSearchParams(searchParams); // Update the URL
   };
 
+  const toggleStatisticsModal = () => {
+    const isStatisticsOpen = searchParams.get('modal') === 'user';
+    if (isStatisticsOpen) {
+      searchParams.delete('modal'); // Remove the modal query parameter
+      searchParams.delete('name'); // Remove the tab query parameter
+    } else {
+      searchParams.set('modal', 'user'); // Set modal to wallet
+      searchParams.set('name', user?.username); // Default tab to deposit
+    }
+    setSearchParams(searchParams); // Update the URL
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -50,43 +63,14 @@ export default function LogginNavbar({ toggleChat }) {
     };
   }, []);
 
-  useEffect(() => {
-    // Check if the user's email is verified or if additional details are required
-    if (user) {
-      if (!user.is_verified) {
-        setIsVerificationModalOpen(true);
-      } else if (!user.firstName || !user.lastName || !user.country) {
-        setIsTwoStepModalOpen(true);
-      }
+  useEffect(()=>{
+    // Get username from URL query parameter
+    const searchParams = new URLSearchParams(location.search)
+    const username = searchParams.get('name')
+    if(username){
+      setShowStatistics(true)
     }
-  }, [user]);
-
-  const handleVerify = async (verificationCode) => {
-    try {
-      const isVerified = await verifyCode(verificationCode); // Call the verifyCode function from AuthContext
-      if (isVerified) {
-        setIsVerificationModalOpen(false); // Close the modal if verification is successful
-        if (!user.firstName || !user.lastName || !user.country) {
-          setIsTwoStepModalOpen(true); // Open the two-step registration modal if details are missing
-        }
-      } else {
-        toast.error('Invalid verification code.');
-      }
-    } catch (error) {
-      console.error('Verification error:', error);
-      toast.error('An error occurred during verification. Please try again.');
-    }
-  };
-
-  const handleSubmitDetails = async (details) => {
-    try {
-      await updateUserDetails(details); // Call the API to update user details
-      setIsTwoStepModalOpen(false); // Close the modal after successful update
-    } catch (error) {
-      console.error('Error updating user details:', error);
-      toast.error('Failed to update details. Please try again.');
-    }
-  };
+  },[location.search])
 
   const cryptocurrencies = [
     { name: 'Bitcoin', symbol: 'BTC', balance: '0.0023', icon: '/assets/token/bitcoin-btc-logo.png' },
@@ -104,27 +88,20 @@ export default function LogginNavbar({ toggleChat }) {
     { name: 'Cosmos', symbol: 'ATOM', balance: '34.56', icon: '/assets/token/atom.png' },
   ];
 
+
+
   const userDropdownItems = [
-    { name: 'Wallet', icon: '💼' },
-    { name: 'VIP', icon: '👑' },
-    { name: 'Affiliate', icon: '🤝' },
-    { name: 'Statistics', icon: '📊' },
-    { name: 'Transactions', icon: '💳' },
-    { name: 'My Bets', icon: '🎲' },
-    { name: 'Settings', icon: '⚙️' },
+    { name: 'Wallet', icon: '💼', action: toggleWalletModal },
+    { name: 'VIP', icon: '👑', action: ()=> navigate("/vip-club") },
+    { name: 'Affiliate', icon: '🤝', action: ()=> navigate("/affiliate") },
+    { name: 'Statistics', icon: '📊', action:  toggleStatisticsModal },
+    { name: 'Transactions', icon: '💳', action: ()=> navigate("/transactions") },
+    { name: 'My Bets', icon: '🎲', action: ()=> navigate("/my-bets") },
+
+    { name: 'Settings', icon: '⚙️', action: ()=> navigate("/settings") },
     { name: 'Live Support', icon: '💬' },
     { name: 'Logout', icon: '🚪', action: logout }, // Add the logout action
   ];
-
-  const handleResendCode = async () => {
-    try {
-      await resendVerificationCode(user.email); // Call the resend function
-      toast.success('A new verification code has been sent to your email.');
-    } catch (error) {
-      console.error('Resend code error:', error);
-      toast.error('Failed to resend verification code. Please try again.');
-    }
-  };
 
   // Filter cryptocurrencies based on the search term
   const filteredCryptocurrencies = cryptocurrencies.filter((crypto) =>
@@ -133,40 +110,14 @@ export default function LogginNavbar({ toggleChat }) {
 
   return (
     <>
-      <VerificationModal
-        isOpen={isVerificationModalOpen}
-        onClose={() => setIsVerificationModalOpen(false)}
-        onVerify={handleVerify}
-        onResendCode={handleResendCode}
-      />
-      {!user.firstName || !user.lastName || !user.country && (
-        <TwoStepRegistrationModal
-          isOpen={isTwoStepModalOpen}
-          onClose={() => setIsTwoStepModalOpen(false)}
-          onSubmit={handleSubmitDetails}
-        />
-      )}
-      <TwoStepRegistrationModal
-        isOpen={isTwoStepModalOpen}
-        onClose={() => setIsTwoStepModalOpen(false)}
-        onSubmit={handleSubmitDetails}
-      />
-      <WalletModal
-        isOpen={searchParams.get('modal') === 'wallet'} // Open modal if modal=wallet
-        onClose={() => {
-          searchParams.delete('modal'); // Remove modal query parameter
-          searchParams.delete('tab'); // Remove tab query parameter
-          setSearchParams(searchParams); // Update the URL
-        }}
-      />
-      <nav className="p-1 md:p-4 flex justify-center items-center space-x-0 relative">
+      <nav className="p-1 md:p-4 flex justify-center items-center space-x-0 relative z-40">
         {/* Wallet Balance Container */}
         <div
           className="wallet-container flex"
           onClick={toggleWalletModal} // Open wallet modal on click
         >
           <div className="bg-[rgb(15,33,46)] cursor-pointer text-white px-4 py-3 rounded-l flex items-center space-x-2 relative">
-            <span className="text-sm font-medium">{parseFloat(user?.balance).toFixed(2)}</span>
+            <span className="text-sm font-medium">{Number(balance).toFixed(4)}</span>
             <img
               src="/assets/token/usdt.png" // Replace with the actual path to your currency icon
               alt="Currency Icon"

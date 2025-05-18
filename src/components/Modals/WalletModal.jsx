@@ -6,36 +6,21 @@ import WithdrawTab from './WithdrawTab'; // Import WithdrawTab
 export default function WalletModal({ isOpen, onClose }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') || 'deposit';
-  const [selectedCrypto, setSelectedCrypto] = useState({
-    name: 'Bitcoin',
-    symbol: 'BTC',
-    icon: '/assets/token/bitcoin-btc-logo.png',
-  });
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const depositAddress = '0x1234567890abcdef1234567890abcdef12345678';
   const networks = ['Ethereum', 'Binance Smart Chain', 'Polygon'];
   const [selectedNetwork, setSelectedNetwork] = useState(networks[0]);
 
-  const handleCryptoSelect = (crypto) => {
-    setSelectedCrypto(crypto);
-    setIsDropdownOpen(false);
-  };
 
   const handleTabChange = (tab) => {
     searchParams.set('tab', tab);
     setSearchParams(searchParams);
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(depositAddress);
-    alert('Address copied to clipboard!');
-  };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-[#000000ab] bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#1a2c38] p-6 rounded-[15px] py-12 shadow-lg w-[460px]">
+      <div className="bg-[#1a2c38] p-6 rounded-[15px] py-12 shadow-lg w-[560px]">
         {/* Modal Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg text-white font-bold">Wallet</h2>
@@ -86,14 +71,7 @@ export default function WalletModal({ isOpen, onClose }) {
 
         {/* Tab Content */}
         {activeTab === 'deposit' && (
-          <DepositTab
-            depositAddress={depositAddress}
-            selectedCrypto={selectedCrypto}
-            networks={networks}
-            selectedNetwork={selectedNetwork}
-            setSelectedNetwork={setSelectedNetwork}
-            handleCopy={handleCopy}
-          />
+          <DepositTab  />
         )}
         {activeTab === 'withdraw' && (
           <WithdrawTab

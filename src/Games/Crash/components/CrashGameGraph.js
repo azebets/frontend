@@ -244,14 +244,45 @@ export default class CrashGameGraph extends EventEmitter {
       this.ctx.font = `bold ${this.fontSizePx(4)} ${CrashGameGraph.fontFamily}`;
       this.ctx.fillStyle = this.colors[0];
 
-      const seconds = (this.game.startTime - Date.now()) / 1000;
-      if (seconds < 0) return;
-
-      this.ctx.fillText(
-        `Starts in ${seconds.toFixed(1)} s`,
-        this.width / 2,
-        (2 * this.height) / 5
-      );
+      // Fix the seconds calculation
+      // 1. Make sure we have a valid startTime
+      const currentTime = Date.now();
+      const startTime = this.game.startTime || (currentTime + 5000); // Default to 5 seconds if not set
+      
+      // 2. Calculate seconds and ensure it's not negative
+      const seconds = Math.max(0, (startTime - currentTime) / 1000);
+      
+      // 3. Only render if we have a positive countdown
+      if (seconds > 0) {
+        this.ctx.fillText(
+          `Starts in ${seconds.toFixed(1)}s`,
+          this.width / 2,
+          (2 * this.height) / 5
+        );
+        
+        // Optional: Add a progress bar for better visualization
+        const barWidth = this.width * 0.4;
+        const barHeight = this.height * 0.02;
+        const barX = (this.width - barWidth) / 2;
+        const barY = (2 * this.height) / 5 + 30;
+        
+        // Background bar
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+        this.ctx.fillRect(barX, barY, barWidth, barHeight);
+        
+        // Progress bar - assuming 5 second countdown
+        const maxTime = 5; 
+        const progress = Math.min(seconds / maxTime, 1);
+        this.ctx.fillStyle = this.colors[0];
+        this.ctx.fillRect(barX, barY, barWidth * progress, barHeight);
+      } else {
+        // If countdown is zero or negative, show "Starting..."
+        this.ctx.fillText(
+          "Starting...",
+          this.width / 2,
+          (2 * this.height) / 5
+        );
+      }
     } else if (this.game.status === GameStatus.CONNECTION) {
       this.ctx.font = `bold ${this.fontSizePx(3)} ${CrashGameGraph.fontFamily}`;
       this.ctx.fillStyle = this.colors[0];

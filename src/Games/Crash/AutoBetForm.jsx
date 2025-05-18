@@ -1,130 +1,116 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import api from '../../api/auth';
+import React, { useEffect } from 'react';
+import { toast } from 'sonner';
+import { useCrashGame } from './CrashContext';
+import BetAmountInput from './components/BetAmountInput';
+import AutoCashoutInput from './components/AutoCashoutInput';
+import AutoBetSettings from './components/AutoBetSettings';
+import ActionButton from './components/ActionButton';
 
-const AutoBetForm = ({ 
-  gameState, 
-  betAmount, 
-  setBetAmount, 
-  autoCashout, 
-  setAutoCashout, 
-  userBet, 
-  setUserBet, 
-  balance, 
-  setBalance 
-}) => {
+const AutoBetForm = () => {
+  // Get all state and methods from CrashContext
+  const { 
+    gameState, 
+    betAmount,
+    userBet,
+    handlePlaceBet,
+    // Auto betting state and methods
+    isAutoBetting,
+    betsPlaced,
+    setBetsPlaced,
+    remainingBets,
+    setRemainingBets,
+    maxBets,
+    setMaxBets,
+    autoCashout,
+    setAutoCashout,
+    stopOnProfit,
+    setStopOnProfit,
+    stopOnLoss,
+    setStopOnLoss,
+    onWin,
+    setOnWin,
+    onLoss,
+    setOnLoss,
+    winMultiplier,
+    setWinMultiplier,
+    lossMultiplier,
+    setLossMultiplier,
+    totalProfit,
+    startAutoBetting,
+    stopAutoBetting,
+    handleBetResult
+  } = useCrashGame();
   
-  const handlePlaceBet = async () => {
-    if (gameState.status !== 'starting') {
-      toast.error('Wait for the next round to place a bet')
-      return
+  // Place a bet - this function is called from the auto betting loop
+  const placeBet = () => {
+    // Use the handlePlaceBet function from the context
+    handlePlaceBet(betAmount, autoCashout);
+    
+    // Increment bets placed
+    setBetsPlaced(prev => prev + 1);
+    
+    // Decrement remaining bets if not infinite
+    if (remainingBets > 0) {
+      setRemainingBets(prev => prev - 1);
+    }
+  };
+  
+  // Auto betting loop - this is the core of the auto betting functionality
+  useEffect(() => {
+    // When auto betting starts, place the first bet
+    if (isAutoBetting && gameState.status === 'starting' && remainingBets !== 0) {
+      placeBet();
     }
     
-    if (betAmount <= 0) {
-      toast.error('Bet amount must be greater than 0')
-      return
-    }
-    
-    if (betAmount > balance) {
-      toast.error('Insufficient balance')
-      return
-    }
-    
-    if (autoCashout < 1.01) {
-      toast.error('Auto cashout must be at least 1.01x')
-      return
-    }
-    
-    try {
-      const response = await api.post('/games/crash/bet', {
-        amount: betAmount,
-        autoCashout: autoCashout
-      })
-      
-      if (response.data.success) {
-        setUserBet({
-          amount: betAmount,
-          autoCashout: autoCashout
-        })
-        setBalance(prev => prev - betAmount)
-        toast.success('Auto bet placed successfully!')
+    // When game crashes, handle the result and prepare for next round
+    if (gameState.status === 'crashed' && isAutoBetting) {
+      // Handle result of previous bet
+      const won = userBet && gameState.multiplier >= userBet.autoCashout;
+      if (userBet) {
+        handleBetResult(won, userBet.amount, won ? userBet.autoCashout : 0);
       }
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to place bet')
     }
-  }
-  
-  const handleHalfAmount = () => {
-    setBetAmount(prevAmount => Math.max(1, Math.floor(prevAmount / 2)));
-  };
-  
-  const handleDoubleAmount = () => {
-    setBetAmount(prevAmount => Math.min(balance, prevAmount * 2));
-  };
+    
+  }, [gameState.status, isAutoBetting, userBet, remainingBets]);
   
   return (
-    <div>
-      <div className="mb-4">
-        <label className="block text-sm mb-2">Bet Amount</label>
-        <div className="relative flex items-center">
-          <div className="absolute left-3 flex items-center pointer-events-none">
-            <img 
-              src="/assets/token/usdt.png" 
-              alt="USDT" 
-              className="w-5 h-5 mr-1" 
-            />
-          </div>
-          <input 
-            type="number" 
-            value={betAmount}
-            onChange={(e) => setBetAmount(Number(e.target.value))}
-            min="1"
-            step="1"
-            className="w-full p-3 pl-10 pr-28 bg-gray-700 rounded text-white"
-          />
-          <div className="absolute right-2 flex space-x-2">
-            <button 
-              onClick={handleHalfAmount}
-              className="px-3 py-1.5 bg-gray-600 hover:bg-gray-500 rounded text-sm font-medium transition-colors"
-            >
-              ½
-            </button>
-            <button 
-              onClick={handleDoubleAmount}
-              className="px-3 py-1.5 bg-gray-600 hover:bg-gray-500 rounded text-sm font-medium transition-colors"
-            >
-              2×
-            </button>
-          </div>
-        </div>
-      </div>
+    <div className="space-y-4">
+      <BetAmountInput isDisabled={isAutoBetting} />
       
-      <div className="mb-4">
-        <label className="block text-sm mb-2">Auto Cashout (x)</label>
-        <input 
-          type="number" 
-          value={autoCashout}
-          onChange={(e) => setAutoCashout(Number(e.target.value))}
-          min="1.01"
-          step="0.01"
-          className="w-full p-3 bg-gray-700 rounded text-white"
-        />
-      </div>
+      <AutoCashoutInput 
+        autoCashout={autoCashout}
+        setAutoCashout={setAutoCashout}
+        maxBets={maxBets}
+        setMaxBets={setMaxBets}
+        betAmount={betAmount}
+        isDisabled={isAutoBetting}
+      />
       
-      {!userBet && gameState.status === 'starting' && (
-        <button 
-          className="w-full py-3 bg-green-600 hover:bg-green-700 rounded-md text-lg font-bold transition-colors"
-          onClick={handlePlaceBet}
-        >
-          Place Auto Bet
-        </button>
-      )}
-      
-      {userBet && gameState.status === 'running' && (
-        <div className="text-center py-3 bg-gray-700 rounded-md text-lg font-medium">
-          Auto cashout at {autoCashout.toFixed(2)}x
-        </div>
-      )}
+      <AutoBetSettings 
+        stopOnProfit={stopOnProfit}
+        setStopOnProfit={setStopOnProfit}
+        stopOnLoss={stopOnLoss}
+        setStopOnLoss={setStopOnLoss}
+        onWin={onWin}
+        setOnWin={setOnWin}
+        onLoss={onLoss}
+        setOnLoss={setOnLoss}
+        winMultiplier={winMultiplier}
+        setWinMultiplier={setWinMultiplier}
+        lossMultiplier={lossMultiplier}
+        setLossMultiplier={setLossMultiplier}
+        betAmount={betAmount}
+        autoCashout={autoCashout}
+        isDisabled={isAutoBetting}
+      />
+    
+      <ActionButton 
+        isAutoBetting={isAutoBetting}
+        gameStatus={gameState.status}
+        betAmount={betAmount}
+        startAutoBetting={startAutoBetting}
+        stopAutoBetting={stopAutoBetting}
+      />
     </div>
   );
 };

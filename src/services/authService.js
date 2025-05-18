@@ -7,13 +7,8 @@ export const login = async (email, password) => {
 };
 
 // User registration
-export const register = async (email, password, username, language) => {
-  const response = await api.post('/auth/register', {
-    email,
-    password,
-    username,
-    language,
-  });
+export const register = async (data) => {
+  const response = await api.post('/auth/register', data);
   return response.data;
 };
 
