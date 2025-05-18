@@ -104,7 +104,7 @@ function Layout() {
       <Toaster position="bottom-right" richColors />
       <Suspense fallback={<Loader />}>
         {/* Fixed sidebar - will not scroll with page content */}
-        {window.innerWidth >= 750 && !isGameRoute() && (
+        {window.innerWidth >= 750  && (
           <div className="inset-y-0 left-0 z-21">
             <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
           </div>
@@ -113,7 +113,7 @@ function Layout() {
         {/* Main content with responsive left margin */}
         <div
           className={`flex-1 flex relative flex-col transition-all w-full duration-300 ${
-            window.innerWidth >= 750 && !isGameRoute() 
+            window.innerWidth >= 750
               ? sidebarOpen
                 ? isMediumScreen
                   ? 'pl-[70px]' // Medium screen margin
@@ -142,7 +142,7 @@ function Layout() {
         {isChatOpen && <Chats closeChat={toggleChat} />}
 
         {/* Backdrop for mobile and medium screens */}
-        {sidebarOpen && window.innerWidth > 750 && !isGameRoute() && (
+        {sidebarOpen && window.innerWidth > 750  && (
           <div
             className={`fixed inset-0 bg-[#00000094] bg-opacity-50 z-20 ${
               isMediumScreen || window.innerWidth <= 750 ? '' : 'hidden'
