@@ -19,10 +19,10 @@ const CrashControls = ({
   const [betMode, setBetMode] = useState('manual') // 'manual' or 'auto'
   
   return (
-    <div className="md:w-80 h-full bg-gray-800 bg-opacity-50 p-4 rounded-tl-[18px] rounded-bl-[18px] space-y-5">
+    <div className="min-w-70 h-full bg-gray-800 bg-opacity-50 p-4 rounded-tl-[18px] rounded-bl-[18px] space-y-5">
       {/* Mode Toggle Switch */}
-      <div className="flex justify-center mb-4">
-        <div className="bg-gray-700 rounded-full p-1 flex w-64">
+      <div className="flex justify-center mb-4 ">
+        {/* <div className="bg-gray-700 rounded-full p-1 flex w-64">
           <button 
             className={`flex-1 py-2 px-4 rounded-full font-medium transition-colors ${
               betMode === 'manual' 
@@ -43,10 +43,10 @@ const CrashControls = ({
           >
             Auto
           </button>
-        </div>
+        </div> */}
       </div>
 
-      <div className="mb-3">
+      <div className="mb-3 ">
         {betMode === 'manual' ? (
           <ManualBetForm
             gameState={gameState}

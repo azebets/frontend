@@ -72,12 +72,12 @@ export default function Modals() {
             }}
         />
         <Statistics isOpen={searchParams.get('modal') === 'user'} />
-        <VerificationModal
+        {/* <VerificationModal
             isOpen={isVerificationModalOpen}
             onClose={() => setIsVerificationModalOpen(false)}
             onVerify={handleVerify}
             onResendCode={handleResendCode}
-        />
+        /> */}
         <TwoStepRegistrationModal
             isOpen={isTwoStepModalOpen}
             onClose={() => setIsTwoStepModalOpen(false)}
