@@ -169,7 +169,7 @@ export default function LogginNavbar({ toggleChat }) {
         )}
 
         {/* Search Icon */}
-        <button className="md:ml-40 p-4 hidden md:block items-center bold text-white">
+        {/* <button className="md:ml-40 p-4 hidden md:block items-center bold text-white">
           <svg
             fill="currentColor"
             viewBox="0 0 64 64"
@@ -184,10 +184,10 @@ export default function LogginNavbar({ toggleChat }) {
           </svg>
           <span>Search</span>
           
-        </button>
+        </button> */}
 
         {/* User Icon */}
-        <div className="relative" ref={userDropdownRef}>
+        <div className="relative md:ml-40 p-4 hidden md:block items-center bold text-white" ref={userDropdownRef}>
           <button
             onClick={toggleUserDropdown}
             className="p-4 flex items-center text-white"
