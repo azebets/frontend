@@ -14,6 +14,8 @@ const CrashGame = lazy(() => import('../../Games/Crash/Index'));
 const MinesGame = lazy(() => import('../../Games/Mines/MinesGame'));
 const PlinkoGame = lazy(() => import('../../Games/Plinko/PlinkoPage'));
 const DiceoGame = lazy(() => import('../../Games/Dice/DiceGame'));
+const LimboGame = lazy(() => import('../../Games/Limbo/LimboGame'));
+
 const Transactions = lazy(() => import('../../pages/Transactions'));
 
 // Lazy-loaded affiliate tab components - corrected paths
@@ -38,7 +40,7 @@ const routes = [
   { path: '/casino/home', element: <CasinoHome /> },
   { path: '/casino/game/crash', element: <CrashGame /> },
   { path: '/casino/game/mines', element: <MinesGame /> },
-  // { path: '/casino/game/plinko', element: <PlinkoGame /> },
+  { path: '/casino/game/limbo', element: <LimboGame /> },
   { path: '/casino/game/dice', element: <DiceoGame /> },
 //   { path: '/casino/game/hilo', element: <HiloGame /> },
   
@@ -89,7 +91,7 @@ const gameRoutes = [
   '/casino/game/crash',
   '/casino/game/dice',
   '/casino/game/mines',
-  '/casino/game/hilo'
+  '/casino/game/limbo',
 ];
 
 // Export the routes and helper functions

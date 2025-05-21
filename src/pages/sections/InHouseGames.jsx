@@ -45,51 +45,11 @@ function InhouseGames() {
     },
     {
       id: 5,
-      title: "Sweet Bonanza",
+      title: "Limbo",
       provider: "Pragmatic Play",
-      image: "/assets/trending-games/s5.avif",
+       image: "/assets/InhouseGames/limbo.avif",
       players: 1432,
-      path: "sweet-bonanza"
-    },
-    {
-      id: 6,
-      title: "Sweet Bonanza",
-      provider: "Pragmatic Play",
-      image: "/assets/trending-games/s6.avif",
-      players: 1432,
-      path: "sweet-bonanza-2"
-    },
-    {
-      id: 7,
-      title: "Sweet Bonanza",
-      provider: "Pragmatic Play",
-      image: "/assets/trending-games/s7.avif",
-      players: 1432,
-      path: "sweet-bonanza-3"
-    },
-    {
-      id: 8,
-      title: "Sweet Bonanza",
-      provider: "Pragmatic Play",
-      image: "/assets/trending-games/s8.avif",
-      players: 1432,
-      path: "sweet-bonanza-4"
-    },
-    {
-      id: 9,
-      title: "Sweet Bonanza",
-      provider: "Pragmatic Play",
-      image: "/assets/trending-games/s9.avif",
-      players: 1432,
-      path: "sweet-bonanza-5"
-    },
-    {
-      id: 10,
-      title: "Sweet Bonanza",
-      provider: "Pragmatic Play",
-      image: "/assets/trending-games/s10.avif",
-      players: 1432,
-      path: "sweet-bonanza-6"
+      path: "limbo"
     }
    ];
 
