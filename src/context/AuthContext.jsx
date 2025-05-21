@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { getUserProfile } from '../services/authService';
 import { getUserVipProgress, getAllVipTiers } from '../services/vipService';
 import Cookies from 'js-cookie';
@@ -204,3 +204,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);

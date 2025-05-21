@@ -12,6 +12,8 @@ const AffiliatePage = lazy(() => import('../../pages/AffiliatePage'));
 const VipClubPage = lazy(() => import('../../pages/VipClubPage'));
 const CrashGame = lazy(() => import('../../Games/Crash/Index'));
 const MinesGame = lazy(() => import('../../Games/Mines/MinesGame'));
+const PlinkoGame = lazy(() => import('../../Games/Plinko/PlinkoPage'));
+const DiceoGame = lazy(() => import('../../Games/Dice/DiceGame'));
 const Transactions = lazy(() => import('../../pages/Transactions'));
 
 // Lazy-loaded affiliate tab components - corrected paths
@@ -36,7 +38,8 @@ const routes = [
   { path: '/casino/home', element: <CasinoHome /> },
   { path: '/casino/game/crash', element: <CrashGame /> },
   { path: '/casino/game/mines', element: <MinesGame /> },
-//   { path: '/casino/game/plinko', element: <PlinkoGame /> },
+  // { path: '/casino/game/plinko', element: <PlinkoGame /> },
+  { path: '/casino/game/dice', element: <DiceoGame /> },
 //   { path: '/casino/game/hilo', element: <HiloGame /> },
   
   // VIP Club route
@@ -84,7 +87,8 @@ const protectedRoutes = [
 // Routes that should use the game layout
 const gameRoutes = [
   '/casino/game/crash',
-  '/casino/game/plinko',
+  '/casino/game/dice',
+  '/casino/game/mines',
   '/casino/game/hilo'
 ];
 
