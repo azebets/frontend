@@ -19,21 +19,53 @@ export const LimboGameProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [gameState, setGameState] = useState('idle'); // idle, rolling, finished
   const [lastRoll, setLastRoll] = useState(null);
-  const [showResult, setShowResult] = useState(false)
+  const [showResult, setShowResult] = useState(false);
+  const [pendingBet, setPendingBet] = useState(null); // Store pending bet until animation completes
+  
   // Game configuration
   const [betAmount, setBetAmount] = useState(1);
   const [target, setTarget] = useState(50);
   const [mode, setMode] = useState('over'); // 'over' or 'under'
-  const [multiplier, setMultiplier] = useState(1.0102);
-  const [winChance, setWinChance] = useState((100 - target));
-  // Calculate win chance and multiplier
-  // const winChance = mode === 'over' ? (100 - target) : target;
-  // const multiplier = parseFloat((99 / winChance).toFixed(2));
+  const [multiplier, setMultiplier] = useState(1.98);
+  const [winChance, setWinChance] = useState(50);
+  
+  // Update multiplier when win chance changes
+  const updateMultiplierFromWinChance = useCallback((chance) => {
+    if (chance <= 0 || chance >= 100) return;
+    const newMultiplier = parseFloat((99 / chance).toFixed(2));
+    setMultiplier(newMultiplier);
+  }, []);
 
-  useEffect(() => {
-    setWinChance(mode === 'over' ? (100 - target) : target);
-    setMultiplier(parseFloat((99 / winChance).toFixed(2)));
-  }, [target]);
+  // Update win chance when multiplier changes
+  const updateWinChanceFromMultiplier = useCallback((mult) => {
+    if (mult <= 1) return;
+    const newWinChance = parseFloat((99 / mult).toFixed(2));
+    setWinChance(newWinChance);
+  }, []);
+
+  // Handle multiplier input change
+  const handleMultiplierChange = useCallback((value) => {
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue) && parsedValue >= 1.01) {
+      setMultiplier(parsedValue);
+      updateWinChanceFromMultiplier(parsedValue);
+    } else if (value === '' || value === '.') {
+      // Allow empty input or decimal point for typing
+      setMultiplier(value);
+    }
+  }, [updateWinChanceFromMultiplier]);
+
+  // Handle win chance input change
+  const handleWinChanceChange = useCallback((value) => {
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue) && parsedValue > 0 && parsedValue < 100) {
+      setWinChance(parsedValue);
+      updateMultiplierFromWinChance(parsedValue);
+    } else if (value === '' || value === '.') {
+      // Allow empty input or decimal point for typing
+      setWinChance(value);
+    }
+  }, [updateMultiplierFromWinChance]);
   
   // Initialize socket connection
   useEffect(() => {
@@ -60,9 +92,10 @@ export const LimboGameProvider = ({ children }) => {
     });
 
     socketInstance.on('limboBet', (bet) => {
-      if(!user) return
-      if(bet.userId !== user._id) return 
-      setRecentBets(prevBets => [bet, ...prevBets.slice(0, 10)]);
+      if(!user) return;
+      if(bet.userId !== user._id) return;
+      // Instead of immediately adding to recentBets, we'll store it and add after animation
+      setPendingBet(bet);
     });
 
     socketInstance.on('limbo-wallet', ([walletData]) => {
@@ -78,6 +111,14 @@ export const LimboGameProvider = ({ children }) => {
       socketInstance.disconnect();
     };
   }, [user]);
+  
+  // Function to add the pending bet to recent bets after animation completes
+  const onAnimationComplete = useCallback(() => {
+    if (pendingBet) {
+      setRecentBets(prevBets => [pendingBet, ...prevBets.slice(0, 9)]); // Keep only top 10 bets
+      setPendingBet(null); // Clear the pending bet
+    }
+  }, [pendingBet]);
   
   // Place a bet
   const placeBet = useCallback(() => {
@@ -100,7 +141,7 @@ export const LimboGameProvider = ({ children }) => {
       currencyName: 'USD', // Replace with your currency
       currencyImage: '/assets/token/usdt.png', // Replace with your currency image
       betValue: {
-        target: target,
+        target: multiplier,
         mode: mode
       }
     };
@@ -108,7 +149,7 @@ export const LimboGameProvider = ({ children }) => {
     socket.emit('limbo-bet', betData, (response) => {
       if (response.code === 0) {
         setLastRoll(response.data);
-          setShowResult(true)
+        setShowResult(true);
       } else {
         setError(response.message);
       }
@@ -117,10 +158,10 @@ export const LimboGameProvider = ({ children }) => {
       // Reset after a short delay
       setTimeout(() => {
         setGameState('idle');
-        setShowResult(false)
+        setShowResult(false);
       }, 4000);
     });
-  }, [socket, connected, gameState, user, betAmount, target, mode]);
+  }, [socket, connected, gameState, user, betAmount, multiplier, mode]);
   
   // Update seeds
   const updateSeeds = useCallback(async (clientSeed) => {
@@ -196,8 +237,9 @@ export const LimboGameProvider = ({ children }) => {
     updateSeeds,
     getGameDetails,
     user,
-    setWinChance,
-    setMultiplier
+    handleMultiplierChange,
+    handleWinChanceChange,
+    onAnimationComplete
   };
 
   return (

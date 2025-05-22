@@ -2,46 +2,35 @@ import React, { useState } from 'react'
 import { useLimboGame } from './LimboContext'
 
 const MultiplierView = () => {
-  const { multiplier, winChance, mode, setMultiplier, setWinChance, handleTargetChange } = useLimboGame()
+  const { 
+    multiplier, 
+    winChance, 
+    mode, 
+    handleMultiplierChange, 
+    handleWinChanceChange 
+  } = useLimboGame()
+  
   const [multiplierError, setMultiplierError] = useState(false)
   
-  // Handle input changes
-  const handleMultiplierInput = (e) => {
-    const inputValue = e.target.value
+  // Handle multiplier input change
+  const onMultiplierChange = (e) => {
+    const value = e.target.value
     
-    if (inputValue === '') {
-      setMultiplier('') // Allow empty string
-      setMultiplierError(false)
+    // Check for error state
+    if (value !== '' && parseFloat(value) < 1.01) {
+      setMultiplierError(true)
     } else {
-      // Allow decimal inputs
-      if (/^[0-9]*\.?[0-9]*$/.test(inputValue)) {
-        const value = parseFloat(inputValue)
-        handleTargetChange(inputValue)
-        
-        // Show error if value is less than 1.01
-        if (!isNaN(value) && value < 1.01) {
-          setMultiplierError(true)
-        } else {
-          setMultiplierError(false)
-        }
-      }
+      setMultiplierError(false)
     }
+    
+    // Update the value
+    handleMultiplierChange(value)
   }
   
-  const handleWinChanceInput = (e) => {
-    const inputValue = e.target.value
-    
-    if (inputValue === '') {
-      setWinChance('') // Allow empty string
-    } else {
-      // Allow decimal inputs
-      if (/^[0-9]*\.?[0-9]*$/.test(inputValue)) {
-        const value = parseFloat(inputValue)
-        if (!isNaN(value)) {
-          handleTargetChange(inputValue)
-        }
-      }
-    }
+  // Handle win chance input change
+  const onWinChanceChange = (e) => {
+    const value = e.target.value
+    handleWinChanceChange(value)
   }
   
   return (
@@ -54,10 +43,10 @@ const MultiplierView = () => {
         )}
         <div className="relative">
           <input
-            type="number"
+            type="text"
             className={`w-full bg-gray-600 border ${multiplierError ? 'border-red-500' : 'border-gray-700'} rounded px-4 py-2 text-white pr-10`}
             value={multiplier}
-            onChange={handleMultiplierInput}
+            onChange={onMultiplierChange}
             data-test="payout"
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -73,10 +62,10 @@ const MultiplierView = () => {
         <label className="block text-sm text-gray-400 mb-1">Win Chance</label>
         <div className="relative">
           <input
-            type="number" 
+            type="text" 
             className="w-full bg-gray-600 border border-gray-700 rounded px-4 py-2 text-white pr-10"
             value={winChance}
-            onChange={handleWinChanceInput}
+            onChange={onWinChanceChange}
             data-test="chance"
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
