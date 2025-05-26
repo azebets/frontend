@@ -63,27 +63,26 @@ function Sidebar({ isOpen, toggleSidebar }) {
   const gamesItems = [
     { 
       name: 'Crash', 
-      icon: 'M13 10V3L4 14h7v7l9-11h-7z', // Lightning bolt icon for Crash
+      // Airplane icon for Crash
+      icon: 'M2.5 19.5l19-7.5m-19 7.5l7.5-19m-7.5 19l7.5-7.5m11.5 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z', 
       path: '/casino/game/crash'
     },
     { 
       name: 'Mines', 
-      icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z', // Bomb/mine icon
+      // Pickaxe icon for Mines
+      icon: 'M2 22l20-20m-7 7l7 7m-7-7l-7 7m7-7v14', 
       path: '/casino/game/mines'
     },
     { 
-      name: 'Plinko', 
-      icon: 'M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z', // Plinko-like icon
-      path: '/casino/game/plinko'
-    },
-    { 
       name: 'Dice', 
-      icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4', // Cube/dice icon
+      // Dice icon for Dice
+      icon: 'M5 5h14v14H5V5zm3 3h2v2H8V8zm6 0h2v2h-2V8zm-6 6h2v2H8v-2zm6 0h2v2h-2v-2z', 
       path: '/casino/game/dice'
     },
     { 
       name: 'Hilo', 
-      icon: 'M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4', // Up/down arrows for Hilo
+      // Arrow up and down icon for Hilo
+      icon: 'M12 4v16m0 0l-4-4m4 4l4-4M12 20V4m0 0l-4 4m4-4l4 4', 
       path: '/casino/game/hilo'
     },
   ];
