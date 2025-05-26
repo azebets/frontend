@@ -50,6 +50,14 @@ function InhouseGames() {
        image: "/assets/InhouseGames/limbo.avif",
       players: 1432,
       path: "limbo"
+    },
+    {
+      id: 6,
+      title: "Hilo",
+      provider: "Pragmatic Play",
+       image: "/assets/InhouseGames/hilo.avif",
+      players: 1432,
+      path: "hilo"
     }
    ];
 

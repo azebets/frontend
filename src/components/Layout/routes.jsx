@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { lazy } from 'react';
-
 import NotFound from '../../pages/NotFound';
 
 // Import transaction components
@@ -12,10 +11,10 @@ const AffiliatePage = lazy(() => import('../../pages/AffiliatePage'));
 const VipClubPage = lazy(() => import('../../pages/VipClubPage'));
 const CrashGame = lazy(() => import('../../Games/Crash/Index'));
 const MinesGame = lazy(() => import('../../Games/Mines/MinesGame'));
-const PlinkoGame = lazy(() => import('../../Games/Plinko/PlinkoPage'));
+const PlinkoGame = lazy(() => import('../../Games/plinko'));
 const DiceoGame = lazy(() => import('../../Games/Dice/DiceGame'));
 const LimboGame = lazy(() => import('../../Games/Limbo/LimboGame'));
-
+const HiloGame = lazy(() => import('../../Games/Hilo/HiloGame'));
 const Transactions = lazy(() => import('../../pages/Transactions'));
 
 // Lazy-loaded affiliate tab components - corrected paths
@@ -42,7 +41,8 @@ const routes = [
   { path: '/casino/game/mines', element: <MinesGame /> },
   { path: '/casino/game/limbo', element: <LimboGame /> },
   { path: '/casino/game/dice', element: <DiceoGame /> },
-//   { path: '/casino/game/hilo', element: <HiloGame /> },
+  // { path: '/casino/game/plinko', element: <PlinkoGame /> },
+  { path: '/casino/game/hilo', element: <HiloGame /> },
   
   // VIP Club route
   { path: '/vip-club', element: <VipClubPage /> },
@@ -92,6 +92,7 @@ const gameRoutes = [
   '/casino/game/dice',
   '/casino/game/mines',
   '/casino/game/limbo',
+  '/casino/game/plinko',
 ];
 
 // Export the routes and helper functions

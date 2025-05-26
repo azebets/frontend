@@ -4,7 +4,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-import Loader from '../common/Loader';
+import Preload from '../common/Preloader';
 import Chats from './Chat';
 import { Toaster } from 'sonner';
 import { AuthContext } from '../../context/AuthContext';
@@ -102,7 +102,7 @@ function Layout() {
   return (
     <div className="flex min-h-screen bg-grey-800">
       <Toaster position="bottom-right" richColors />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Preload />}>
         {/* Fixed sidebar - will not scroll with page content */}
         {window.innerWidth >= 750  && (
           <div className="inset-y-0 left-0 z-21">

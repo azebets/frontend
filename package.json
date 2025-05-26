@@ -25,6 +25,7 @@
     "gsap": "^3.13.0",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
+    "matter-js": "^0.20.0",
     "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0",
     "pixi.js": "^8.2.6",
