@@ -72,9 +72,9 @@ const RecentWinsTable = () => {
                       className="w-4 h-4 mr-1" 
                     />
                     {bet.status === 'cashed_out' ? (
-                      <span className="text-green-400">{bet.winAmount}</span>
+                      <span className="text-green-400">{parseFloat(bet.winAmount).toFixed(4)}</span>
                     ) : (
-                      <span>{bet.betAmount}</span>
+                      <span>{parseFloat(bet.betAmount).toFixed(4)}</span>
                     )}
                   </div>
                 </td>

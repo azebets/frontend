@@ -333,7 +333,7 @@ const ManualBetForm = () => {
           <span>{bets.length}</span>
         </div>
         <div className="flex items-center text-gray-300">
-          <span> {bets.reduce((sum, bet) => sum + parseFloat(bet.amount), 0)}</span>
+          <span> {parseFloat(bets.reduce((sum, bet) => sum + parseFloat(bet.amount), 0)).toFixed(4)}</span>
           <img 
             src="/assets/token/usdt.png" 
             alt="USDT" 
