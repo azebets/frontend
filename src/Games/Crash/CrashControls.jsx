@@ -19,7 +19,7 @@ const CrashControls = ({
   const [betMode, setBetMode] = useState('manual') // 'manual' or 'auto'
   
   return (
-    <div className="min-w-70 h-full bg-gray-800 bg-opacity-50 p-4 rounded-tl-[18px] rounded-bl-[18px] space-y-5">
+    <div className="w-full md:min-w-70  h-full bg-gray-800 bg-opacity-50 p-4 rounded-tr-[18px] md:rounded-tr-[0px]  rounded-br-[18px] md:rounded-br-[0px] rounded-tl-[18px] rounded-bl-[18px] space-y-5">
       {/* Mode Toggle Switch */}
       <div className="flex justify-center mb-4 ">
         {/* <div className="bg-gray-700 rounded-full p-1 flex w-64">

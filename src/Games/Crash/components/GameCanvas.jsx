@@ -36,7 +36,7 @@ const GameCanvas = observer(({ width, height }) => {
   return (
     <canvas 
       ref={canvasRef} 
-      className="bg-gray-900 w-full block h-[360px]"
+      className="bg-gray-900 w-full block h-[230px] md:h-[360px]"
       width={width}
       height={height}
     />

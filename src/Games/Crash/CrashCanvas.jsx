@@ -40,7 +40,7 @@ const CrashCanvas = observer(() => {
 
   return (
     <div className="flex-grow relative rounded-lg overflow-hidden">
-      <div className="w-full mb-12">
+      <div className="w-full mb-3 md:mb-12">
         <CrashHistory />
       </div>
       <div className="relative">
@@ -68,7 +68,6 @@ const CrashCanvas = observer(() => {
             </div>
             {/* {graphStore.game.statusMessage} */}
           </div>
-
       </div>
     </div>
   );
