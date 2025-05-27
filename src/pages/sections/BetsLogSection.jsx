@@ -7,14 +7,14 @@ export default function BetsLogSection() {
   const [activeTab, setActiveTab] = useState('casino');
 
   const tabs = [
-    { id: 'casino', label: 'Casino Bets' },
-    { id: 'sports', label: 'Sport Bets' },
-    { id: 'leaderboard', label: 'Race LeaderBoard' }
+    { id: 'casino', label: 'Casino Bets', disabled: false },
+    { id: 'sports', label: 'Sport Bets', disabled: true },
+    { id: 'leaderboard', label: 'Race LeaderBoard', disabled: true }
   ];
 
   return (
-    <div className="py-6 bg-[#1a2c38]">
-      <div className="container mx-auto px-4">
+    <div className="py-6  bg-[#1a2c38]">
+      <div className="container mx-auto px-0 md:px-4">
         {/* Section Header */}
 
         {/* Tabs */}
@@ -23,7 +23,8 @@ export default function BetsLogSection() {
             {tabs.map(tab => (
               <button
                 key={tab.id}
-                className={`py-2 px-4 text-center rounded-[30px] text-sm font-medium transition-colors cursor-pointer mx-1 ${
+                disabled={tab.disabled}
+                className={`py-2 px-2 md:px-4 text-center rounded-[30px] text-sm font-medium transition-colors cursor-pointer mx-1 ${
                   activeTab === tab.id 
                     ? 'bg-[rgb(26,44,56)] text-white' 
                     : 'text-gray-300 hover:text-white'

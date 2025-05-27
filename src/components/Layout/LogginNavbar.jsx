@@ -9,8 +9,6 @@ export default function LogginNavbar({ toggleChat }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(''); // State for search input
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
-  const [isTwoStepModalOpen, setIsTwoStepModalOpen] = useState(false); // State for two-step registration modal
   const userDropdownRef = useRef(null); // Reference for the dropdown
   const [searchParams, setSearchParams] = useSearchParams(); // Manage query parameters
   const navigate = useNavigate();
@@ -88,8 +86,6 @@ export default function LogginNavbar({ toggleChat }) {
     { name: 'Cosmos', symbol: 'ATOM', balance: '34.56', icon: '/assets/token/atom.png' },
   ];
 
-
-
   const userDropdownItems = [
     { name: 'Wallet', icon: '💼', action: toggleWalletModal },
     { name: 'VIP', icon: '👑', action: ()=> navigate("/vip-club") },
@@ -158,7 +154,7 @@ export default function LogginNavbar({ toggleChat }) {
                   {/* Left: Balance */}
                   <span className="text-sm font-medium">{crypto.balance}</span>
                   {/* Right: Icon and Symbol */}
-                  <div className="flex  space-x-2">
+                  <div className="flex space-x-2">
                     <img src={crypto.icon} alt={`${crypto.name} Icon`} className="w-4 h-4" />
                     <span className="text-sm font-medium">{crypto.symbol}</span>
                   </div>
@@ -187,10 +183,10 @@ export default function LogginNavbar({ toggleChat }) {
         </button> */}
 
         {/* User Icon */}
-        <div className="relative md:ml-40 p-4 hidden md:block items-center bold text-white" ref={userDropdownRef}>
+        <div className="relative md:ml-40 p-4  md:block items-center bold text-white" ref={userDropdownRef}>
           <button
             onClick={toggleUserDropdown}
-            className="p-4 flex items-center text-white"
+            className="p-2 md:p-4 flex items-center text-white"
           >
             <svg
               fill="currentColor"
@@ -226,7 +222,7 @@ export default function LogginNavbar({ toggleChat }) {
         </div>
 
         {/* Bell Icon */}
-        <button className="p-4 flex items-center text-white">
+        <button className="p-2 md:p-4 flex items-center text-white">
           <svg
             fill="currentColor"
             viewBox="0 0 64 64"
@@ -238,7 +234,7 @@ export default function LogginNavbar({ toggleChat }) {
         </button>
 
         {/* Chat Icon */}
-        <button onClick={toggleChat} className="p-4 items-center hidden text-white md:block">
+        <button onClick={toggleChat} className="p-2 md:p-4 hidden items-center text-white md:block">
           <svg
             fill="currentColor"
             viewBox="0 0 64 64"

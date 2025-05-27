@@ -54,21 +54,39 @@ function Navbar({ toggleChat }) {
             <div className="flex items-center">
               {/* Logo SVG with Link to home */}
               <Link to="/" className="cursor-pointer">
-              <svg
+                {/* Show full logo on md+ screens, abbreviated on small screens */}
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 180 40"
-                  className="h-7 text-white hover:text-grey-200 transition-colors"
+                  className="h-7 text-white hover:text-grey-200 transition-colors hidden md:block"
                 >
                   <text
                     x="0"
                     y="28"
-                    fontFamily="Verdana, Geneva, sans-serif"
+                    fontFamily="Verdana, Geneva, cursive sans-serif"
                     fontWeight="bold"
                     fontSize="32"
                     fill="currentColor"
                     letterSpacing="2"
                   >
                     Azabets
+                  </text>
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 40 40"
+                  className="h-7 text-white hover:text-grey-200 transition-colors block md:hidden"
+                >
+                  <text
+                    x="0"
+                    y="28"
+                    fontFamily="Verdana, Geneva, cursive sans-serif"
+                    fontWeight="bold"
+                    fontSize="32"
+                    fill="currentColor"
+                    letterSpacing="2"
+                  >
+                    Aze
                   </text>
                 </svg>
               </Link>

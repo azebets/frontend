@@ -23,7 +23,7 @@ function CasinoHome() {
 
 
   return (
-    <div className="p-6">
+    <div className="p-2 md:p-6">
       <Swiper
         slidesPerView={3}
         spaceBetween={10}
