@@ -8,12 +8,12 @@ const DiceCanvas = () => {
   const { gameState, lastRoll, mode, target, handleTargetChange, showResult} = useDiceGame();
   
   return (
-    <div className="flex-grow relative rounded-lg overflow-hidden">
+    <div className="flex-grow relative rounded-lg overflow-hidden p-2">
          <div className="w-full mb-12">
              <DiceHistory />
          </div>
     <div className='relative'>
-      <div className="content svelte-1otmwc3">
+      <div className="content svelte-1otmwc3 pb-0 md:pb-10">
         <div className="wrap svelte-1esfxtl bg-gray-800 cursor-pointer" data-test-dice-condition="above" style={{"--slider-height": "8px", "--drag-size": "36px", "--max-game-board-width": "730px", "--lines-asset": "url(/assets/games/Dice/lines.T9v8Oznt.svg)"}}>
         <div className="wrap svelte-16rlbb1">
             <div className="content svelte-16rlbb1" style={{left: "0%"}}>
