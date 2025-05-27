@@ -75,13 +75,13 @@ const LimboCanvas = () => {
   
   return (
     <div className="flex-grow relative rounded-lg overflow-hidden">
-      <div className="w-full mb-12">
+      <div className="w-full mb-4 md:mb-12">
         <LimboHistory />
       </div>
       <div className='relative'>
-        <div className="content svelte-1otmwc3">
-          <div className='flex justify-center items-center py-8 mb-12'>
-            <h1 className={`text-[120px] ${getTextColorClass()} font-bold`}>
+        <div className="content svelte-1otmwc3 pb-0 md:pb-10">
+          <div className='flex justify-center items-center py-2 md:py-8 mb-12'>
+            <h1 className={`text-[50px] md:text-[120px] ${getTextColorClass()} font-bold`}>
               {displayValue}x
             </h1>
           </div>

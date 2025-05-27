@@ -34,7 +34,7 @@ const MultiplierView = () => {
   }
   
   return (
-    <div className="footer flex flex-col md:flex-row gap-4 mt-4 p-5 rounded bg-gray-800">
+    <div className="footer flex  gap-4 mt-4 p-5 rounded bg-gray-800">
       {/* Multiplier Input */}
       <div className="flex-1">
         <label className="block text-sm text-gray-400 mb-1">Target Multiplier</label>

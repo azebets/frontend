@@ -27,7 +27,7 @@ const HiloGameContent = () => {
                     <div className='layout-spacing variant-normal svelte-rct8um'>
                       <div className='game-wrapper svelte-1dc4nai'>
                           <div className='game-frame svelte-14sn0xa'>
-                            <div className='content svelte-14sn0xa'>
+                            <div className='content svelte-14sn0xa flex flex-col-reverse md:flex-row gap-3'>
                                 <HiloControl />
                                 <HiloGameContentEl />
                             </div>

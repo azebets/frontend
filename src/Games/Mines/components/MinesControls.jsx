@@ -121,7 +121,7 @@ const MinesControls = () => {
   const currentProfit = gameState.potentialPayout - gameState.betAmount
   
   return (
-    <div className="w-80 h-full bg-gray-800 bg-opacity-50 p-4 rounded-tl-[18px] rounded-bl-[18px] space-y-5">
+    <div className="md:w-80 w-full h-full bg-gray-800 bg-opacity-50 p-4 rounded-tr-[18px] md:rounded-tr-[0px]  rounded-br-[18px] md:rounded-br-[0px] rounded-tl-[18px] rounded-bl-[18px] space-y-5">
       {/* Bet Amount Section */}
       <div className="bg-gray-800 bg-opacity-50 ">
         <label className="flex items-center text-sm mb-2 text-gray-300">
@@ -184,7 +184,7 @@ const MinesControls = () => {
           </button>
           
           {showMinesDropdown && !gameState.gameActive && (
-            <div className="absolute z-10 mt-1 w-full bg-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+            <div className="absolute z-10 mt-1 w-full bg-gray-700 rounded-lg shadow-lg max-h-30 md:max-h-60 overflow-y-auto">
               <div className="flex flex-col">
                 {Array.from({ length: 24 }, (_, i) => i + 1).map(count => (
                   <button

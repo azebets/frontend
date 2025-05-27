@@ -66,7 +66,7 @@ const MinesGrid = () => {
   }
   
   return (
-    <div className="grid grid-cols-5 gap-2 w-full">
+    <div className="grid grid-cols-5 gap-2 w-full p-10">
       {gameState.grid.map((value, index) => renderTile(value, index))}
     </div>
   )
