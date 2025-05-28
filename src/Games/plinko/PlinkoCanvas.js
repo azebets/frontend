@@ -37,6 +37,255 @@ export default class PlinkoCanvas {
       this.hoveredSlot = null;
       this.drawBoard();
     });
+    
+    // Track multiple balls
+    this.activeBalls = new Map(); // Map of ballId -> ball animation data
+  }
+
+  // New method to animate multiple ball drops simultaneously
+  animateBallDrop(ballImg, path, ballId, onComplete) {
+    // Parse the path string (e.g., "10011110")
+    const pathArray = path.split('').map(bit => parseInt(bit));
+    
+    // Start position at the top center
+    const startX = this.width / 2;
+    const startY = 20;
+    
+    // Calculate the final slot based on the path
+    let finalSlot = 0;
+    for (let i = 0; i < pathArray.length; i++) {
+      if (pathArray[i] === 1) {
+        finalSlot++;
+      }
+    }
+    
+    // Calculate positions for each step of the animation
+    const positions = [];
+    let currentX = startX;
+    let currentY = startY;
+    
+    // Add starting position
+    positions.push({ x: currentX, y: currentY, isPeg: false });
+    
+    // Calculate row spacing
+    const rowSpacing = this.height / (this.rows + 2);
+    
+    // Calculate the positions for each row based on the path
+    for (let row = 0; row < this.rows; row++) {
+      currentY += rowSpacing;
+      
+      // Move left or right based on the path bit (0 = left, 1 = right)
+      if (row < pathArray.length) {
+        const colSpacing = this.width / (this.rows + 1);
+        if (pathArray[row] === 1) {
+          currentX += colSpacing / 2; // Move right
+        } else {
+          currentX -= colSpacing / 2; // Move left
+        }
+      }
+      
+      // Add this position to the array (mark as a peg position)
+      positions.push({ x: currentX, y: currentY, isPeg: true, pegRow: row, pegCol: pathArray[row] });
+    }
+    
+    // Add intermediate positions for bouncing effect
+    const interpolatedPositions = [];
+    for (let i = 0; i < positions.length - 1; i++) {
+      const current = positions[i];
+      const next = positions[i + 1];
+      
+      // Add the current position
+      interpolatedPositions.push(current);
+      
+      // If this is a peg to the next position, add bounce points
+      if (current.isPeg && i < positions.length - 2) {
+        const bounceHeight = rowSpacing * 0.2; // 20% of row spacing for bounce height
+        
+        // First bounce point (slightly to the side)
+        interpolatedPositions.push({
+          x: current.x + (next.x - current.x) * 0.25,
+          y: current.y + rowSpacing * 0.25 - bounceHeight,
+          isPeg: false
+        });
+        
+        // Second bounce point (middle)
+        interpolatedPositions.push({
+          x: current.x + (next.x - current.x) * 0.5,
+          y: current.y + rowSpacing * 0.5,
+          isPeg: false
+        });
+        
+        // Third bounce point (almost to next peg)
+        interpolatedPositions.push({
+          x: current.x + (next.x - current.x) * 0.75,
+          y: current.y + rowSpacing * 0.75 - bounceHeight * 0.5,
+          isPeg: false
+        });
+      }
+    }
+    
+    // Add the final position
+    interpolatedPositions.push(positions[positions.length - 1]);
+    
+    // Add final position at the bottom
+    const finalY = this.height - 15;
+    interpolatedPositions.push({ x: currentX, y: finalY, isPeg: false });
+    
+    // Store this ball's animation data
+    this.activeBalls.set(ballId, {
+      positions: interpolatedPositions,
+      step: 0,
+      progress: 0,
+      finalSlot,
+      onComplete,
+      shakingPegs: []
+    });
+    
+    // Start the animation loop if it's not already running
+    if (!this.animationFrameId) {
+      this.animateAllBalls(ballImg);
+    }
+  }
+  
+  // Animate all active balls in a single animation loop
+  animateAllBalls(ballImg) {
+    // Store the current pegs to restore after drawing
+    const originalPegs = [...this.pegs];
+    
+    // Apply shaking effects to pegs from all balls
+    const allShakingPegs = [];
+    for (const ball of this.activeBalls.values()) {
+      allShakingPegs.push(...ball.shakingPegs);
+    }
+    
+    // Apply shaking effect to pegs that were hit
+    for (let i = 0; i < allShakingPegs.length; i++) {
+      const shaking = allShakingPegs[i];
+      
+      // Find the peg in the original pegs array
+      const pegIndex = originalPegs.findIndex(p => 
+        p.row === shaking.row && p.col === shaking.col
+      );
+      
+      if (pegIndex !== -1) {
+        // Calculate shake amount based on time elapsed
+        const shakeAmount = Math.sin(shaking.time * 30) * shaking.intensity;
+        
+        // Apply shake to the peg position
+        this.pegs[pegIndex] = {
+          ...originalPegs[pegIndex],
+          x: originalPegs[pegIndex].x + shakeAmount,
+          y: originalPegs[pegIndex].y + shakeAmount * 0.5
+        };
+        
+        // Reduce intensity over time
+        shaking.intensity *= 0.9;
+        shaking.time += 0.1;
+        
+        // Remove shaking effect if intensity is too low
+        if (shaking.intensity < 0.1) {
+          allShakingPegs.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    
+    // Draw the board with potentially shaking pegs
+    this.drawBoard();
+    
+    // Restore original peg positions
+    this.pegs = originalPegs;
+    
+    // Process each active ball
+    const animationSpeed = 10;
+    const ballsToRemove = [];
+    
+    for (const [ballId, ball] of this.activeBalls.entries()) {
+      if (ball.step < ball.positions.length - 1) {
+        // Interpolate between current position and next position
+        const current = ball.positions[ball.step];
+        const next = ball.positions[ball.step + 1];
+        
+        // If we're at a peg position, add a slight pause
+        const speedMultiplier = current.isPeg ? 0.85 : 1;
+        
+        const x = current.x + (next.x - current.x) * ball.progress;
+        const y = current.y + (next.y - current.y) * ball.progress;
+        
+        // Draw the ball
+        this.drawBall(ballImg, x, y);
+        
+        // Update progress
+        ball.progress += (animationSpeed / 100) * speedMultiplier;
+        
+        // Move to next step if we've reached it
+        if (ball.progress >= 1) {
+          ball.step++;
+          ball.progress = 0;
+          
+          // If we just hit a peg, add a visual effect and start the peg shaking
+          if (ball.step < ball.positions.length && ball.positions[ball.step].isPeg) {
+            const hitPeg = ball.positions[ball.step];
+            
+            // Find the peg in our pegs array
+            const pegIndex = this.pegs.findIndex(p => 
+              Math.abs(p.x - hitPeg.x) < 5 && Math.abs(p.y - hitPeg.y) < 5
+            );
+            
+            if (pegIndex !== -1) {
+              // Add this peg to the shaking pegs list
+              ball.shakingPegs.push({
+                row: hitPeg.pegRow,
+                col: hitPeg.pegCol,
+                intensity: 2, // Initial shake intensity
+                time: 0      // Time counter for the shake
+              });
+              
+              // Draw a small "impact" effect
+              const pegX = hitPeg.x * (this.canvas.width / this.width);
+              const pegY = hitPeg.y * (this.canvas.height / this.height);
+              
+              // Draw a small flash
+              this.ctx.beginPath();
+              this.ctx.arc(pegX, pegY, 8, 0, Math.PI * 2);
+              this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+              this.ctx.fill();
+              this.ctx.closePath();
+            }
+          }
+        }
+      } else {
+        // We've reached the end of the animation for this ball
+        this.setActiveSlot(ball.finalSlot);
+        this.drawBall(ballImg, ball.positions[ball.positions.length - 1].x, ball.positions[ball.positions.length - 1].y);
+        
+        // Call the completion callback
+        if (ball.onComplete) {
+          ball.onComplete(ball.finalSlot);
+        }
+        
+        // Mark this ball for removal
+        ballsToRemove.push(ballId);
+      }
+    }
+    
+    // Remove completed balls
+    for (const ballId of ballsToRemove) {
+      this.activeBalls.delete(ballId);
+    }
+    
+    // Continue the animation loop if there are still active balls
+    if (this.activeBalls.size > 0) {
+      this.animationFrameId = requestAnimationFrame(() => this.animateAllBalls(ballImg));
+    } else {
+      this.animationFrameId = null;
+      
+      // Reset active slot after a delay
+      setTimeout(() => {
+        this.setActiveSlot(null);
+        this.drawBoard();
+      }, 2000);
+    }
   }
 
   // Handle mouse move to detect hover over slots
@@ -46,19 +295,27 @@ export default class PlinkoCanvas {
     const y = event.clientY - rect.top;
     
     // Check if mouse is over the slots area
-    const slots = this.rows + 1; // Match the number of slots to the bottom row of pegs
-    const slotWidth = this.canvas.width / slots;
-    const slotHeight = 25 * (this.canvas.height / this.height);
-    const slotY = this.canvas.height - slotHeight - 5 * (this.canvas.height / this.height);
+    const slots = this.rows + 1;
+    const pegSpacing = this.width / slots;
+    const startX = pegSpacing / 2;
+    const buttonWidth = pegSpacing * 0.8;
     
-    if (y >= slotY && y <= this.canvas.height) {
-      const slotIndex = Math.floor(x / slotWidth);
-      if (slotIndex >= 0 && slotIndex < slots) {
-        if (this.hoveredSlot !== slotIndex) {
-          this.hoveredSlot = slotIndex;
-          this.drawBoard();
+    const slotHeight = 25 * (this.canvas.height / this.height);
+    const slotY = this.canvas.height - slotHeight - 15 * (this.canvas.height / this.height);
+    
+    if (y >= slotY && y <= slotY + slotHeight) {
+      // Calculate which button the mouse is over
+      for (let i = 0; i < slots; i++) {
+        const slotX = (startX + i * pegSpacing - buttonWidth / 2) * (this.canvas.width / this.width);
+        const buttonWidthScaled = buttonWidth * (this.canvas.width / this.width);
+        
+        if (x >= slotX && x <= slotX + buttonWidthScaled) {
+          if (this.hoveredSlot !== i) {
+            this.hoveredSlot = i;
+            this.drawBoard();
+          }
+          return;
         }
-        return;
       }
     }
     
@@ -67,9 +324,7 @@ export default class PlinkoCanvas {
       this.hoveredSlot = null;
       this.drawBoard();
     }
-  }
-
-  // Set active slot (when ball lands)
+  }  // Set active slot (when ball lands)
   setActiveSlot(slotIndex) {
     this.activeSlot = slotIndex;
     this.drawBoard();
@@ -88,7 +343,7 @@ export default class PlinkoCanvas {
     const rowSpacing = this.height / (totalRows + 2);
     
     // Calculate the number of slots at the bottom
-    const slots = totalRows + 3; // This creates the right number of slots for the pegs
+    const slots = totalRows + 2; // This creates the right number of slots for the pegs
     
     for (let row = 0; row < totalRows; row++) {
       // Calculate vertical position
@@ -163,77 +418,108 @@ export default class PlinkoCanvas {
     });
 
     // Draw ending slots as buttons - ALIGNED WITH PEGS
-    const slots = this.rows + 1; // Match the number of slots to the bottom row of pegs
-    const slotWidth = this.canvas.width / slots;
-    const slotHeight = 25 * scaleY;
-    const buttonPadding = 2 * scaleX; // Smaller padding to fit better
-    
+    // Only draw buttons for slots that have a payout
+    const slots = this.payouts.length;
+    const slotHeight = 28 * scaleY; // Reduced from 45 to 28 for a shorter button
+    const buttonBottomMargin = 15 * scaleY;
+
+    // Calculate the positions of the bottom row pegs to align buttons between them
+    const lastRow = this.rows - 1;
+    const pegsInLastRow = 3 + lastRow;
+    const colSpacing = this.width / (slots);
+    const startOffset = (this.width - (pegsInLastRow - 1) * colSpacing) / 2;
+
+    // Calculate button centers (between pegs)
+    let pegXs = [];
+    for (let col = 0; col < pegsInLastRow; col++) {
+      pegXs.push(startOffset + col * colSpacing);
+    }
+    let buttonCenters = [];
+    for (let i = 0; i < pegXs.length + 1; i++) {
+      if (i === 0) {
+        buttonCenters.push(pegXs[0] - colSpacing / 2);
+      } else if (i === pegXs.length) {
+        buttonCenters.push(pegXs[pegXs.length - 1] + colSpacing / 2);
+      } else {
+        buttonCenters.push((pegXs[i - 1] + pegXs[i]) / 2);
+      }
+    }
+
+    // Filter out buttons with no payout and center the row
+    const validButtons = [];
     for (let i = 0; i < slots; i++) {
-      const slotX = i * slotWidth + buttonPadding / 2;
-      const slotY = this.canvas.height - slotHeight - 5 * scaleY;
-      const buttonWidth = slotWidth - buttonPadding;
-      const buttonHeight = slotHeight - buttonPadding;
+      if (this.payouts[i] !== undefined && this.payouts[i] !== null) {
+        validButtons.push({ index: i, center: buttonCenters[i], payout: this.payouts[i] });
+      }
+    }
+
+    // Center the valid buttons horizontally
+    const buttonWidth = colSpacing * 1;
+    const totalButtonsWidth = validButtons.length * buttonWidth;
+    const centerOffset = (this.width - totalButtonsWidth) / 2;
+
+    validButtons.forEach((btn, idx) => {
+      const slotX = centerOffset + idx * buttonWidth;
+      const slotY = this.canvas.height - slotHeight - buttonBottomMargin;
+      const buttonHeight = slotHeight - 2 * scaleY;
       const cornerRadius = 3 * scaleX;
-      
+
       // Determine button color based on hover/active state
       let buttonFillColor = this.buttonColor;
-      if (this.activeSlot === i) {
+      if (this.activeSlot === btn.index) {
         buttonFillColor = this.buttonHighlightColor;
-      } else if (this.hoveredSlot === i) {
+      } else if (this.hoveredSlot === btn.index) {
         buttonFillColor = '#243845';
       }
-      
+
       // Draw button shadow
       this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
       this.ctx.shadowBlur = 4 * scaleX;
       this.ctx.shadowOffsetX = 0;
       this.ctx.shadowOffsetY = 2 * scaleY;
-      
+
       // Draw button background
       this.ctx.fillStyle = buttonFillColor;
-      this.roundRect(slotX, slotY, buttonWidth, buttonHeight, cornerRadius);
+      this.roundRect(slotX, slotY, buttonWidth * scaleX, buttonHeight, cornerRadius);
       this.ctx.fill();
-      
+
       // Reset shadow
       this.ctx.shadowColor = 'transparent';
       this.ctx.shadowBlur = 0;
       this.ctx.shadowOffsetX = 0;
       this.ctx.shadowOffsetY = 0;
-      
+
       // Draw button highlight at the top (gradient effect)
       const gradient = this.ctx.createLinearGradient(slotX, slotY, slotX, slotY + buttonHeight * 0.3);
       gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
       gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
       this.ctx.fillStyle = gradient;
-      this.roundRect(slotX, slotY, buttonWidth, buttonHeight * 0.3, cornerRadius);
+      this.roundRect(slotX, slotY, buttonWidth * scaleX, buttonHeight * 0.3, cornerRadius);
       this.ctx.fill();
-      
+
       // Draw colored border for high payout buttons
-      if (this.payouts[i] !== undefined) {
-        // Higher payouts get a colored border
-        if (this.payouts[i] > 5) {
-          this.ctx.strokeStyle = this.buttonHighlightColor;
-          this.ctx.lineWidth = 1 * scaleX;
-          this.roundRect(slotX, slotY, buttonWidth, buttonHeight, cornerRadius);
-          this.ctx.stroke();
-        }
-        
-        // Draw payout text (MUCH smaller size)
-        this.ctx.fillStyle = "#fff";
-        this.ctx.font = `bold ${8 * scaleY}px Arial`;
-        this.ctx.textAlign = "center";
-        this.ctx.fillText(
-          `${this.payouts[i]}x`,
-          slotX + buttonWidth / 2,
-          slotY + buttonHeight / 2 + 2 * scaleY
-        );
+      if (btn.payout > 5) {
+        this.ctx.strokeStyle = this.buttonHighlightColor;
+        this.ctx.lineWidth = 1 * scaleX;
+        this.roundRect(slotX, slotY, buttonWidth * scaleX, buttonHeight, cornerRadius);
+        this.ctx.stroke();
       }
-      
+
+      // Draw payout text
+      this.ctx.fillStyle = "#fff";
+      this.ctx.font = `bold ${8 * scaleY}px Arial`;
+      this.ctx.textAlign = "center";
+      this.ctx.fillText(
+        `${btn.payout}x`,
+        slotX + buttonWidth * scaleX / 2,
+        slotY + buttonHeight / 2 + 2 * scaleY
+      );
+
       // Draw hover card if this slot is hovered
-      if (this.hoveredSlot === i && this.payouts[i] !== undefined) {
-        this.drawHoverCard(i, slotX + buttonWidth / 2, slotY);
+      if (this.hoveredSlot === btn.index && btn.payout !== undefined) {
+        this.drawHoverCard(btn.index, slotX + buttonWidth * scaleX / 2, slotY);
       }
-    }
+    });
   }
 
   // Draw hover card with profit and chance info
@@ -241,7 +527,7 @@ export default class PlinkoCanvas {
     const scaleX = this.canvas.width / this.width;
     const scaleY = this.canvas.height / this.height;
     
-    const cardWidth = 200 * scaleX;
+    const cardWidth = 300 * scaleX;
     const cardHeight = 100 * scaleY;
     const cardX = Math.max(10, Math.min(x - cardWidth / 2, this.canvas.width - cardWidth - 10));
     const cardY = y - cardHeight - 10 * scaleY;
@@ -334,12 +620,8 @@ export default class PlinkoCanvas {
     }
   }
 
-  // New method to animate ball drop with bouncing effect on pegs
-  animateBallDrop(ballImg, path, onComplete) {
-    if (this.animationFrameId) {
-      cancelAnimationFrame(this.animationFrameId);
-    }
-
+  // New method to animate multiple ball drops simultaneously
+  animateBallDrop(ballImg, path, ballId, onComplete) {
     // Parse the path string (e.g., "10011110")
     const pathArray = path.split('').map(bit => parseInt(bit));
     
@@ -372,7 +654,7 @@ export default class PlinkoCanvas {
       
       // Move left or right based on the path bit (0 = left, 1 = right)
       if (row < pathArray.length) {
-        const colSpacing = this.width / (this.rows + 3);
+        const colSpacing = this.width / (this.rows + 1);
         if (pathArray[row] === 1) {
           currentX += colSpacing / 2; // Move right
         } else {
@@ -381,120 +663,207 @@ export default class PlinkoCanvas {
       }
       
       // Add this position to the array (mark as a peg position)
-      positions.push({ x: currentX, y: currentY, isPeg: true });
+      positions.push({ x: currentX, y: currentY, isPeg: true, pegRow: row, pegCol: pathArray[row] });
+    }
+    
+    // Add intermediate positions for bouncing effect
+    const interpolatedPositions = [];
+    for (let i = 0; i < positions.length - 1; i++) {
+      const current = positions[i];
+      const next = positions[i + 1];
       
-      // Add intermediate positions for bouncing effect
-      if (row < this.rows - 1) {
-        // Calculate next position
-        let nextX = currentX;
-        const nextY = currentY + rowSpacing;
-        
-        if (row + 1 < pathArray.length) {
-          const colSpacing = this.width / (this.rows + 3);
-          if (pathArray[row + 1] === 1) {
-            nextX += colSpacing / 2; // Move right
-          } else {
-            nextX -= colSpacing / 2; // Move left
-          }
-        }
-        
-        // Add bounce positions (3 points for a small bounce)
+      // Add the current position
+      interpolatedPositions.push(current);
+      
+      // If this is a peg to the next position, add bounce points
+      if (current.isPeg && i < positions.length - 2) {
         const bounceHeight = rowSpacing * 0.2; // 20% of row spacing for bounce height
         
         // First bounce point (slightly to the side)
-        positions.push({
-          x: currentX + (nextX - currentX) * 0.25,
-          y: currentY + rowSpacing * 0.25 - bounceHeight,
+        interpolatedPositions.push({
+          x: current.x + (next.x - current.x) * 0.25,
+          y: current.y + rowSpacing * 0.25 - bounceHeight,
           isPeg: false
         });
         
         // Second bounce point (middle)
-        positions.push({
-          x: currentX + (nextX - currentX) * 0.5,
-          y: currentY + rowSpacing * 0.5,
+        interpolatedPositions.push({
+          x: current.x + (next.x - current.x) * 0.5,
+          y: current.y + rowSpacing * 0.5,
           isPeg: false
         });
         
         // Third bounce point (almost to next peg)
-        positions.push({
-          x: currentX + (nextX - currentX) * 0.75,
-          y: currentY + rowSpacing * 0.75 - bounceHeight * 0.5,
+        interpolatedPositions.push({
+          x: current.x + (next.x - current.x) * 0.75,
+          y: current.y + rowSpacing * 0.75 - bounceHeight * 0.5,
           isPeg: false
         });
       }
     }
     
+    // Add the final position
+    interpolatedPositions.push(positions[positions.length - 1]);
+    
     // Add final position at the bottom
     const finalY = this.height - 15;
-    positions.push({ x: currentX, y: finalY, isPeg: false });
+    interpolatedPositions.push({ x: currentX, y: finalY, isPeg: false });
     
-    // Animate the ball along the path
-    let step = 0;
-    const totalSteps = positions.length;
-    const animationSpeed = 10; 
-    let progress = 0;
+    // Store this ball's animation data
+    this.activeBalls.set(ballId, {
+      positions: interpolatedPositions,
+      step: 0,
+      progress: 0,
+      finalSlot,
+      onComplete,
+      shakingPegs: []
+    });
     
-    const animate = () => {
-      this.drawBoard();
+    // Start the animation loop if it's not already running
+    if (!this.animationFrameId) {
+      this.animateAllBalls(ballImg);
+    }
+  }
+  
+  // Animate all active balls in a single animation loop
+  animateAllBalls(ballImg) {
+    // Store the current pegs to restore after drawing
+    const originalPegs = [...this.pegs];
+    
+    // Apply shaking effects to pegs from all balls
+    const allShakingPegs = [];
+    for (const ball of this.activeBalls.values()) {
+      allShakingPegs.push(...ball.shakingPegs);
+    }
+    
+    // Apply shaking effect to pegs that were hit
+    for (let i = 0; i < allShakingPegs.length; i++) {
+      const shaking = allShakingPegs[i];
       
-      if (step < totalSteps - 1) {
+      // Find the peg in the original pegs array
+      const pegIndex = originalPegs.findIndex(p => 
+        p.row === shaking.row && p.col === shaking.col
+      );
+      
+      if (pegIndex !== -1) {
+        // Calculate shake amount based on time elapsed
+        const shakeAmount = Math.sin(shaking.time * 30) * shaking.intensity;
+        
+        // Apply shake to the peg position
+        this.pegs[pegIndex] = {
+          ...originalPegs[pegIndex],
+          x: originalPegs[pegIndex].x + shakeAmount,
+          y: originalPegs[pegIndex].y + shakeAmount * 0.5
+        };
+        
+        // Reduce intensity over time
+        shaking.intensity *= 0.9;
+        shaking.time += 0.1;
+        
+        // Remove shaking effect if intensity is too low
+        if (shaking.intensity < 0.1) {
+          allShakingPegs.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    
+    // Draw the board with potentially shaking pegs
+    this.drawBoard();
+    
+    // Restore original peg positions
+    this.pegs = originalPegs;
+    
+    // Process each active ball
+    const animationSpeed = 10;
+    const ballsToRemove = [];
+    
+    for (const [ballId, ball] of this.activeBalls.entries()) {
+      if (ball.step < ball.positions.length - 1) {
         // Interpolate between current position and next position
-        const current = positions[step];
-        const next = positions[step + 1];
+        const current = ball.positions[ball.step];
+        const next = ball.positions[ball.step + 1];
         
-        // If we're at a peg position, add a slight pause but not as much as before
-        const speedMultiplier = current.isPeg ? 0.85 : 1; // Increased from 0.7 to 0.85
+        // If we're at a peg position, add a slight pause
+        const speedMultiplier = current.isPeg ? 0.85 : 1;
         
-        const x = current.x + (next.x - current.x) * progress;
-        const y = current.y + (next.y - current.y) * progress;
+        const x = current.x + (next.x - current.x) * ball.progress;
+        const y = current.y + (next.y - current.y) * ball.progress;
         
         // Draw the ball
         this.drawBall(ballImg, x, y);
         
         // Update progress
-        progress += (animationSpeed / 100) * speedMultiplier;
+        ball.progress += (animationSpeed / 100) * speedMultiplier;
         
         // Move to next step if we've reached it
-        if (progress >= 1) {
-          step++;
-          progress = 0;
+        if (ball.progress >= 1) {
+          ball.step++;
+          ball.progress = 0;
           
-          // If we just hit a peg, add a small visual effect
-          if (step < totalSteps && positions[step].isPeg) {
-            // Draw a small "impact" effect
-            const pegX = positions[step].x * (this.canvas.width / this.width);
-            const pegY = positions[step].y * (this.canvas.height / this.height);
+          // If we just hit a peg, add a visual effect and start the peg shaking
+          if (ball.step < ball.positions.length && ball.positions[ball.step].isPeg) {
+            const hitPeg = ball.positions[ball.step];
             
-            // Draw a small flash
-            this.ctx.beginPath();
-            this.ctx.arc(pegX, pegY, 8, 0, Math.PI * 2);
-            this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-            this.ctx.fill();
-            this.ctx.closePath();
+            // Find the peg in our pegs array
+            const pegIndex = this.pegs.findIndex(p => 
+              Math.abs(p.x - hitPeg.x) < 5 && Math.abs(p.y - hitPeg.y) < 5
+            );
+            
+            if (pegIndex !== -1) {
+              // Add this peg to the shaking pegs list
+              ball.shakingPegs.push({
+                row: hitPeg.pegRow,
+                col: hitPeg.pegCol,
+                intensity: 2, // Initial shake intensity
+                time: 0      // Time counter for the shake
+              });
+              
+              // Draw a small "impact" effect
+              const pegX = hitPeg.x * (this.canvas.width / this.width);
+              const pegY = hitPeg.y * (this.canvas.height / this.height);
+              
+              // Draw a small flash
+              this.ctx.beginPath();
+              this.ctx.arc(pegX, pegY, 8, 0, Math.PI * 2);
+              this.ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+              this.ctx.fill();
+              this.ctx.closePath();
+            }
           }
         }
-        
-        this.animationFrameId = requestAnimationFrame(animate);
       } else {
-        // We've reached the end of the animation
-        this.setActiveSlot(finalSlot);
-        this.drawBall(ballImg, positions[totalSteps - 1].x, positions[totalSteps - 1].y);
+        // We've reached the end of the animation for this ball
+        this.setActiveSlot(ball.finalSlot);
+        this.drawBall(ballImg, ball.positions[ball.positions.length - 1].x, ball.positions[ball.positions.length - 1].y);
         
         // Call the completion callback
-        if (onComplete) {
-          onComplete(finalSlot);
+        if (ball.onComplete) {
+          ball.onComplete(ball.finalSlot);
         }
         
-        // Reset active slot after a delay
-        setTimeout(() => {
-          this.setActiveSlot(null);
-          this.drawBoard();
-        }, 2000);
+        // Mark this ball for removal
+        ballsToRemove.push(ballId);
       }
-    };
+    }
     
-    // Start the animation
-    animate();
+    // Remove completed balls
+    for (const ballId of ballsToRemove) {
+      this.activeBalls.delete(ballId);
+    }
+    
+    // Continue the animation loop if there are still active balls
+    if (this.activeBalls.size > 0) {
+      this.animationFrameId = requestAnimationFrame(() => this.animateAllBalls(ballImg));
+    } else {
+      this.animationFrameId = null;
+      
+      // Reset active slot after a delay
+      setTimeout(() => {
+        this.setActiveSlot(null);
+        this.drawBoard();
+      }, 2000);
+    }
   }
 
   // Update bet amount

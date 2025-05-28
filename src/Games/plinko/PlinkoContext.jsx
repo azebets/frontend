@@ -18,7 +18,7 @@ export const PlinkoGameProvider = ({ children }) => {
   const [gameState, setGameState] = useState('idle'); // idle, dropping, finished
   const [lastDrop, setLastDrop] = useState(null);
   const [showResult, setShowResult] = useState(false);
-  const [pendingBet, setPendingBet] = useState(null);
+  const [pendingBets, setPendingBets] = useState([]);
   const canvasRef = useRef(null);
   const [canvasApi, setCanvasApi] = useState(null);
 
@@ -50,14 +50,11 @@ export const PlinkoGameProvider = ({ children }) => {
 
     socketInstance.on('plinkoBet', (bet) => {
       if (!user) return;
-      
-      // Store the bet result and start animation
+
       if (bet.userId === user._id) {
-        setLastDrop(bet);
+        setPendingBets(prev => [...prev, bet]); // <-- This line is correct!
         setGameState('dropping');
-        setPendingBet(bet);
       } else {
-        // Add other users' bets directly to the recent bets list
         setRecentBets(prevBets => [bet, ...prevBets.slice(0, 9)]);
       }
     });
@@ -76,30 +73,25 @@ export const PlinkoGameProvider = ({ children }) => {
   }, [user, setBalance]);
 
   // Add the pending bet to recent bets after animation completes
-  const onAnimationComplete = useCallback(() => {
-    if (pendingBet) {
-      setRecentBets(prevBets => [pendingBet, ...prevBets.slice(0, 9)]);
-      setPendingBet(null);
-      setGameState('finished');
-      setShowResult(true);
-      
-      // Reset game state after a delay
-      setTimeout(() => {
-        setGameState('idle');
-        setShowResult(false);
-      }, 2000);
-    }
-  }, [pendingBet]);
+  const onAnimationComplete = useCallback((betId) => {
+    setPendingBets(prev => prev.filter(b => b.betId !== betId));
+    setGameState('finished');
+    setShowResult(true);
+    setTimeout(() => {
+      setGameState('idle');
+      setShowResult(false);
+    }, 2000);
+  }, []);
 
   // Place a bet (drop ball)
   const placeBet = useCallback(() => {
-    if (!socket || !connected || gameState === 'dropping') return;
+    if (!socket || !connected) return; // <-- Only block if not connected
     if (!user) {
       setError('Please log in to place a bet');
       return;
     }
 
-    setGameState('betting'); // New state to indicate bet is being processed
+    // No setGameState('betting') here, let animation/gameState be managed by plinkoBet event
 
     const betData = {
       _id: user._id,
@@ -107,8 +99,8 @@ export const PlinkoGameProvider = ({ children }) => {
       hidden: user.hidden_from_public || false,
       avatar: user.profile_image || '',
       betAmount: betAmount,
-      currencyName: 'USD', // Replace with your currency
-      currencyImage: '/assets/token/usdt.png', // Replace with your currency image
+      currencyName: 'USD',
+      currencyImage: '/assets/token/usdt.png',
       betValue: {
         risk,
         rows,
@@ -120,9 +112,9 @@ export const PlinkoGameProvider = ({ children }) => {
         setError(response.message);
         setGameState('idle');
       }
-      // Note: We don't set lastDrop here anymore, as we'll get it from the plinkoBet event
+      // No setGameState here; handled by plinkoBet event
     });
-  }, [socket, connected, gameState, user, betAmount, risk, rows]);
+  }, [socket, connected, user, betAmount, risk, rows]);
 
   // Update seeds (optional, for provably fair)
   const updateSeeds = useCallback(async (clientSeed) => {
@@ -155,8 +147,8 @@ export const PlinkoGameProvider = ({ children }) => {
           reject(new Error(response.message));
         }
       });
-    });
-  }, [socket, connected]);
+    }, [socket, connected]);
+  });
 
   // Calculate potential profit (example, adjust as needed)
   const calculateProfit = () => {
@@ -203,6 +195,7 @@ export const PlinkoGameProvider = ({ children }) => {
     updateSeeds,
     getGameDetails,
     user,
+    pendingBets,
     onAnimationComplete,
     plinkoCanvasRef,
     canvasApi,

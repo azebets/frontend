@@ -1,16 +1,18 @@
-
 import React, { useEffect, useRef } from 'react';
 import { usePlinkoGame } from './PlinkoContext';
 import PlinkoCanvas from './PlinkoCanvas';
 
-const BOARD_WIDTH = 560;
-const BOARD_HEIGHT = 470;
+const BOARD_WIDTH = window.innerWidth > 750 ? 560 : 360;
+const BOARD_HEIGHT = window.innerWidth > 750 ? 470 : 350;
 
 export default function PlinkoBoard() {
-  const { rows, risk, gameState, lastDrop, onAnimationComplete } = usePlinkoGame();
+  const { rows, risk, pendingBets, onAnimationComplete } = usePlinkoGame();
   const canvasRef = useRef(null);
   const ballImgRef = useRef(null);
   const canvasInstanceRef = useRef(null);
+
+  // Track which bets have been animated
+  const animatedBetsRef = useRef(new Set());
 
   // Load ball image
   useEffect(() => {
@@ -26,7 +28,6 @@ export default function PlinkoBoard() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Create and use PlinkoCanvas for all drawing
     const plinko = new PlinkoCanvas(canvas, {
       rows,
       width: BOARD_WIDTH,
@@ -44,67 +45,28 @@ export default function PlinkoBoard() {
     };
   }, [rows, risk]);
 
-  // Handle ball animation when a drop occurs
+  // Animate each new pending bet as it arrives
   useEffect(() => {
-    if (!lastDrop || !ballImgRef.current || !canvasInstanceRef.current || gameState !== 'dropping') return;
+    if (!pendingBets || !ballImgRef.current || !canvasInstanceRef.current) return;
 
-    // Get the path from the game result
-    const path = lastDrop.gameValue?.path;
-    
-    if (path) {
-      // Use the path to animate the ball drop
-      canvasInstanceRef.current.animateBallDrop(
-        ballImgRef.current,
-        path,
-        (finalSlot) => {
-          // Animation complete
-          if (onAnimationComplete) {
-            onAnimationComplete();
-          }
+    pendingBets.forEach(bet => {
+      if (!animatedBetsRef.current.has(bet.betId)) {
+        const path = bet.gameValue?.path;
+        if (path) {
+          animatedBetsRef.current.add(bet.betId);
+          canvasInstanceRef.current.animateBallDrop(
+            ballImgRef.current,
+            path,
+            bet.betId,
+            () => {
+              if (onAnimationComplete) onAnimationComplete(bet.betId);
+              animatedBetsRef.current.delete(bet.betId); // Clean up after animation
+            }
+          );
         }
-      );
-    } else {
-      // Fallback to the old animation if path is not available
-      const startX = BOARD_WIDTH / 2; // Start in the middle
-      const startY = 20;
-      const endSlot = lastDrop.slotIndex;
-      const endX = (BOARD_WIDTH / (rows + 1)) * (endSlot + 0.5); // Center of the slot
-      const endY = BOARD_HEIGHT - 15;
-
-      // Simple animation to move the ball from top to bottom
-      let currentY = startY;
-      const speed = 3; // Adjust for faster/slower animation
-
-      const animate = () => {
-        if (!canvasInstanceRef.current) return;
-        
-        canvasInstanceRef.current.drawBoard();
-        
-        // Calculate x position based on progress (simple linear interpolation)
-        const progress = (currentY - startY) / (endY - startY);
-        const currentX = startX + (endX - startX) * progress;
-        
-        // Draw the ball at the current position
-        canvasInstanceRef.current.drawBall(ballImgRef.current, currentX, currentY);
-        
-        // Move the ball down
-        currentY += speed;
-        
-        // Continue animation until the ball reaches the bottom
-        if (currentY < endY) {
-          canvasInstanceRef.current.animationFrameId = requestAnimationFrame(animate);
-        } else {
-          // Animation complete
-          if (onAnimationComplete) {
-            onAnimationComplete();
-          }
-        }
-      };
-
-      // Start the animation
-      animate();
-    }
-  }, [lastDrop, gameState, rows, onAnimationComplete]);
+      }
+    });
+  }, [pendingBets, rows, risk, onAnimationComplete]);
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -112,7 +74,7 @@ export default function PlinkoBoard() {
         ref={canvasRef}
         width={BOARD_WIDTH}
         height={BOARD_HEIGHT}
-        className=" rounded-lg"
+        className="rounded-lg "
       />
     </div>
   );
