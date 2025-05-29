@@ -1,45 +1,29 @@
-import React from 'react';
-import { HiloGameProvider, useHiloGame } from './context/HiloContext';
-import HiloControl from './HiloControl';
-import HiloGameContentEl from './HiloGameContent';
-import './styles/style.css'
+import React from 'react'
+import HiloCanvas from './HiloCanvas'
+import HiloControls from './HiloControls'
+// import BetsTable from './BetsTable'
+import { HiloGameProvider } from './HiloContext'
 
-// Main component wrapper with context provider
 const HiloGame = () => {
   return (
     <HiloGameProvider>
       <HiloGameContent />
     </HiloGameProvider>
-  );
-};
+  )
+}
 
-// Main content component that uses the context
 const HiloGameContent = () => {
-  const { screenWidth } = useHiloGame();
-  const [currentTab, setCurrentTab] = React.useState(1);
-
   return (
-    <div className='game-layout svelte-1dc4nai'>
-      <div className='content-wrapper svelte-52mqyn' style={{"--width":" 370px"}}>
-        <div className='page-content' id='main-content'>
-            <div className='parent svelte-zd0v12'>
-                <div className='ctainer svelte-zd0v12'>
-                    <div className='layout-spacing variant-normal svelte-rct8um'>
-                      <div className='game-wrapper svelte-1dc4nai'>
-                          <div className='game-frame svelte-14sn0xa'>
-                            <div className='content svelte-14sn0xa flex flex-col-reverse md:flex-row gap-3'>
-                                <HiloControl />
-                                <HiloGameContentEl />
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-                </div>
-            </div>
+    <div className="w-full max-w-7xl mx-auto p-2 pb-20 md:pb-10 md:p-5 text-white font-sans"> 
+      <div className="bg-gray-900 bg-opacity-80 rounded-[18px] shadow-lg shadow-gray-900/50 p-0 md:p-5 mb-5">
+        <div className="flex flex-col-reverse md:flex-row gap-3">
+          <HiloControls />
+          <HiloCanvas />
         </div>
       </div>
+      {/* <BetsTable /> */}
     </div>
-  );
-};
+  )
+}
 
-export default HiloGame;
+export default HiloGame

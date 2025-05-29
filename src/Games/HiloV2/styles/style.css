@@ -53,15 +53,20 @@
     background: var(--grey-700);
     color: var(--grey-100);
     color: var(--white);
-    display: flex
-;
     flex-grow: 1;
     width: 100%;
+    display: flex;
     min-width: 300px;
     border-radius: var(--game-frame-radius);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom: 3px solid var(--grey-500);
+}
+@media screen and (max-width: 750px) {
+ .content.svelte-14sn0xa.main{
+    display: flex;
+    flex-direction: column-reverse;
+ }
 }
 .game-sidebar.svelte-1dz8jt:not(.stacked) {
     border-top-left-radius: var(--game-frame-radius);

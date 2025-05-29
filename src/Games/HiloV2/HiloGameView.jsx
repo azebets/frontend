@@ -79,7 +79,7 @@ function HiloGameView() {
           {/* Stacked Deck with current card on top */}
           <div className="relative h-[190px] w-[80px]">
             {/* Skip button as a card at top right */}
-            <div className="absolute -top-4 -right-14 z-20">
+            <div className="absolute -top-4 -right-14 z-5">
               <button
                 type="button"
                 className=" flex flex-col items-center justify-center bg-[#2f4553] p-2 border rounded transition "

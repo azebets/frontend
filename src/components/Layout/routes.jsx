@@ -13,7 +13,7 @@ const CrashGame = lazy(() => import('../../Games/Crash/Index'));
 const MinesGame = lazy(() => import('../../Games/Mines/MinesGame'));
 const DiceoGame = lazy(() => import('../../Games/Dice/DiceGame'));
 const LimboGame = lazy(() => import('../../Games/Limbo/LimboGame'));
-const HiloGame = lazy(() => import('../../Games/Hilo/HiloGame'));
+const HiloGame = lazy(() => import('../../Games/HiloV2/HiloGame'));
 const PlinkoGame = lazy(() => import('../../Games/plinko/PlinkoGame'));
 const Transactions = lazy(() => import('../../pages/Transactions'));
 
