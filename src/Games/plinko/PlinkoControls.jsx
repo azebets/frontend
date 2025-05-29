@@ -5,8 +5,6 @@ import { AuthContext } from '../../context/AuthContext';
 import {
   FaCoins,
   FaDice,
-  FaChevronDown,
-  FaChevronUp,
   FaLock,
   FaLayerGroup,
   FaExclamationTriangle,
@@ -59,7 +57,7 @@ const PlinkoControls = () => {
   };
 
   return (
-    <div className="w-full md:w-70 h-full bg-gray-800 bg-opacity-50 p-4 rounded-tr-[18px] md:rounded-tr-[0px] rounded-br-[18px] md:rounded-br-[0px] rounded-tl-[18px] rounded-bl-[18px] space-y-5">
+    <div className="w-full md:w-80 h-full bg-gray-800 bg-opacity-50 p-4 rounded-tr-[18px] md:rounded-tr-[0px] rounded-br-[18px] md:rounded-br-[0px] rounded-tl-[18px] rounded-bl-[18px] space-y-5">
       <div className="flex justify-center mb-4"></div>
       {/* Bet Amount Section */}
       <div className="mb-3">
