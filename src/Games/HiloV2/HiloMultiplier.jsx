@@ -31,6 +31,7 @@ export default function HiloMultiplier() {
     const currentRound = hiloGame.rounds[hiloGame.rounds.length - 1];
     const currentRank = getCardRank(currentRound.card);
     
+    
     let hiLabel = "Higher";
     let loLabel = "Lower";
     
