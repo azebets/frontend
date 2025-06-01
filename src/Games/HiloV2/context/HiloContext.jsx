@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
+import { toast } from 'sonner';
 import { SoundManager } from '../audio/SoundManager';
 import { io } from "socket.io-client";
 import { serverUrl } from '../../../utils/api';
@@ -150,9 +151,15 @@ export const HiloGameProvider = ({ children }) => {
   }, [user?._id]);
 
   // --- SOCKET.IO EMIT HELPERS ---
-  // Place bet
+  // Place bet function with early validation for insufficient funds
   const handleBet = useCallback((data) => {
     if (socket && user?._id && !processingRequest) {
+      // Early validation for insufficient funds
+      if (data.bet_amount > balance) {
+        toast.error("Insufficient funds to place this bet");
+        return; // Stop execution early
+      }
+      
       setProcessingRequest(true);
       socket.emit("hilo-bet", {
         _id: user._id,
@@ -168,8 +175,7 @@ export const HiloGameProvider = ({ children }) => {
         }
       });
     }
-  }, [socket, user, processingRequest]);
-
+  }, [socket, user, processingRequest, balance]); // Added balance to dependencies
   // Next round (higher/lower/skip)
   const handleNextRound = useCallback((data) => {
     if (socket && user?._id) {
