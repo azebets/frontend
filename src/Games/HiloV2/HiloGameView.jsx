@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "./HiloGameView.css"; // <-- Add this for animation styles
+import React, { useState } from "react";
 import { useHiloGame } from "./context/HiloContext";
 import { useKeyPress } from '../../hooks/useKeyPress';
-import HiloControl from './HiloControl';
 import useDeck from "./hooks/deck";
 
 const cardBackUrl = "url(/assets/hilo/back-none.BGcPpGyo.svg)";
@@ -10,6 +8,7 @@ const bgHi = "url(/assets/hilo/bg-hi.DH5yjVB6.svg)";
 const bgLo = "url(/assets/hilo/bg-lo.DB3Mujl0.svg)";
 const bgHiStacked = "url(/assets/hilo/bg-hi-stacked.Cv2Q4gGD.svg)";
 const bgLoStacked = "url(/assets/hilo/bg-lo.DB3Mujl0.svg)";
+
 
 function Card({ value = "A", color = "var(--grey-600)", disabled = true, style = {}, faceDown = true, flyOut = false }) {
   let icon = null;
@@ -74,9 +73,11 @@ function HiloGameView() {
     deckCount, 
     setDeckCount, 
     handleHiloNextRound, 
+    handleCashOut,
     newGame,
     hasActiveGame,
-    hiloGame
+    hiloGame,
+    cashoutResult
   } = useHiloGame();
 
   const { getCardRank, getCardSuite } = useDeck();
@@ -97,6 +98,12 @@ function HiloGameView() {
   useKeyPress('s', () => {
     if (hasActiveGame) {
       handleHiloNextRound({ hi: false, lo: false, skip: true });
+    }
+  });
+  
+  useKeyPress('c', () => {
+    if (hasActiveGame) {
+      handleCashOut();
     }
   });
 
@@ -197,9 +204,9 @@ function HiloGameView() {
             </div>
           </div>
         </div>
-        
+      
       </div>
-    
+      
     </div>
   );
 }

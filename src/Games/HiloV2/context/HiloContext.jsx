@@ -32,6 +32,7 @@ export const HiloGameProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [newGame, setNewGame] = useState(true);
   const [controlStats, setControlStats] = useState({});
+  const [cashoutResult, setCashoutResult] = useState(null);
   
   // New state for tracking if there's an active game
   const [hasActiveGame, setHasActiveGame] = useState(false);
@@ -68,16 +69,15 @@ export const HiloGameProvider = ({ children }) => {
       if (user?._id) {
         socketInstance.emit("hilo-init", user, (response) => {
           setGameInitialized(true);
-          if (response.code === 0) {
+          if (response && response.code === 0) {
+            console.log(response)
             // Check if there's an active game
             const hasGame = response.data && 
                            response.data.bet_id && 
                            response.data.rounds && 
                            response.data.rounds.length > 0;
             setHasActiveGame(hasGame);
-          } else {
-            setError(response.message);
-          }
+          } 
         });
       }
     });
@@ -265,26 +265,37 @@ export const HiloGameProvider = ({ children }) => {
     });
 
   }, [socket, user, processingRequest, hiloGame, setProcessingRequest, setError, setHasActiveGame]);
-
-  // Cash out
-  const handleCashOut = useCallback(() => {
-    if (socket && user?._id && !processingRequest && hiloGame) {
-      setProcessingRequest(true);
-      socket.emit("hilo-cashout", {
-        user_id: user._id,
-        bet_id: hiloGame.bet_id,
-      }, (response) => {
-        setProcessingRequest(false);
-        if (response && response.code === 0) {
-          // State will be updated by "hilo-update" event
-          setHasActiveGame(false); // Set active game to false when cashed out
-        } else {
-          setError(response?.message || "Failed to cash out");
-        }
-      });
-    }
-  }, [socket, user, processingRequest, hiloGame]);
-
+    // Cash out
+    const handleCashOut = useCallback(() => {
+      if (socket && user?._id && !processingRequest && hiloGame) {
+        setProcessingRequest(true);
+        socket.emit("hilo-cashout", {
+          user_id: user._id,
+          bet_id: hiloGame.bet_id,
+        }, (response) => {
+          setProcessingRequest(false);
+          if (response && response.code === 0) {
+            // Store the cashout result for display
+            setCashoutResult({
+              amount: response.data?.payout || hiloGame.payout,
+              profit: (response.data?.payout || hiloGame.payout) - hiloGame.bet_amount,
+              multiplier: (response.data?.payout || hiloGame.payout) / hiloGame.bet_amount,
+              timestamp: new Date().toISOString()
+            });
+          
+            // Set active game to false when cashed out
+            setHasActiveGame(false);
+          
+            // Clear the cashout result after 5 seconds
+            setTimeout(() => {
+              setCashoutResult(null);
+            }, 5000);
+          } else {
+            setError(response?.message || "Failed to cash out");
+          }
+        });
+      }
+    }, [socket, user, processingRequest, hiloGame]);
   // --- UI/UX & SETTINGS ---
   // Save hotkeys setting to localStorage when changed
   useEffect(() => {
@@ -389,7 +400,7 @@ export const HiloGameProvider = ({ children }) => {
     setControlStats,
     socket,
     handleHiloNextRound, 
-    deckCount, 
+    deckCount, cashoutResult, setCashoutResult,
     setDeckCount, 
     newGame, 
     setNewGame,
