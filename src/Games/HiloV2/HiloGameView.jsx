@@ -1,4 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import "./HiloGameView.css"; // <-- Add this for animation styles
+import { useHiloGame } from "./context/HiloContext";
+import { useKeyPress } from '../../hooks/useKeyPress';
+import HiloControl from './HiloControl';
+import useDeck from "./hooks/deck";
 
 const cardBackUrl = "url(/assets/hilo/back-none.BGcPpGyo.svg)";
 const bgHi = "url(/assets/hilo/bg-hi.DH5yjVB6.svg)";
@@ -6,7 +11,7 @@ const bgLo = "url(/assets/hilo/bg-lo.DB3Mujl0.svg)";
 const bgHiStacked = "url(/assets/hilo/bg-hi-stacked.Cv2Q4gGD.svg)";
 const bgLoStacked = "url(/assets/hilo/bg-lo.DB3Mujl0.svg)";
 
-function Card({ value = "A", color = "var(--grey-600)", disabled = true, style = {}, faceDown = true }) {
+function Card({ value = "A", color = "var(--grey-600)", disabled = true, style = {}, faceDown = true, flyOut = false }) {
   let icon = null;
 
   if (value === "J" || value === "Q") {
@@ -34,7 +39,7 @@ function Card({ value = "A", color = "var(--grey-600)", disabled = true, style =
 
   return (
     <button
-      className="wrap svelte-1cwyebm"
+      className={`wrap svelte-1cwyebm ${flyOut ? "card-fly-out" : ""}`}
       disabled={disabled}
       style={style}
     >
@@ -60,9 +65,68 @@ function Card({ value = "A", color = "var(--grey-600)", disabled = true, style =
 }
 
 function HiloGameView() {
-  // Example: 4 back cards, 1 current card (Q)
-  const deckCount = 4;
-  const currentCard = { value: "Q", color: "var(--red-500)", disabled: false, faceDown: false };
+  const [flyOut, setFlyOut] = useState(false);
+  const { 
+    deck, 
+    setDeck, 
+    currentCard, 
+    setCurrentCard, 
+    deckCount, 
+    setDeckCount, 
+    handleHiloNextRound, 
+    newGame,
+    hasActiveGame,
+    hiloGame
+  } = useHiloGame();
+
+  const { getCardRank, getCardSuite } = useDeck();
+
+  // Handle key presses for game actions
+  useKeyPress('h', () => {
+    if (hasActiveGame) {
+      handleHiloNextRound({ hi: true, lo: false, skip: false });
+    }
+  });
+  
+  useKeyPress('l', () => {
+    if (hasActiveGame) {
+      handleHiloNextRound({ hi: false, lo: true, skip: false });
+    }
+  });
+  
+  useKeyPress('s', () => {
+    if (hasActiveGame) {
+      handleHiloNextRound({ hi: false, lo: false, skip: true });
+    }
+  });
+
+  // Get current card details from hiloGame if available
+  const getCurrentCardDetails = () => {
+    if (!hiloGame || !hiloGame.rounds || hiloGame.rounds.length === 0) {
+      return {
+        value: "?",
+        suite: "?",
+        color: "var(--grey-600)",
+        faceDown: true
+      };
+    }
+    
+    const currentRound = hiloGame.rounds[hiloGame.rounds.length - 1];
+    const cardNumber = currentRound.card;
+    const rank = getCardRank(cardNumber);
+    const suite = getCardSuite(cardNumber);
+    const isRed = suite === '♥' || suite === '♦';
+    
+    return {
+      value: rank,
+      suite: suite,
+      color: isRed ? "var(--red-500)" : "var(--grey-600)",
+      faceDown: false
+    };
+  };
+
+  // Get the current card to display
+  const cardToDisplay = hasActiveGame ? getCurrentCardDetails() : { value: "?", suite: "?", color: "var(--grey-600)", faceDown: true };
 
   return (
     <div
@@ -79,11 +143,13 @@ function HiloGameView() {
           {/* Stacked Deck with current card on top */}
           <div className="relative h-[190px] w-[80px]">
             {/* Skip button as a card at top right */}
-            <div className="absolute -top-4 -right-14 z-5">
+            <div className="absolute -top-4 -right-14 z-20">
               <button
                 type="button"
-                className=" flex flex-col items-center justify-center bg-[#2f4553] p-2 border rounded transition "
-                disabled
+                className={`flex flex-col items-center justify-center bg-[#2f4553] p-2 border rounded transition `}
+                onClick={() => handleHiloNextRound({ hi: false, lo: false, skip: true })}
+                style={{cursor: !hasActiveGame ? "not-allowed" : "pointer"}}
+                disabled={!hasActiveGame}
                 tabIndex={0}
                 data-testid="skip-card"
                 data-test="skip-card"
@@ -99,31 +165,41 @@ function HiloGameView() {
                 </svg>
               </button>
             </div>
+            
+            {/* Stacked cards in the background */}
             {[...Array(deckCount)].map((_, idx) => (
               <div
                 key={idx}
                 className="absolute left-0 w-full"
                 style={{
-                  top: `${(deckCount - idx) * 4}px`,
+                  top: `${idx * 2}px`, // Reduced spacing between cards
                   zIndex: idx,
                 }}
               >
-                <Card />
+                <Card faceDown={true} />
               </div>
             ))}
-            {/* Current card on top, stationary */}
+            
+            {/* Current card on top */}
             <div
               className="absolute left-0 w-full"
               style={{
                 top: `0px`,
-                zIndex: deckCount,
+                zIndex: deckCount + 1, // Ensure it's above all stacked cards
               }}
             >
-              <Card {...currentCard} />
+              <Card 
+                value={cardToDisplay.value} 
+                color={cardToDisplay.color} 
+                faceDown={cardToDisplay.faceDown} 
+                flyOut={flyOut} 
+              />
             </div>
           </div>
         </div>
+        
       </div>
+    
     </div>
   );
 }

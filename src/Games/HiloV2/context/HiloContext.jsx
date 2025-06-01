@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { SoundManager } from '../audio/SoundManager';
-import { SocketEvents } from '../socket';
+import { io } from "socket.io-client";
+import { serverUrl } from '../../../utils/api';
 
 // Create context
 const HiloContext = createContext();
@@ -22,114 +23,273 @@ export const HiloGameProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [allBets, setAllBets] = useState([]);
   const [myBets, setMyBets] = useState([]);
-  const [SE, setSE] = useState(null);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [betAmount, setBetAmount] = useState(1);
+  const [profitHigher, setProfitHigher] = useState(0);
+  const [profitLower, setProfitLower] = useState(0);
+  const [profitSame, setProfitSame] = useState(0);
+  const [cardHistory, setCardHistory] = useState([]);
+  const [socket, setSocket] = useState(null);
+  const [newGame, setNewGame] = useState(true);
+  const [controlStats, setControlStats] = useState({});
+  
+  // New state for tracking if there's an active game
+  const [hasActiveGame, setHasActiveGame] = useState(false);
+  const [gameInitialized, setGameInitialized] = useState(false);
+  
+  const createFullDeck = () => [
+    // Hearts (red)
+    { value: 'A', color: 'var(--red-500)', disabled: false, faceDown: true },
+    { value: '2', color: 'var(--red-500)', disabled: false, faceDown: true },
+    // ... rest of the deck
+  ];
+  
+  const [deck, setDeck] = useState(createFullDeck());
+  const [deckCount, setDeckCount] = useState(4);
+  const [currentCard, setCurrentCard] = useState({
+    value: "Q",
+    color: "var(--red-500)",
+    disabled: false,
+    faceDown: false,
+  });
 
-  // Initialize socket events when user is available
+  // --- SOCKET.IO CONNECTION AND EVENTS ---
   useEffect(() => {
-    if (user?.user_id && !SE) {
-      const socketEvents = new SocketEvents(user.user_id);
-      socketEvents.handleHiloInit({ user_id: user.user_id })
-        .then(data => {
-          // Initialize with data from server
-          if (data.allBets) setAllBets(data.allBets);
-          if (data.myBets) setMyBets(data.myBets);
-          if (data.currentGame) setHiloGame(data.currentGame);
-        })
-        .catch(err => {
-          console.error("Failed to initialize Hilo game:", err);
-          setError("Failed to connect to game server");
+    // Connect to backend socket server
+    const socketInstance = io(serverUrl(), {
+      transports: ['websocket'],
+      withCredentials: true,
+    });
+    setSocket(socketInstance);
+
+    socketInstance.on("connect", () => {
+      console.log("Connected to Hilo backend socket");
+      // Emit hilo-init when user is available
+      if (user?._id) {
+        socketInstance.emit("hilo-init", user, (response) => {
+          setGameInitialized(true);
+          if (response.code === 0) {
+            // Check if there's an active game
+            const hasGame = response.data && 
+                           response.data.bet_id && 
+                           response.data.rounds && 
+                           response.data.rounds.length > 0;
+            setHasActiveGame(hasGame);
+          } else {
+            setError(response.message);
+          }
         });
-      
-      setSE(socketEvents);
-    }
-    
-    return () => {
-      // Clean up socket connection when component unmounts
-      if (SE) {
-        SE.disconnect();
       }
-    };
-  }, [user]);
+    });
 
-  // Initialize sound and hotkeys settings
-  useEffect(() => {
-    // Load hotkeys setting
-    const hotkeys = localStorage.getItem("HILO_HOTKEYS_ENABLED") === "true";
-    setHotkeysEnabled(hotkeys);
-    
-    // Load sound settings
-    let settings = localStorage.getItem("HILO_SOUND_SETTINGS");
-    settings = settings ? JSON.parse(settings) : { music: true, soundFx: true };
-    setSoundSettings(settings);
-    
-    // Initialize sound manager
-    const soundMgr = new SoundManager({ hilo: { enabled: settings.music } }, settings.soundFx);
-    setSoundManager(soundMgr);
-    
-    // Start playing background music if enabled
-    if (settings.music) {
-      soundMgr.playMusic('hilo');
-    }
-    
-    // Handle screen resize
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    
-    // Set up keyboard shortcuts if enabled
-    if (hotkeys) {
-      const handleKeyDown = (e) => {
-        if (!hiloGame || hiloGame.has_ended || processingRequest) return;
+    // Listen for game state updates from backend
+    socketInstance.on("hilo-init", (data) => {
+      if(data.user_id === user._id){
+        setNewGame(data.new_game);
+        setHiloGame(data);
         
-        switch (e.key.toLowerCase()) {
-          case 'h': // Higher
-            handleNextRound({ hi: true, lo: false, skip: false });
-            break;
-          case 'l': // Lower
-            handleNextRound({ hi: false, lo: true, skip: false });
-            break;
-          case 's': // Skip
-            handleNextRound({ hi: false, lo: false, skip: true });
-            break;
-          case 'c': // Cash out
-            handleCashOut();
-            break;
-          default:
-            break;
+        // Check if there's an active game based on the data
+        const hasGame = data && 
+                       data.bet_id && 
+                       data.rounds && 
+                       data.rounds.length > 0;
+        setHasActiveGame(hasGame);
+      }
+    });
+
+    socketInstance.on("hilo-game", (data) => {
+      if(data.user_id === user._id){ 
+        setHiloGame(data);
+        // Update active game status
+        const hasGame = data && 
+                       data.bet_id && 
+                       data.rounds && 
+                       data.rounds.length > 0 &&
+                       !data.has_ended; // Make sure to check if game hasn't ended
+        setHasActiveGame(hasGame);
+      }
+    });
+
+    socketInstance.on("hilo-wallet", (data) => {
+      if(data._id === user._id){ 
+        setBalance(data.balance);
+      }
+    });
+
+    socketInstance.on("hilo-update", (data) => {
+      // Update game state after a bet/round/cashout
+      if (data.currentGame) {
+        setHiloGame(data.currentGame);
+        
+        // Update active game status
+        const hasGame = data.currentGame && 
+                       data.currentGame.bet_id && 
+                       data.currentGame.rounds && 
+                       data.currentGame.rounds.length > 0 &&
+                       !data.currentGame.has_ended;
+        setHasActiveGame(hasGame);
+      }
+      if (data.currentCard) setCurrentCard(data.currentCard);
+      if (data.cardHistory) setCardHistory(data.cardHistory);
+      if (data.balance !== undefined) setBalance(data.balance);
+      if (data.allBets) setAllBets(data.allBets);
+      if (data.myBets) setMyBets(data.myBets);
+    });
+
+    socketInstance.on("hilo-error", (err) => {
+      console.error("Received hilo-error:", err);
+      setError(err?.message || "Unknown error from server");
+      setProcessingRequest(false); // Make sure to reset processing state on error
+    });
+
+    // Cleanup on unmount
+    return () => {
+      socketInstance.disconnect();
+    };
+  // eslint-disable-next-line
+  }, [user?._id]);
+
+  // --- SOCKET.IO EMIT HELPERS ---
+  // Place bet
+  const handleBet = useCallback((data) => {
+    if (socket && user?._id && !processingRequest) {
+      setProcessingRequest(true);
+      socket.emit("hilo-bet", {
+        _id: user._id,
+        bet_amount: data.bet_amount,
+        token: data.token,
+        token_img: data.token_img,
+      }, (response) => {
+        setProcessingRequest(false);
+        if (response && response.code === 0) {
+          // State will be updated by "hilo-update" event
+        } else {
+          setError(response?.message || "Failed to place bet");
         }
-      };
-      
-      window.addEventListener('keydown', handleKeyDown);
-      
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        window.removeEventListener('keydown', handleKeyDown);
-        soundMgr.stop();
-      };
+      });
+    }
+  }, [socket, user, processingRequest]);
+
+  // Next round (higher/lower/skip)
+  const handleNextRound = useCallback((data) => {
+    if (socket && user?._id) {
+      if(!hiloGame.bet_id) {
+        console.log("Game does not exist")
+        return
+      }
+      console.log(hiloGame.bet_id)
+      console.log("Next round clicked")
+      setProcessingRequest(true);
+      socket.emit("hilo-next-round", {
+        user_id: user._id,
+        bet_id: hiloGame.bet_id,
+        hi: data.hi,
+        lo: data.lo,
+        skip: data.skip,
+        bet_amount: hiloGame?.bet_amount,
+        payout: hiloGame?.payout,
+        token: "USDT",
+        token_img: "/uyiu/.jkhk",
+      }, (response) => {
+        setProcessingRequest(false);
+        if (response && response.code === 0) {
+          console.log(response)
+          // State will be updated by "hilo-update" event
+        } else {
+          setError(response?.message || "Failed to proceed to next round");
+        }
+      });
+    }
+  }, [socket, user, processingRequest, hiloGame]);
+
+  // Updated handleHiloNextRound to work every time it's clicked
+  const handleHiloNextRound = useCallback((choice) => {
+    console.log("handleHiloNextRound called with:", choice);
+    
+    if (!socket) {
+      console.error("Socket not initialized");
+      return;
     }
     
-    // Cleanup
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      soundMgr.stop();
+    if (!user?._id) {
+      console.error("User not authenticated");
+      return;
+    }
+    
+    if (processingRequest) {
+      console.log("Request already in progress, ignoring click");
+      return;
+    }
+    
+    if (!hiloGame?.bet_id) {
+      console.error("No active game found");
+      return;
+    }
+    
+    // Set processing state to prevent multiple clicks
+    // setProcessingRequest(true);
+    
+    // Prepare the data to send to the server
+    const requestData = {
+      _id: user._id,
+      bet_id: hiloGame.bet_id,
+      hi: choice.hi || false,
+      lo: choice.lo || false,
+      skip: choice.skip || false,
+      bet_amount: hiloGame?.bet_amount,
+      payout: hiloGame?.payout,
     };
-  }, [hotkeysEnabled, hiloGame, processingRequest]);
+    
+    console.log("Sending hilo-next-round with data:", requestData);
+    
+    // Emit the event to the server
+    socket.emit("hilo-next-round", requestData, (response) => {
+      console.log("Received response from hilo-next-round:", response);
+      
+      // Always reset processing state when we get a response
+      if (response && response.code === 0) {
+        console.log("Next round successful");
+        // If it was a skip action, make sure we maintain the active game state
+        if (choice.skip) {
+          console.log("Skip action - maintaining active game state");
+          setHasActiveGame(true);
+        }
+        setProcessingRequest(false);
+        // The game state will be updated by the "hilo-update" event
+      } else {
+        // Handle error
+        const errorMessage = response?.message || "Failed to proceed to next round";
+        console.error("Next round failed:", errorMessage);
+        setError(errorMessage);
+      }
+    });
 
+  }, [socket, user, processingRequest, hiloGame, setProcessingRequest, setError, setHasActiveGame]);
+
+  // Cash out
+  const handleCashOut = useCallback(() => {
+    if (socket && user?._id && !processingRequest && hiloGame) {
+      setProcessingRequest(true);
+      socket.emit("hilo-cashout", {
+        user_id: user._id,
+        bet_id: hiloGame.bet_id,
+      }, (response) => {
+        setProcessingRequest(false);
+        if (response && response.code === 0) {
+          // State will be updated by "hilo-update" event
+          setHasActiveGame(false); // Set active game to false when cashed out
+        } else {
+          setError(response?.message || "Failed to cash out");
+        }
+      });
+    }
+  }, [socket, user, processingRequest, hiloGame]);
+
+  // --- UI/UX & SETTINGS ---
   // Save hotkeys setting to localStorage when changed
   useEffect(() => {
     localStorage.setItem("HILO_HOTKEYS_ENABLED", hotkeysEnabled);
   }, [hotkeysEnabled]);
-
-  // Save sound settings to localStorage when changed
-  useEffect(() => {
-    localStorage.setItem("HILO_SOUND_SETTINGS", JSON.stringify(soundSettings));
-    
-    // Update sound manager with new settings
-    if (soundManager) {
-      soundManager.setMusicEnabled(soundSettings.music, 'hilo');
-      soundManager.setSoundFxEnabled(soundSettings.soundFx);
-    }
-  }, [soundSettings, soundManager]);
 
   // Update auth context when balance changes
   const updateBalance = useCallback((newBalanceOrFn) => {
@@ -142,151 +302,51 @@ export const HiloGameProvider = ({ children }) => {
       setBalance(newBalanceOrFn);
     }
   }, [setBalance]);
+ 
+  // Calculate profits when betAmount or currentCard changes
+  useEffect(() => {
+    // Example multipliers: Higher = 2.25x, Lower = 1.1x, Same = 12x (you can adjust as needed)
+    const amount = Number(betAmount) || 0;
+    setProfitHigher(amount > 0 ? +(amount * 2.25).toFixed(2) : 0);
+    setProfitLower(amount > 0 ? +(amount * 1.1).toFixed(2) : 0);
+    setProfitSame(amount > 0 ? +(amount * 12).toFixed(2) : 0);
+  }, [betAmount, currentCard]);
 
-  // Handle bet submission
-  const handleBet = useCallback((data) => {
-    if (SE && !processingRequest) {
-      setProcessingRequest(true);
-      
-      // Play bet sound
-      if (soundManager) {
-        soundManager.playGameEvent('bet');
-      }
-      
-      SE.handleHiloBet({
-        token: data.token,
-        token_img: data.token_img,
-        user_id: user.user_id,
-        bet_amount: data.bet_amount,
-      })
-        .then(response => {
-          // Update game state with response from server
-          setHiloGame(response.game);
-          updateBalance(response.balance);
-        })
-        .catch(error => {
-          console.error('Bet error:', error);
-          setError(error.message || 'Failed to place bet');
-        })
-        .finally(() => {
-          setProcessingRequest(false);
-        });
+  // Reset cardHistory when a new game starts
+  useEffect(() => {
+    if (hiloGame && hiloGame.rounds && hiloGame.rounds.length === 0) {
+      setCardHistory([]);
     }
-  }, [SE, processingRequest, soundManager, user, updateBalance]);
+  }, [hiloGame]);
 
-  // Handle next round
-  const handleNextRound = useCallback((data) => {
-    if (SE && !processingRequest && hiloGame) {
-      setProcessingRequest(true);
-      
-      // Add a check to ensure the game state is valid before proceeding
-      if (!hiloGame.bet_id) {
-        console.error('Invalid game state. Refreshing the page...');
-        window.location.reload();
-        return;
-      }
-      
-      const { bet_id, token, token_img, payout, bet_amount } = hiloGame;
-      
-      // Play appropriate sound
-      if (soundManager) {
-        if (data.skip) {
-          soundManager.playGameEvent('skip');
-        } else {
-          soundManager.playGameEvent('card');
-        }
-      }
-      
-      SE.handleHiloNextRound({
-        hi: data.hi,
-        lo: data.lo,
-        user_id: user.user_id,
-        skip: data.skip,
-        bet_id,
-        bet_amount,
-        token,
-        token_img,
-        payout,
-      })
-        .then(response => {
-          // Update game state with response from server
-          setHiloGame(response.game);
-          
-          // If game ended, update my bets
-          if (response.game.has_ended) {
-            setMyBets(prev => [response.game, ...prev]);
-          }
-          
-          // Play appropriate sound
-          if (soundManager && response.game.rounds) {
-            const lastRound = response.game.rounds[response.game.rounds.length - 1];
-            if (lastRound) {
-              if (lastRound.skipped) {
-                // Skip sound already played
-              } else if (lastRound.hi || lastRound.lo) {
-                if (response.game.has_ended) {
-                  if (response.game.won) {
-                    soundManager.playGameEvent('win', { payout: response.game.payout });
-                  } else {
-                    soundManager.playGameEvent('lose');
-                  }
-                }
-              }
-            }
-          }
-        })
-        .catch(error => {
-          console.error('Next round error:', error);
-          setError(error.message || 'Failed to proceed to next round');
-        })
-        .finally(() => {
-          setProcessingRequest(false);
-        });
+  // Reset game state when game ends
+  useEffect(() => {
+    if (hiloGame && hiloGame.has_ended) {
+      setHasActiveGame(false);
     }
-  }, [SE, processingRequest, hiloGame, soundManager, user]);
+  }, [hiloGame]);
 
-  // Handle cash out
-  const handleCashOut = useCallback(() => {
-    if (SE && !processingRequest && hiloGame) {
-      setProcessingRequest(true);
-      
-      const { bet_id, token, token_img, payout, bet_amount } = hiloGame;
-      
-      // Play cashout sound
-      if (soundManager) {
-        soundManager.playGameEvent('cashout');
-      }
-      
-      SE.handleHiloCashout({
-        user_id: user.user_id,
-        bet_id,
-        bet_amount,
-        token,
-        token_img,
-        payout,
-      })
-        .then(response => {
-          // Update game state with response from server
-          setHiloGame(response.game);
-          updateBalance(response.balance);
-          
-          // Update my bets
-          setMyBets(prev => [response.game, ...prev]);
-          
-          // Play win sound
-          if (soundManager) {
-            soundManager.playGameEvent('win', { payout: response.game.payout });
-          }
-        })
-        .catch(error => {
-          console.error('Cashout error:', error);
-          setError(error.message || 'Failed to cash out');
-        })
-        .finally(() => {
-          setProcessingRequest(false);
-        });
+  // Helper function to start a new game
+  const startNewGame = useCallback((betData) => {
+    if (!socket || !user?._id || processingRequest) return;
+    
+    handleBet(betData);
+  }, [socket, user, processingRequest, handleBet]);
+
+  // Get the current card from the game state
+  const getCurrentCard = useCallback(() => {
+    if (!hiloGame || !hiloGame.rounds || hiloGame.rounds.length === 0) {
+      return null;
     }
-  }, [SE, processingRequest, hiloGame, soundManager, user, updateBalance]);
+    
+    const currentRound = hiloGame.rounds[hiloGame.rounds.length - 1];
+    return {
+      card: currentRound.card,
+      rank: currentRound.cardRank,
+      suite: currentRound.cardSuite,
+      rankValue: currentRound.cardRankNumber
+    };
+  }, [hiloGame]);
 
   // Context value
   const value = {
@@ -312,7 +372,33 @@ export const HiloGameProvider = ({ children }) => {
     screenWidth,
     handleBet,
     handleNextRound,
-    handleCashOut
+    handleCashOut,
+    createFullDeck, 
+    deck, 
+    setDeck, 
+    currentCard, 
+    setCurrentCard,
+    betAmount, 
+    setBetAmount,
+    profitHigher, 
+    profitLower, 
+    profitSame,
+    cardHistory, 
+    setCardHistory,
+    controlStats, 
+    setControlStats,
+    socket,
+    handleHiloNextRound, 
+    deckCount, 
+    setDeckCount, 
+    newGame, 
+    setNewGame,
+    // New state for active game management
+    hasActiveGame,
+    setHasActiveGame,
+    gameInitialized,
+    startNewGame,
+    getCurrentCard
   };
 
   return (
@@ -321,5 +407,4 @@ export const HiloGameProvider = ({ children }) => {
     </HiloContext.Provider>
   );
 };
-
 export default HiloContext;
